@@ -75,6 +75,12 @@ token AlphavalPatternAction(const char * lexeme, const int length) {
 	return ALPHAVAL;
 }
 
+token DiceDamage(const char * lexeme) {
+	LogDebug("DiceDamage: '%s'", lexeme);
+	yylval.token = DICEDMG;
+	return DICEDMG;
+}
+
 
 token IntegerDataTypeAction(const char * lexeme) {
 	LogDebug("IntegerDataTypeAction: '%s'", lexeme);
@@ -438,6 +444,18 @@ token ChkPartyAction(const char * lexeme){
 	return CHKPARTY;
 }
 
+token ChkStat(const char * lexeme){
+	LogDebug("ChkStat: %s", lexeme);
+	yylval.token = CHKSTAT;
+	return CHKSTAT;
+}
+
+token ChkStats(const char * lexeme){
+	LogDebug("ChkStats: %s", lexeme);
+	yylval.token = CHKSTATS;
+	return CHKSTATS;
+}
+
 token ExportSheetAction(const char * lexeme){
 	LogDebug("ExportSheetAction: %s", lexeme);
 	yylval.token = EXPSH;
@@ -448,6 +466,18 @@ token GetSheetAction(const char * lexeme){
 	LogDebug("GetSheetAction: %s", lexeme);
 	yylval.token = GETSH;
 	return GETSH;
+}
+
+token AddCharctoSheet(const char * lexeme){
+	LogDebug("AddCharctoSheet: %s", lexeme);
+	yylval.token = ACTSH;
+	return ACTSH;
+}
+
+token ChangeTempSheet(const char * lexeme){
+	LogDebug("AddCharctoSheet: %s", lexeme);
+	yylval.token = CHTPSH;
+	return CHTPSH;
 }
 
 token FunctionPatternAction(const char * lexeme){

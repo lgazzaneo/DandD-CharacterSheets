@@ -1,0 +1,11 @@
+Integer start(){
+    Character Legolas = new Character("Legolas", "M", "High Elf", "Ranger", "Lawful Neutral");
+    Legolas = AddStats(20, 16, 15, 10, 9, 18, 15);
+    Character TheOldOnesScion = new Character("Silviana", "F", "Human", "Wizard", "Chaotic Neutral");
+    TheOldOnesScion = AddStats(15, 10, 9, 17, 15, 15, 19);
+    Party fiesta = new Party();
+    addPartyMember(Legolas);
+    addPartyMember(TheOldOnesScion);
+    removePartyMember(Legolas);
+    return(0);
+}

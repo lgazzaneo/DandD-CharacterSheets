@@ -85,6 +85,8 @@
 %token <token> ENDLINE
 %token <token> PUNTOCOMA
 
+%token <token>  DICEDMG
+
 %token <token>    CCHAR
 %token <token>    CMONS
 %token <token>    CRACE
@@ -128,9 +130,13 @@
 %token <token>    CHKFEAT
 %token <token>    CHKMONSINF
 %token <token>    CHKPARTY
-    
+%token <token>    CHKSTATS
+%token <token>    CHKSTAT
+
 %token <token>    EXPSH
-%token <token>    GETSH
+%token <token>    GETSH    
+%token <token>    ACTSH
+%token <token>    CHTPSH
 
 %token <token>    FUNCT
 %token <token>    NEW
@@ -244,7 +250,9 @@ argumentosparadeclarar: truedata CADENA COMMA argumentosparadeclarar | truedata 
 
 startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines trueprogram freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES ; {;}
 
-programa: trueprogram freeendlines RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA | trueprogram freeendlines RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA;		{;}
+programa: trueprogram freeendlines RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA | trueprogram freeendlines RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA | freeendlines RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA;		{;}
+
+programacond: trueprogram freeendlines;
 
 trueprogram: variableoper trueprogram | returnfunction trueprogram | aconditional trueprogram | variableoper | returnfunction | aconditional | /*lambda*/ ;		{;}
 
@@ -254,9 +262,9 @@ avariable: declararvar | asignarvar | complexvar | complexch | declarearray | as
 
 declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA | datatype CADENA PUNTOCOMA ;				{;}
 
-valorvar: simplevalues operation valorvar | returnfunction operation valorvar | OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS | subvalorvar | CADENA operation valorvar;				{;}
+valorvar: simplevalues operation valorvar | returnfunction operation valorvar | OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS | subvalorvar | CADENA operation valorvar ;				{;}
 
-subvalorvar: simplevalues | returnfunction | CADENA;		{;}
+subvalorvar: simplevalues | returnfunction | CADENA | DICEDMG ;		{;}
 
 operation: ADD | SUB | MUL | DIV ;					{;}
 
@@ -278,21 +286,21 @@ asignsimplearr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL valorvar PUN
 
 asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL CADENA PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexch ;		{;}
 
-returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA freeendlines | functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA freeendlines ;		{;}
+returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA freeendlines | functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA freeendlines | CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS freeendlines | functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS freeendlines ;		{;}
 
 argumentos: valorvar | valorvar COMMA argumentos;		{;}
 
-functionnames: PRINT | CCHAR | CMONS | CRACE | CCLASS | CITEM | CNPC | CFEAT | CPARTY | ASTAT | ACINFO | ACBACK | ASPBK | ASTSPBK | ARMOD | ACMOD | ANPCINF | AMINF | AITDES | AITINF | APMEM | RMPMEM | CHEXP | CHCLEV | CHCLASS | CHLEV | CHRACE | BHCMULCL | CHITCLASS | CHITRAR | CHITREQ | CHNPCCLASS | EQITEM | UEQIT | CHKCLASS | CHKLEVL | CHKEXP | CHKSPLS | CHKITEM | CHKRACE | CHKITREST | CHKFEAT | CHKMONSINF | CHKPARTY | EXPSH | GETSH ;		{;}
+functionnames: PRINT | CCHAR | CMONS | CRACE | CCLASS | CITEM | CNPC | CFEAT | CPARTY | ASTAT | ACINFO | ACBACK | ASPBK | ASTSPBK | ARMOD | ACMOD | ANPCINF | AMINF | AITDES | AITINF | APMEM | RMPMEM | CHEXP | CHCLEV | CHCLASS | CHLEV | CHRACE | BHCMULCL | CHITCLASS | CHITRAR | CHITREQ | CHNPCCLASS | EQITEM | UEQIT | CHKCLASS | CHKLEVL | CHKEXP | CHKSPLS | CHKITEM | CHKRACE | CHKITREST | CHKFEAT | CHKMONSINF | CHKPARTY | EXPSH | GETSH | ACTSH | CHTPSH | CHKSTATS | CHKSTAT ;		{;}
 
 aconditional: ifelse | dowhile | foriter;		{;}
 
-ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES elseiter freeendlines;		{;}
+ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES freeendlines elseiter freeendlines;		{;}
 
-elseiter: freeendlines | ELSECOND OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES | ELSIFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES elseiter;	{;}
+elseiter: freeendlines | ELSECOND OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES | ELSIFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES elseiter;	{;}
 
 condition: checkearvar AND condition | checkearvar OR condition | checkearvar | OPEN_PARENTHESIS condition CLOSE_PARENTHESIS ; 	{;}
 
-dowhile: DOCOND OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS PUNTOCOMA freeendlines | WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES freeendlines	{;}
+dowhile: DOCOND OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS PUNTOCOMA freeendlines | WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES freeendlines	{;}
 
 foriter: FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES freeendlines ; {;}
 

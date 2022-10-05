@@ -1,0 +1,10 @@
+Integer start(){
+    Character Legolas = new Character("Legolas", "M", "High Elf", "Ranger", "Lawful Neutral");
+    Legolas = AddStats(20, 16, 15, 10, 9, 18, 15);
+    Character TheOldOnesScion = new Character("Silviana", "F", "Human", "Wizard", "Chaotic Neutral");
+    TheOldOnesScion = AddStats(15, 10, 9, 17, 15, 15, 19);
+    Item Long_Bow = new Item("Long Bow +1", RangeW, UC, 1d6+1, +16Str);
+    if(checkStat(TheOldOnesScion, Str) <> checkItemRestrictions(Str)){
+        print("No tiene suficiente Fuerza");
+    }
+}

@@ -1,0 +1,8 @@
+Integer devuelvo7(Interger a){
+    return(7);
+}
+
+Integer start(){
+    print("%d", devuelvo7(1));
+    return(0);
+}

@@ -1,0 +1,3 @@
+Integer Suma1(Integer a){
+    return(a+1);
+}

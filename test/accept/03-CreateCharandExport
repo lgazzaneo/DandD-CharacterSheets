@@ -1,0 +1,7 @@
+Integer start(){
+    Character Legolas = new Character("Legolas", "M", "High Elf", "Ranger", "Lawful Neutral");
+    Legolas = AddStats(20, 16, 15, 10, 9, 18, 15);
+    Sheet CS_Legolas = new Sheet(Legolas, DEFAULT);
+    exportSheet(CS_Legolas);
+    return(0);
+}

@@ -20,10 +20,11 @@
 digit			[0-9]
 endline			[\n]
 whitespace		[ \f\r\t\v]
-alphaval        (-)?[0-9A-Za-z]+
+alphaval        (-+)?[0-9A-Za-z]+
 cadena          [^"']*
 comillas        ["]
 names           [A-Za-z]+[A-Za-z0-9_-]*
+dicedamage      [0-9]+[d][0-9]([+-][0-9]+)?
 
 %%
 
@@ -68,6 +69,7 @@ names           [A-Za-z]+[A-Za-z0-9_-]*
 
 {names}                                     {return Cadena(yytext); }
 
+{dicedamage}                                {return DiceDamage(yytext);}
 
 "&&"                                        {return ANDOperator(yytext); }
 "||"                                        {return OROperator(yytext); }
@@ -125,9 +127,13 @@ names           [A-Za-z]+[A-Za-z0-9_-]*
 "checkFeatures"                             {return ChkFeatAction(yytext); }
 "checkMonsterInfo"                          {return ChkMonsInfAction(yytext); }
 "checkParty"                                {return ChkPartyAction(yytext); }
+"checkStat"                                 {return ChkStat(yytext); }
+"checkStats"                                {return ChkStats(yytext); }
 
 "exportSheet"                               {return ExportSheetAction(yytext); }
 "getSheet"                                  {return GetSheetAction(yytext); }
+"AddCharactertoSheet"                       {return AddCharctoSheet(yytext);}
+"ChangeTemplateSheet"                       {return ChangeTempSheet(yytext);}
 
 "function"                                  {return FunctionPatternAction(yytext); }
 "new"                                       {return NewPatternAction(yytext); }
