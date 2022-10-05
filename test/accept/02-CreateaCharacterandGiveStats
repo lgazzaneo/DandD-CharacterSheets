@@ -1,0 +1,5 @@
+Integer start(){
+    Character TheOldOne = new Character(“Silviana”, “F”, “Wood Elf”, “Ranger”, “Lawful Neutral”);
+    TheOldOne = AddStats(20, 16, 15, 10, 9, 18, 15);
+    return(0);
+}

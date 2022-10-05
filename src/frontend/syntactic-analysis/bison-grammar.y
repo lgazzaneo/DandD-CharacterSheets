@@ -56,6 +56,7 @@
 	int foriter;
 	int argfor1;
 	int argfor3;
+	int freeendlines;
 
 	// Terminales.
 	token token;
@@ -214,6 +215,7 @@
 %type <foriter> foriter
 %type <argfor1> argfor1
 %type <argfor3> argfor3
+%type <freeendlines> freeendlines
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
 %left ADD SUB
@@ -224,77 +226,79 @@
 
 %%
 
-mainprogram: startprograma | crearfunct ENDLINE mainprogram ;
+mainprogram: startprograma | crearfunct freeendlines mainprogram ;	{;}
 
-crearfunct: FUNCT truedata CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES ENDLINE programa ENDLINE CLOSE_LLAVES ;
+freeendlines: /*lambda*/ | ENDLINE | ENDLINE freeendlines ;
 
-truedata: datatype | complexdatatype ;
+crearfunct: FUNCT truedata CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES ; {;}
 
-datatype: INTDT | STRDT  ;
+truedata: datatype | complexdatatype ;			{;}
 
-simplevalues: INTEGER | STR ;
+datatype: INTDT | STRDT  ;	{;}
 
-complexdatatype : STAT | STATS | ITEM | MOSNTER | MODIF | CHARAC | PARTY | NPC | RAZGO | SHEET ;
+simplevalues: INTEGER | STR ; {;}
 
-argumentosparadeclarar: truedata CADENA COMMA argumentosparadeclarar | truedata CADENA ;
+complexdatatype : STAT | STATS | ITEM | MOSNTER | MODIF | CHARAC | PARTY | NPC | RAZGO | SHEET ; {;}
 
-startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES ENDLINE trueprogram ENDLINE RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA ENDLINE CLOSE_LLAVES ;
+argumentosparadeclarar: truedata CADENA COMMA argumentosparadeclarar | truedata CADENA ;		{;}
 
-programa: trueprogram ENDLINE RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA ;
+startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines trueprogram freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES ; {;}
 
-trueprogram: variableoper | returnfunction | aconditional ;
+programa: trueprogram freeendlines RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA | trueprogram freeendlines RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA;		{;}
 
-variableoper: avariable ENDLINE ;
+trueprogram: variableoper trueprogram | returnfunction trueprogram | aconditional trueprogram | variableoper | returnfunction | aconditional | /*lambda*/ ;		{;}
 
-avariable: declararvar | asignarvar | complexvar | complexch | declarearray | asignsimplearr | asigncpxarr;
+variableoper: avariable freeendlines ;				{;}
 
-declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA | datatype CADENA PUNTOCOMA ;
+avariable: declararvar | asignarvar | complexvar | complexch | declarearray | asignsimplearr | asigncpxarr;			{;}
 
-valorvar: simplevalues operation valorvar | returnfunction operation valorvar | OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS | subvalorvar ;
+declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA | datatype CADENA PUNTOCOMA ;				{;}
 
-subvalorvar: simplevalues | returnfunction ;
+valorvar: simplevalues operation valorvar | returnfunction operation valorvar | OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS | subvalorvar | CADENA operation valorvar;				{;}
 
-operation: ADD | SUB | MUL | DIV ;
+subvalorvar: simplevalues | returnfunction | CADENA;		{;}
 
-asignarvar: CADENA IGUAL valorvar PUNTOCOMA | CADENA IGUAL CADENA PUNTOCOMA ;
+operation: ADD | SUB | MUL | DIV ;					{;}
 
-checkearvar: valorrel operrel valorrel ;
+asignarvar: CADENA IGUAL valorvar PUNTOCOMA | CADENA IGUAL CADENA PUNTOCOMA ;		{;}
 
-valorrel: simplevalues | returnfunction | OPEN_PARENTHESIS asignarvar CLOSE_PARENTHESIS ;
+checkearvar: valorrel operrel valorrel ;	{;}
 
-operrel: GREATER | LESSER | GREATorEQ | LESSorEQ | EQUA | NOTEQ ; 
+valorrel: simplevalues | returnfunction | OPEN_PARENTHESIS asignarvar CLOSE_PARENTHESIS ;	{;}
 
-complexvar: complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA | complexdatatype CADENA PUNTOCOMA | CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA;
+operrel: GREATER | LESSER | GREATorEQ | LESSorEQ | EQUA | NOTEQ ; {;}
 
-complexch: CADENA IGUAL CADENA PUNTOCOMA | CADENA POINT complexch | CADENA IGUAL valorvar PUNTOCOMA | CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA ;
+complexvar: complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA | complexdatatype CADENA PUNTOCOMA | CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA;		{;}
 
-declarearray: truedata CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW truedata OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA ;
+complexch: CADENA IGUAL CADENA PUNTOCOMA | CADENA POINT complexch | CADENA IGUAL valorvar PUNTOCOMA | CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA ;		{;}
 
-asignsimplearr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL valorvar PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL CADENA PUNTOCOMA ;
+declarearray: truedata CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW truedata OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA ;		{;}
 
-asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL CADENA PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexch ;
+asignsimplearr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL valorvar PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL CADENA PUNTOCOMA ;		{;}
 
-returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA ENDLINE | functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA ENDLINE ;
+asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL CADENA PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexch ;		{;}
 
-argumentos: valorvar | valorvar COMMA argumentos;
+returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA freeendlines | functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA freeendlines ;		{;}
 
-functionnames: PRINT | CCHAR | CMONS | CRACE | CCLASS | CITEM | CNPC | CFEAT | CPARTY | ASTAT | ACINFO | ACBACK | ASPBK | ASTSPBK | ARMOD | ACMOD | ANPCINF | AMINF | AITDES | AITINF | APMEM | RMPMEM | CHEXP | CHCLEV | CHCLASS | CHLEV | CHRACE | BHCMULCL | CHITCLASS | CHITRAR | CHITREQ | CHNPCCLASS | EQITEM | UEQIT | CHKCLASS | CHKLEVL | CHKEXP | CHKSPLS | CHKITEM | CHKRACE | CHKITREST | CHKFEAT | CHKMONSINF | CHKPARTY | EXPSH | GETSH ;
+argumentos: valorvar | valorvar COMMA argumentos;		{;}
 
-aconditional: ifelse | dowhile | foriter;
+functionnames: PRINT | CCHAR | CMONS | CRACE | CCLASS | CITEM | CNPC | CFEAT | CPARTY | ASTAT | ACINFO | ACBACK | ASPBK | ASTSPBK | ARMOD | ACMOD | ANPCINF | AMINF | AITDES | AITINF | APMEM | RMPMEM | CHEXP | CHCLEV | CHCLASS | CHLEV | CHRACE | BHCMULCL | CHITCLASS | CHITRAR | CHITREQ | CHNPCCLASS | EQITEM | UEQIT | CHKCLASS | CHKLEVL | CHKEXP | CHKSPLS | CHKITEM | CHKRACE | CHKITREST | CHKFEAT | CHKMONSINF | CHKPARTY | EXPSH | GETSH ;		{;}
 
-ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES ENDLINE programa ENDLINE CLOSE_LLAVES elseiter ENDLINE;
+aconditional: ifelse | dowhile | foriter;		{;}
 
-elseiter: ENDLINE | ELSECOND OPEN_LLAVES ENDLINE programa ENDLINE CLOSE_LLAVES | ELSIFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES ENDLINE programa ENDLINE CLOSE_LLAVES elseiter;
+ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES elseiter freeendlines;		{;}
 
-condition: checkearvar AND condition | checkearvar OR condition | checkearvar | OPEN_PARENTHESIS condition CLOSE_PARENTHESIS ; 
+elseiter: freeendlines | ELSECOND OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES | ELSIFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES elseiter;	{;}
 
-dowhile: DOCOND OPEN_LLAVES ENDLINE programa ENDLINE CLOSE_LLAVES WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS PUNTOCOMA ENDLINE | WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES ENDLINE programa ENDLINE CLOSE_LLAVES ENDLINE;
+condition: checkearvar AND condition | checkearvar OR condition | checkearvar | OPEN_PARENTHESIS condition CLOSE_PARENTHESIS ; 	{;}
 
-foriter: FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES ENDLINE programa ENDLINE CLOSE_LLAVES ENDLINE ;
+dowhile: DOCOND OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS PUNTOCOMA freeendlines | WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES freeendlines	{;}
 
-argfor1: | asignarvar | datatype CADENA IGUAL valorvar PUNTOCOMA ;
+foriter: FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES freeendlines ; {;}
 
-argfor3: | asignarvar | simplevalues operation valorvar | returnfunction operation valorvar | OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS ;
+argfor1: | asignarvar | datatype CADENA IGUAL valorvar PUNTOCOMA ;	{;}
+
+argfor3: | asignarvar | simplevalues operation valorvar | returnfunction operation valorvar | OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS ;	{;}
 
 program: expression													{ $$ = ProgramGrammarAction($1); }
 	;
