@@ -15,6 +15,7 @@
 
 /* Contextos de Flex. */
 %x COMMENT
+%x STRING
 
 /* Patrones reutilizables. */
 digit			[0-9]
@@ -49,27 +50,11 @@ dicedamage      [0-9]+[d][0-9]([+-][0-9]+)?
 "["                                         { return OpenCorchetesPatternAction(yytext); }
 "]"                                         { return CloseCorchetesPatternAction(yytext); }
 
-{digit}+									{ return IntegerPatternAction(yytext, yyleng); }
-
-{alphaval}+                                 { return AlphavalPatternAction(yytext, yyleng); }
-
-{whitespace}								{ IgnoredPatternAction(yytext, yyleng); }
-
-.											{ return UnknownPatternAction(yytext, yyleng); }
-
 ";"                                         {return PuntoComa(yytext); }
 
 ","                                         {return CommaAction(yytext);}
 
 "."                                         {return PointAction(yytext);}
-
-{comillas}{cadena}{comillas}                {return StringPatternAction(yytext); }
-
-{endline}                                   {return EndlineAction(yytext); }
-
-{names}                                     {return Cadena(yytext); }
-
-{dicedamage}                                {return DiceDamage(yytext);}
 
 "&&"                                        {return ANDOperator(yytext); }
 "||"                                        {return OROperator(yytext); }
@@ -169,5 +154,25 @@ dicedamage      [0-9]+[d][0-9]([+-][0-9]+)?
 "print"                                     {return PrintAction(yytext); }
 
 "return"                                    {return ReturnAction(yytext);}
+
+{digit}+									{ return IntegerPatternAction(yytext, yyleng); }
+
+{dicedamage}                                {return DiceDamage(yytext);}
+
+{alphaval}                                  { return AlphavalPatternAction(yytext, yyleng); }
+
+{whitespace}								{ IgnoredPatternAction(yytext, yyleng); }
+
+{comillas}                                  {BEGIN(STRING);}
+<STRING>{cadena}                            {return StringPatternAction(yytext); }
+<STRING>{comillas}                          {BEGIN(INITIAL);}       
+
+{endline}                                   {return EndlineAction(yytext); }
+
+{names}                                     {return Cadena(yytext); }
+
+
+
+.											{ return UnknownPatternAction(yytext, yyleng); }
 
 %%

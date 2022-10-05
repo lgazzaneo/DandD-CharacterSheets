@@ -118,12 +118,11 @@ token OROperator(const char * lexeme) {
 	return OR;
 }
 
-token ANDOpertor(const char * lexeme) {
+token ANDOperator(const char * lexeme) {
 	LogDebug("AndOperator: '%s'", lexeme);
 	yylval.token = AND;
 	return AND;
 }
-
 
 token MultiplicationOperatorPatternAction(const char * lexeme) {
 	LogDebug("MultiplicationOperatorPatternAction: '%s'.", lexeme);

@@ -181,10 +181,6 @@
 %token <token>    POINT
 
 // Tipos de dato para los no-terminales generados desde Bison.
-%type <program> program
-%type <expression> expression
-%type <factor> factor
-%type <constant> constant
 %type <mainprogram> mainprogram
 %type <crearfunct> crearfunct
 %type <truedata> truedata
@@ -232,97 +228,206 @@
 
 %%
 
-mainprogram: startprograma | crearfunct freeendlines mainprogram ;	{;}
+mainprogram: aux;					{state.succeed = true;}
 
-freeendlines: /*lambda*/ | ENDLINE | ENDLINE freeendlines ;
+aux: startprograma 					{return 0;}
+	| crearfunct freeendlines aux; 	{return 0;}
 
-crearfunct: FUNCT truedata CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES ; {;}
+freeendlines: ENDLINE 				{return 0;}
+			| ENDLINE freeendlines 	{return 0;}
+			| /**/ ;				{return 0;}
 
-truedata: datatype | complexdatatype ;			{;}
+crearfunct: FUNCT truedata CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES ; {return 0;}
 
-datatype: INTDT | STRDT  ;	{;}
+truedata: datatype 					{return 0;}
+		| complexdatatype ;			{return 0;}
 
-simplevalues: INTEGER | STR ; {;}
+datatype: INTDT 					{return 0;}
+		| STRDT  ;					{return 0;}
 
-complexdatatype : STAT | STATS | ITEM | MOSNTER | MODIF | CHARAC | PARTY | NPC | RAZGO | SHEET ; {;}
+simplevalues: INTEGER 				{return 0;}
+			| STR ; 				{return 0;}
 
-argumentosparadeclarar: truedata CADENA COMMA argumentosparadeclarar | truedata CADENA ;		{;}
+complexdatatype : STAT 				{return 0;}
+				| STATS 			{return 0;}
+				| ITEM 				{return 0;}
+				| MOSNTER 			{return 0;}
+				| MODIF 			{return 0;}
+				| CHARAC 			{return 0;}
+				| PARTY 			{return 0;}
+				| NPC 				{return 0;}
+				| RAZGO 			{return 0;}
+				| SHEET ; 			{return 0;}
 
-startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines trueprogram freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES ; {;}
+argumentosparadeclarar: truedata CADENA COMMA argumentosparadeclarar 		{return 0;}
+						| truedata CADENA ;									{return 0;}
 
-programa: trueprogram freeendlines RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA | trueprogram freeendlines RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA | freeendlines RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA;		{;}
+startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines trueprogram freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES ; 		{return 0;}
+
+programa: trueprogram freeendlines RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA 		{return 0;}
+		| trueprogram freeendlines RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA 	{return 0;}
+		| freeendlines RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA;				{return 0;}
 
 programacond: trueprogram freeendlines;
 
-trueprogram: variableoper trueprogram | returnfunction trueprogram | aconditional trueprogram | variableoper | returnfunction | aconditional | /*lambda*/ ;		{;}
+trueprogram: variableoper trueprogram 		{return 0;}	
+			| returnfunction trueprogram 	{return 0;}	
+			| aconditional trueprogram 		{return 0;}	
+			| variableoper 					{return 0;}	
+			| returnfunction 				{return 0;}	
+			| aconditional 					{return 0;}	
+			| /*lambda*/ ;					{return 0;}	
 
-variableoper: avariable freeendlines ;				{;}
+variableoper: avariable freeendlines ;		{return 0;}
 
-avariable: declararvar | asignarvar | complexvar | complexch | declarearray | asignsimplearr | asigncpxarr;			{;}
+avariable: declararvar 				{return 0;}
+		| asignarvar 				{return 0;}
+		| complexvar 				{return 0;}
+		| complexch 				{return 0;}
+		| declarearray 				{return 0;}
+		| asignsimplearr 			{return 0;}
+		| asigncpxarr;				{return 0;}
 
-declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA | datatype CADENA PUNTOCOMA ;				{;}
+declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA 	{return 0;}
+			| datatype CADENA PUNTOCOMA ;				{return 0;}
 
-valorvar: simplevalues operation valorvar | returnfunction operation valorvar | OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS | subvalorvar | CADENA operation valorvar ;				{;}
+valorvar: simplevalues operation valorvar 				{return 0;}
+		| returnfunction operation valorvar 			{return 0;}
+		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 	{return 0;}
+		| subvalorvar 									{return 0;}
+		| CADENA operation valorvar ;					{return 0;}
 
-subvalorvar: simplevalues | returnfunction | CADENA | DICEDMG ;		{;}
+subvalorvar: simplevalues 		{return 0;}
+			| returnfunction 	{return 0;}
+			| CADENA 			{return 0;}
+			| DICEDMG ;			{return 0;}
 
-operation: ADD | SUB | MUL | DIV ;					{;}
+operation: ADD 				{return 0;}
+		| SUB 				{return 0;}
+		| MUL 				{return 0;}
+		| DIV ;				{return 0;}
 
-asignarvar: CADENA IGUAL valorvar PUNTOCOMA | CADENA IGUAL CADENA PUNTOCOMA ;		{;}
+asignarvar: CADENA IGUAL valorvar PUNTOCOMA 	{return 0;}
+		| CADENA IGUAL CADENA PUNTOCOMA ;		{return 0;}
 
-checkearvar: valorrel operrel valorrel ;	{;}
+checkearvar: valorrel operrel valorrel ;		{return 0;}
 
-valorrel: simplevalues | returnfunction | OPEN_PARENTHESIS asignarvar CLOSE_PARENTHESIS ;	{;}
+valorrel: simplevalues 										{return 0;}
+		| returnfunction 									{return 0;}
+		| OPEN_PARENTHESIS asignarvar CLOSE_PARENTHESIS ;	{return 0;}
 
-operrel: GREATER | LESSER | GREATorEQ | LESSorEQ | EQUA | NOTEQ ; {;}
+operrel: GREATER		{return 0;} 
+		| LESSER 		{return 0;}
+		| GREATorEQ 	{return 0;}
+		| LESSorEQ 		{return 0;}
+		| EQUA 			{return 0;}
+		| NOTEQ ; 		{return 0;}
 
-complexvar: complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA | complexdatatype CADENA PUNTOCOMA | CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA;		{;}
+complexvar: complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 	{return 0;}
+		| complexdatatype CADENA PUNTOCOMA 																				{return 0;}
+		| CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA;						{return 0;}
 
-complexch: CADENA IGUAL CADENA PUNTOCOMA | CADENA POINT complexch | CADENA IGUAL valorvar PUNTOCOMA | CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA ;		{;}
+complexch: CADENA IGUAL CADENA PUNTOCOMA 																	{return 0;}
+		| CADENA POINT complexch 																			{return 0;}
+		| CADENA IGUAL valorvar PUNTOCOMA 																	{return 0;}
+		| CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA ;		{return 0;}
 
-declarearray: truedata CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW truedata OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA ;		{;}
+declarearray: truedata CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW truedata OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA ;		{return 0;}
 
-asignsimplearr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL valorvar PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL CADENA PUNTOCOMA ;		{;}
+asignsimplearr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL valorvar PUNTOCOMA 		{return 0;}
+			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL CADENA PUNTOCOMA ;		{return 0;}
 
-asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL CADENA PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexch ;		{;}
+asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 				{return 0;}
+			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL CADENA PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexch ;		{return 0;}
 
-returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA freeendlines | functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA freeendlines | CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS freeendlines | functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS freeendlines ;		{;}
+returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA freeendlines 			{return 0;}
+			| functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA freeendlines 		{return 0;}
+			| CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS freeendlines 						{return 0;}
+			| functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS freeendlines ;				{return 0;}
 
-argumentos: valorvar | valorvar COMMA argumentos;		{;}
+argumentos: valorvar 						{return 0;}
+		| valorvar COMMA argumentos;		{return 0;}
 
-functionnames: PRINT | CCHAR | CMONS | CRACE | CCLASS | CITEM | CNPC | CFEAT | CPARTY | ASTAT | ACINFO | ACBACK | ASPBK | ASTSPBK | ARMOD | ACMOD | ANPCINF | AMINF | AITDES | AITINF | APMEM | RMPMEM | CHEXP | CHCLEV | CHCLASS | CHLEV | CHRACE | BHCMULCL | CHITCLASS | CHITRAR | CHITREQ | CHNPCCLASS | EQITEM | UEQIT | CHKCLASS | CHKLEVL | CHKEXP | CHKSPLS | CHKITEM | CHKRACE | CHKITREST | CHKFEAT | CHKMONSINF | CHKPARTY | EXPSH | GETSH | ACTSH | CHTPSH | CHKSTATS | CHKSTAT ;		{;}
+functionnames: PRINT 			{return 0;}
+			| CCHAR 			{return 0;}
+			| CMONS 			{return 0;}
+			| CRACE 			{return 0;}
+			| CCLASS 			{return 0;}
+			| CITEM 			{return 0;}
+			| CNPC 				{return 0;}
+			| CFEAT 			{return 0;}
+			| CPARTY 			{return 0;}
+			| ASTAT 			{return 0;}
+			| ACINFO 			{return 0;}
+			| ACBACK 			{return 0;}
+			| ASPBK 			{return 0;}
+			| ASTSPBK 			{return 0;}
+			| ARMOD 			{return 0;}
+			| ACMOD 			{return 0;}
+			| ANPCINF 			{return 0;}
+			| AMINF 			{return 0;}
+			| AITDES 			{return 0;}
+			| AITINF 			{return 0;}
+			| APMEM 			{return 0;}
+			| RMPMEM 			{return 0;}
+			| CHEXP 			{return 0;}
+			| CHCLEV 			{return 0;}
+			| CHCLASS 			{return 0;}
+			| CHLEV 			{return 0;}
+			| CHRACE 			{return 0;}
+			| BHCMULCL 			{return 0;}
+			| CHITCLASS 		{return 0;}
+			| CHITRAR 			{return 0;}
+			| CHITREQ 			{return 0;}
+			| CHNPCCLASS 		{return 0;}
+			| EQITEM 			{return 0;}
+			| UEQIT 			{return 0;}
+			| CHKCLASS 			{return 0;}
+			| CHKLEVL 			{return 0;}
+			| CHKEXP 			{return 0;}
+			| CHKSPLS 			{return 0;}
+			| CHKITEM 			{return 0;}
+			| CHKRACE 			{return 0;}
+			| CHKITREST 		{return 0;}
+			| CHKFEAT 			{return 0;}
+			| CHKMONSINF 		{return 0;}
+			| CHKPARTY 			{return 0;}
+			| EXPSH 			{return 0;}
+			| GETSH 			{return 0;}
+			| ACTSH 			{return 0;}
+			| CHTPSH 			{return 0;}
+			| CHKSTATS 			{return 0;}
+			| CHKSTAT ;			{return 0;}
 
-aconditional: ifelse | dowhile | foriter;		{;}
+aconditional: ifelse 		{return 0;}
+			| dowhile 		{return 0;}
+			| foriter;		{return 0;}
 
-ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES freeendlines elseiter freeendlines;		{;}
+ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES freeendlines elseiter freeendlines;		{return 0;}
 
-elseiter: freeendlines | ELSECOND OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES | ELSIFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES elseiter;	{;}
+elseiter: freeendlines 																															{return 0;}
+		| ELSECOND OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES 																{return 0;}
+		| ELSIFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES elseiter;		{return 0;}
 
-condition: checkearvar AND condition | checkearvar OR condition | checkearvar | OPEN_PARENTHESIS condition CLOSE_PARENTHESIS ; 	{;}
+condition: checkearvar AND condition 								{return 0;}
+		| checkearvar OR condition 									{return 0;}
+		| checkearvar 												{return 0;}
+		| OPEN_PARENTHESIS condition CLOSE_PARENTHESIS ; 			{return 0;}
 
-dowhile: DOCOND OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS PUNTOCOMA freeendlines | WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES freeendlines	{;}
+dowhile: DOCOND OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS PUNTOCOMA freeendlines 		{return 0;}
+		| WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES freeendlines ;							{return 0;}
 
-foriter: FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES freeendlines ; {;}
+foriter: FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES freeendlines ; 	{return 0;}
 
-argfor1: | asignarvar | datatype CADENA IGUAL valorvar PUNTOCOMA ;	{;}
+argfor1: /*lambda*/ 									{return 0;}
+		| asignarvar 									{return 0;}
+		| datatype CADENA IGUAL valorvar PUNTOCOMA ;	{return 0;}
 
-argfor3: | asignarvar | simplevalues operation valorvar | returnfunction operation valorvar | OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS ;	{;}
+argfor3: /*lambda*/ 											{return 0;}
+		| asignarvar 											{return 0;}
+		| simplevalues operation valorvar 						{return 0;}
+		| returnfunction operation valorvar 					{return 0;}
+		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS ;			{return 0;}
 
-program: expression													{ $$ = ProgramGrammarAction($1); }
-	;
-
-expression: expression[left] ADD expression[right]					{ $$ = AdditionExpressionGrammarAction($left, $right); }
-	| expression[left] SUB expression[right]						{ $$ = SubtractionExpressionGrammarAction($left, $right); }
-	| expression[left] MUL expression[right]						{ $$ = MultiplicationExpressionGrammarAction($left, $right); }
-	| expression[left] DIV expression[right]						{ $$ = DivisionExpressionGrammarAction($left, $right); }
-	| factor														{ $$ = FactorExpressionGrammarAction($1); }
-	;
-
-factor: OPEN_PARENTHESIS expression CLOSE_PARENTHESIS				{ $$ = ExpressionFactorGrammarAction($2); }
-	| constant														{ $$ = ConstantFactorGrammarAction($1); }
-	;
-
-constant: INTEGER													{ $$ = IntegerConstantGrammarAction($1); }
-	;
 
 %%
