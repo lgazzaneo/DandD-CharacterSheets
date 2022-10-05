@@ -8,7 +8,7 @@ project(Compiler C)
 # Compilar el parser con Bison, generando contra-ejemplos en caso de que se presenten conflictos.
 add_custom_command(
 	OUTPUT ../src/frontend/syntactic-analysis/bison-parser.c ../src/frontend/syntactic-analysis/bison-parser.h
-	COMMAND bison -d ../src/frontend/syntactic-analysis/bison-grammar.y -o ../src/frontend/syntactic-analysis/bison-parser.c)
+	COMMAND bison -Wcounterexamples -d ../src/frontend/syntactic-analysis/bison-grammar.y -o ../src/frontend/syntactic-analysis/bison-parser.c)
 
 # Seleccionar estrategia según el compilador de C disponible en el sistema.
 # @see https://cmake.org/cmake/help/latest/variable/CMAKE_LANG_COMPILER_ID.html

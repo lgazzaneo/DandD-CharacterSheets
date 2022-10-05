@@ -41,7 +41,7 @@ dicedamage      [0-9]+[d][0-9]([+-][0-9]+)?
 
 "="                                         {return IgualOperacion(yytext);}
 
-"("											{ return OpenParenthesisPatternAction(yytext); }
+"("										    { return OpenParenthesisPatternAction(yytext); }
 ")"											{ return CloseParenthesisPatternAction(yytext); }
 
 "{"                                         { return OpenLlavesPatternAction(yytext); }
@@ -170,8 +170,6 @@ dicedamage      [0-9]+[d][0-9]([+-][0-9]+)?
 {endline}                                   {return EndlineAction(yytext); }
 
 {names}                                     {return Cadena(yytext); }
-
-
 
 .											{ return UnknownPatternAction(yytext, yyleng); }
 

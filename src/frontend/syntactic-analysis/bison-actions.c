@@ -86,3 +86,14 @@ int IntegerConstantGrammarAction(const int value) {
 	LogDebug("\tIntegerConstantGrammarAction(%d)", value);
 	return value;
 }
+
+int a(char * string){
+	state.succeed = true; 
+	printf(string);
+	return 0;
+}
+
+int b(char * str){
+	printf(str);
+	return 0;
+}
