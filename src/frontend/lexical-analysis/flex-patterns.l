@@ -20,8 +20,10 @@
 digit			[0-9]
 endline			[\n]
 whitespace		[ \f\n\r\t\v]
-alphaval        [0-9A-Za-z]
-cadena          [A-Za-z]
+alphaval        (-)?[0-9A-Za-z]+
+cadena          [^"']*
+comillas        ["]
+names           [A-Za-z]+[A-Za-z0-9_-]*
 
 %%
 
@@ -50,8 +52,6 @@ cadena          [A-Za-z]
 
 {alphaval}+                                 { return AlphavalPatternAction(yytext, yyleng); }
 
--{alphaval}+                                { return AlphavalPatternAction(yytext, yyleng); }
-
 {whitespace}								{ IgnoredPatternAction(yytext, yyleng); }
 
 .											{ return UnknownPatternAction(yytext, yyleng); }
@@ -60,9 +60,14 @@ cadena          [A-Za-z]
 
 ","                                         {return CommaAction(yytext);}
 
+"."                                         {return PointAction(yytext);}
+
+{comillas}{cadena}{comillas}                {return StringPatternAction(yytext); }
+
 {endline}                                   {return EndlineAction(yytext); }
 
-{cadena}+                                   {return cadena(yytext); } 
+{names}                                     {return Cadena(yytext); }
+
 
 "&&"                                        {return ANDOperator(yytext); }
 "||"                                        {return OROperator(yytext); }
@@ -130,8 +135,8 @@ cadena          [A-Za-z]
 
 "Party"                                     {return PartyTypePatternAction(yytext); }
 "Character"                                 {return CharcterTypePatternAction(yytext); }
-"Item"                                      {return ItemTypePatternAction(yytext); }
-"String"                                    {return StringPatternAction(yytext); }
+"Item"                                      {return ItemTypePatternAction(yytext); }                                   
+"String"                                    {return StringTypeDataAction(yytext);}
 "Stats"                                     {return StatsTypePatternAction(yytext); }
 "stat"                                      {return StatTypePatternAction(yytext); }
 "NPC"                                       {return NPCTypePatternAction(yytext); }
@@ -139,6 +144,7 @@ cadena          [A-Za-z]
 "Razgo"                                     {return RazgoTypePatternAction(yytext); }
 "Modificator"                               {return ModifTypePatternAction(yytext); }
 "Sheet"                                     {return SheetTypePatternAction(yytext); }
+"Integer"                                   {return IntegerDataTypeAction(yytext);}
 
 "if"                                        {return IfConditionalPatternAction(yytext); }
 "else"                                      {return ElseConditionalPatternAction(yytext); }
@@ -155,5 +161,7 @@ cadena          [A-Za-z]
 ">"                                         {return GreaterComparativeAction(yytext); }
 
 "print"                                     {return PrintAction(yytext); }
+
+"return"                                    {return ReturnAction(yytext);}
 
 %%

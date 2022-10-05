@@ -22,8 +22,40 @@
 	int constant;
 	int mainprogram;
 	int crearfunct;
+	int truedata;
 	int datatype;
+	int simplevalues;
+	int complexdatatype;
 	int argumentosparadeclarar;
+	int startprograma;
+	int programa;
+	int trueprogram;
+	int variableoper;
+	int avariable;
+	int declararvar;
+	int valorvar;
+	int subvalorvar;
+	int operation;
+	int asignarvar;
+	int checkearvar;
+	int valorrel;
+	int operrel;
+	int complexvar;
+	int complexch;
+	int declarearray;
+	int asignsimplearr;
+	int asigncpxarr;
+	int returnfunction;
+	int argumentos;
+	int functionnames;
+	int aconditional;
+	int ifelse;
+	int elseiter;
+	int condition;
+	int dowhile;
+	int foriter;
+	int argfor1;
+	int argfor3;
 
 	// Terminales.
 	token token;
@@ -47,10 +79,11 @@
 
 %token <integer> INTEGER
 
+%token <token> INTDT
+
 %token <token> ENDLINE
 %token <token> PUNTOCOMA
 
-%token <token>	ALPHAVAL
 %token <token>    CCHAR
 %token <token>    CMONS
 %token <token>    CRACE
@@ -104,6 +137,7 @@
 
 %token <token>    CHARAC
 %token <token>   STR
+%token <token>   STRDT
 %token <token>    PARTY
 %token <token>   ITEM
 %token <token>    STATS
@@ -136,11 +170,50 @@
 %token <token>    AND
 %token <token>    OR
 
+%token <token>    RET
+%token <token>    POINT
+
 // Tipos de dato para los no-terminales generados desde Bison.
 %type <program> program
 %type <expression> expression
 %type <factor> factor
 %type <constant> constant
+%type <mainprogram> mainprogram
+%type <crearfunct> crearfunct
+%type <truedata> truedata
+%type <datatype> datatype
+%type <simplevalues> simplevalues
+%type <complexdatatype> complexdatatype
+%type <argumentosparadeclarar> argumentosparadeclarar
+%type <startprograma> startprograma
+%type <programa> programa
+%type <trueprogram> trueprogram
+%type <variableoper> variableoper
+%type <avariable> avariable
+%type <declararvar> declararvar
+%type <valorvar> valorvar
+%type <subvalorvar> subvalorvar
+%type <operation> operation
+%type <asignarvar> asignarvar
+%type <valorrel> valorrel
+%type <checkearvar> checkearvar
+%type <operrel> operrel
+%type <complexvar> complexvar
+%type <complexch> complexch
+%type <declarearray> declarearray
+%type <asignsimplearr> asignsimplearr
+%type <asigncpxarr> asigncpxarr
+%type <returnfunction> returnfunction
+%type <argumentos> argumentos
+%type <functionnames> functionnames
+%type <aconditional> aconditional
+%type <ifelse> ifelse
+%type <elseiter> elseiter
+%type <condition> condition
+%type <dowhile> dowhile
+%type <foriter> foriter
+%type <argfor1> argfor1
+%type <argfor3> argfor3
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
 %left ADD SUB
@@ -151,35 +224,55 @@
 
 %%
 
-mainprogram: programa | crearfunct ENDLINE mainprogram ;
+mainprogram: startprograma | crearfunct ENDLINE mainprogram ;
 
-crearfunct: FUNCT datatype CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES ENDLINE program ENDLINE CLOSE_LLAVES ;
+crearfunct: FUNCT truedata CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES ENDLINE programa ENDLINE CLOSE_LLAVES ;
 
-datatype: INTEGER | STR | CADENA | STAT | STATS | ITEM | MOSNTER | MODIF | CHARAC | PARTY | NPC | RAZGO | SHEET ;
+truedata: datatype | complexdatatype ;
 
-argumentosparadeclarar: datatype CADENA COMMA argumentosparadeclarar | datatype CADENA
+datatype: INTDT | STRDT  ;
 
-programa: INTEGER START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES ENDLINE trueprogram ENDLINE CLOSE_LLAVES ;
+simplevalues: INTEGER | STR ;
 
-trueprogram: avariable | returnfunction | aconditional ;
+complexdatatype : STAT | STATS | ITEM | MOSNTER | MODIF | CHARAC | PARTY | NPC | RAZGO | SHEET ;
 
-avariable: declararvar | asignarvar | checkearvar ;
+argumentosparadeclarar: truedata CADENA COMMA argumentosparadeclarar | truedata CADENA ;
+
+startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES ENDLINE trueprogram ENDLINE RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA ENDLINE CLOSE_LLAVES ;
+
+programa: trueprogram ENDLINE RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA ;
+
+trueprogram: variableoper | returnfunction | aconditional ;
+
+variableoper: avariable ENDLINE ;
+
+avariable: declararvar | asignarvar | complexvar | complexch | declarearray | asignsimplearr | asigncpxarr;
 
 declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA | datatype CADENA PUNTOCOMA ;
 
-valorvar: ALPHAVAL operation valorvar | returnfunction operation valorvar | OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS | subvalorvar ;
+valorvar: simplevalues operation valorvar | returnfunction operation valorvar | OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS | subvalorvar ;
 
-subvalorvar: ALPHAVAL | returnfunction ;
+subvalorvar: simplevalues | returnfunction ;
 
 operation: ADD | SUB | MUL | DIV ;
 
-asignarvar: CADENA IGUAL valorvar PUNTOCOMA ;
+asignarvar: CADENA IGUAL valorvar PUNTOCOMA | CADENA IGUAL CADENA PUNTOCOMA ;
 
 checkearvar: valorrel operrel valorrel ;
 
-valorrel: CADENA | ALPHAVAL | returnfunction | OPEN_PARENTHESIS asignarvar CLOSE_PARENTHESIS ;
+valorrel: simplevalues | returnfunction | OPEN_PARENTHESIS asignarvar CLOSE_PARENTHESIS ;
 
 operrel: GREATER | LESSER | GREATorEQ | LESSorEQ | EQUA | NOTEQ ; 
+
+complexvar: complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA | complexdatatype CADENA PUNTOCOMA | CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA;
+
+complexch: CADENA IGUAL CADENA PUNTOCOMA | CADENA POINT complexch | CADENA IGUAL valorvar PUNTOCOMA | CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA ;
+
+declarearray: truedata CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW truedata OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA ;
+
+asignsimplearr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL valorvar PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL CADENA PUNTOCOMA ;
+
+asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL CADENA PUNTOCOMA | CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexch ;
 
 returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA ENDLINE | functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA ENDLINE ;
 
@@ -201,7 +294,7 @@ foriter: FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA argfor3 
 
 argfor1: | asignarvar | datatype CADENA IGUAL valorvar PUNTOCOMA ;
 
-argfor3: | asignarvar | ALPHAVAL operation valorvar | returnfunction operation valorvar | OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS ;
+argfor3: | asignarvar | simplevalues operation valorvar | returnfunction operation valorvar | OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS ;
 
 program: expression													{ $$ = ProgramGrammarAction($1); }
 	;

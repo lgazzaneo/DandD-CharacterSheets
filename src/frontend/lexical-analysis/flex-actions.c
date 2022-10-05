@@ -75,10 +75,29 @@ token AlphavalPatternAction(const char * lexeme, const int length) {
 	return ALPHAVAL;
 }
 
+
+token IntegerDataTypeAction(const char * lexeme) {
+	LogDebug("IntegerDataTypeAction: '%s'", lexeme);
+	yylval.token = INTDT;
+	return INTDT;
+}
+
+token ReturnAction(const char * lexeme) {
+	LogDebug("ReturnAction: '%s'", lexeme);
+	yylval.token = RET;
+	return RET;
+}
+
 token StringPatternAction(const char * lexeme) {
 	LogDebug("StringPatternAction: '%s'", lexeme);
 	yylval.token = STR;
 	return STR;
+}
+
+token StringTypeDataAction(const char * lexeme) {
+	LogDebug("StringTypeDataAction: '%s'", lexeme);
+	yylval.token = STRDT;
+	return STRDT;
 }
 
 token CommaAction(const char * lexeme) {
@@ -147,6 +166,12 @@ token EndlineAction(const char * lexeme){
 	LogDebug("EndlineAction");
 	yylval.token = ENDLINE;
 	return ENDLINE;
+}
+
+token PointAction(const char * lexeme){
+	LogDebug("PointAction: %s", lexeme);
+	yylval.token = POINT;
+	return POINT;
 }
 
 token CCharAction(const char * lexeme){
