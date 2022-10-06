@@ -169,6 +169,7 @@ token PuntoComa(const char * lexeme){
 
 token EndlineAction(const char * lexeme){
 	LogDebug("EndlineAction");
+	printf("Endlines");
 	yylval.token = ENDLINE;
 	return ENDLINE;
 }
