@@ -334,7 +334,6 @@ operation: ADD 				{return b("suma");}
 		;
 
 asignarvar: CADENA IGUAL valorvar PUNTOCOMA 	{return b("aignarvarcadenavalor");}
-		| CADENA IGUAL CADENA PUNTOCOMA 		{return b("asignarvarcadenacadena");}
 		;
 
 checkearvar: valorrel operrel valorrel 		{return b("checkarvar");}
