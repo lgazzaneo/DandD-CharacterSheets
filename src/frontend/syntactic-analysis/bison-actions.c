@@ -89,11 +89,13 @@ int IntegerConstantGrammarAction(const int value) {
 
 int a(char * string){
 	state.succeed = true; 
-	printf(strcat(string, "/t"));
+	printf(strcat(string, '/t'));
 	return 0;
 }
 
 int b(char * str){
-	printf(str);
+	char * aux = str;
+	aux = strncat(aux, '/t', 10);
+	printf(aux);
 	return 0;
 }
