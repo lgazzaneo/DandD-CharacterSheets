@@ -308,6 +308,7 @@ avariable: declararvar 				{return b("declararvar");}
 		| declarearraycmpx			{return b("declarearraycmpx");}
 		| asignsimplearr 			{return b("assignsimplearray");}
 		| asigncpxarr				{return b("assigncomplexarray");}
+		| complexdeclar           	{return b("complexdeclar");}
 		;
 
 declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA 	{return b("declararvartotal");}
@@ -354,12 +355,12 @@ operrel: GREATER		{return b("greater");}
 
 complexvar: complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 	{return b("complexvariniti");}
 		| complexdatatype CADENA PUNTOCOMA 																				{return b("complexvarsininit");}
-		| CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA						{return b("complexvarinitsindecl");}
 		;
 
+complexdeclar: CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 	{return b("complexvariniti");}
+
 complexch: CADENA POINT complexch 																			{return b("complexch2");}
-		| CADENA IGUAL valorvar PUNTOCOMA 																	{return b("complexch3");}
-		| CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 		{return b("complexch4");}
+		| asignarvar 																						{return b("complexch3");}
 		;
 
 declarearray: datatype CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW datatype OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA 		{return b("declarearray");}
@@ -373,6 +374,7 @@ asignsimplearr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL valorvar PUN
 
 asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 				{return b("assigncmparr1");}
 			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexch 																				{return b("assigncmparr3");}
+			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexdeclar																				{return b("assigncmparr2");}
 			;
 
 returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS  						{return b("returnfunct3");}
