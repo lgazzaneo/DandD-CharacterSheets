@@ -294,7 +294,7 @@ trueprogram: variableoper trueprogram 		{return b("variableoper truep");}
 			| aconditional 					{return b("aconditional");}	
 			;
 
-variableoper: avariable freeendlines 		{return b("variableopertrue");}
+variableoper: avariable 		{return b("variableopertrue");}
 ;
 
 avariable: declararvar 				{return b("declararvar");}
