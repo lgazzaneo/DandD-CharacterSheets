@@ -163,13 +163,13 @@ dicedamage      [0-9]+[d][0-9]([\+\-][0-9]+)?
 <STRING>{cadena}                            {return StringPatternAction(yytext); }
 <STRING>{comillas}                          {BEGIN(INITIAL);}       
 
-{endline}                                   {return EndlineAction(yytext); }
-
 {names}                                     { return Cadena(yytext); }
 
 {alphaval}                                  { return AlphavalPatternAction(yytext, yyleng); }
 
 {whitespace}								{ IgnoredPatternAction(yytext, yyleng); }
+
+{endline}                                   {return EndlineAction(yytext); }
 
 .		                                    {return UnknownPatternAction(yytext, yyleng); }
 
