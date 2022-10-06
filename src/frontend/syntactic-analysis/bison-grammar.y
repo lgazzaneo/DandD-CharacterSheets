@@ -237,253 +237,253 @@
 
 %%
 
-mainprogram: aux					{$$ = a("Start");} 
+mainprogram: aux					{$$ = a("Start     ");} 
 			;
 
-aux: startprograma 					{$$ =  b("Aux");}
-	| crearfunct freeendlines aux 	{$$ = b("Crearnuevafunction");}
+aux: startprograma 					{$$ =  b("Aux     ");}
+	| crearfunct freeendlines aux 	{$$ = b("Crearnuevafunction     ");}
 	;
 
-crearfunct: FUNCT truedata CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES  {$$ = b("crearfunct");} 
+crearfunct: FUNCT truedata CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES  {$$ = b("crearfunct     ");} 
 			;
 
-truedata: datatype 					{$$ = b("truedatadatatype");}
-		| complexdatatype 			{$$ = b("truedatacomplexdata");}
+truedata: datatype 					{$$ = b("truedatadatatype     ");}
+		| complexdatatype 			{$$ = b("truedatacomplexdata     ");}
 		;
 
 
-complexdatatype : STAT 				{$$ = b("STAT");}
-				| STATS 			{$$ = b("STATS");}
-				| ITEM 				{$$ = b("ITEM");}
-				| MOSNTER 			{$$ = b("MOSNTER");}
-				| MODIF 			{$$ = b("MODIF");}
-				| CHARAC 			{$$ = b("CHARAC");}
-				| PARTY 			{$$ = b("PARTY");}
-				| NPC 				{$$ = b("NPC");}
-				| RAZGO 			{$$ = b("RAZGO");}
-				| SHEET  			{$$ = b("SHEET");}
+complexdatatype : STAT 				{$$ = b("STAT     ");}
+				| STATS 			{$$ = b("STATS     ");}
+				| ITEM 				{$$ = b("ITEM     ");}
+				| MOSNTER 			{$$ = b("MOSNTER     ");}
+				| MODIF 			{$$ = b("MODIF     ");}
+				| CHARAC 			{$$ = b("CHARAC     ");}
+				| PARTY 			{$$ = b("PARTY     ");}
+				| NPC 				{$$ = b("NPC     ");}
+				| RAZGO 			{$$ = b("RAZGO     ");}
+				| SHEET  			{$$ = b("SHEET     ");}
 				;
 
-argumentosparadeclarar: truedata CADENA COMMA argumentosparadeclarar 		{$$ = b("argumetosparadeclararrec");}
-						| truedata CADENA 									{$$ = b("argumetoultimoparadeclarar");}
+argumentosparadeclarar: truedata CADENA COMMA argumentosparadeclarar 		{$$ = b("argumetosparadeclararrec  ");}
+						| truedata CADENA 									{$$ = b("argumetoultimoparadeclarar   ");}
 						;
 
-startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines trueprogram RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 		{$$ =  b("startPrograma");}
-				| INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 				{$$ = b("startProgramavacio");}
+startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines trueprogram RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 		{$$ =  b("startPrograma   ");}
+				| INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 				{$$ = b("startProgramavacio   ");}
 				;
 
-programa: trueprogram RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA 		{$$ = b("programaretornocadena");}
-		| trueprogram RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA 	{$$ = b("programaretornovalor");}
-		| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA								{$$ = b("programasintrueprogram");}
+programa: trueprogram RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA 		{$$ = b("programaretornocadena    ");}
+		| trueprogram RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA 	{$$ = b("programaretornovalor    ");}
+		| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA								{$$ = b("programasintrueprogram    ");}
 		;
 
-programacond: trueprogram 																			{$$ = b("programacondsinret");}
-			| trueprogram RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA freeendlines		{$$ = b("programacondconretcadea");}
-			| trueprogram RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA freeendlines				{$$ = b("programacondconretvalor");}
-			| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA freeendlines								{$$ = b("programacondconsoloret");}
+programacond: trueprogram 																			{$$ = b("programacondsinret    ");}
+			| trueprogram RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA freeendlines		{$$ = b("programacondconretcadea    ");}
+			| trueprogram RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA freeendlines				{$$ = b("programacondconretvalor    ");}
+			| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA freeendlines								{$$ = b("programacondconsoloret    ");}
 			;
 
-trueprogram: variableoper freeendlines								{$$ =  b("variableoper");}
-			|variableoper freeendlines trueprogram 					{$$ = b("variableoper truep");} 	
-			| returnfunction PUNTOCOMA freeendlines trueprogram 	{$$ = b("returnfunction truep");}	
-			| aconditional freeendlines trueprogram 				{$$ = b("aconditional truep");}	
-			| returnfunction PUNTOCOMA freeendlines					{$$ = b("returnfunction");}	
-			| aconditional freeendlines								{$$ = b("aconditional");}	
+trueprogram: variableoper freeendlines								{$$ =  b("variableoper  ");}
+			|variableoper freeendlines trueprogram 					{$$ = b("variableoper truep  ");} 	
+			| returnfunction PUNTOCOMA freeendlines trueprogram 	{$$ = b("returnfunction truep  ");}	
+			| aconditional freeendlines trueprogram 				{$$ = b("aconditional truep  ");}	
+			| returnfunction PUNTOCOMA freeendlines					{$$ = b("returnfunction  ");}	
+			| aconditional freeendlines								{$$ = b("aconditional  ");}	
 			;
 
-variableoper: avariable 		{$$ =  b("variableopertrue");}
+variableoper: avariable 		{$$ =  b("variableopertrue  ");}
 			;
 
-avariable: declararvar 				{$$ =  b("declararvar");}
-		| complexvar 				{$$ = b("complexvar");}
-		| complexch 				{$$ = b("complexch");}
-		| declarearray 				{$$ = b("declarearray");}
-		| declarearraycmpx			{$$ = b("declarearraycmpx");}
-		| asignsimplearr 			{$$ = b("assignsimplearray");}
-		| asigncpxarr				{$$ = b("assigncomplexarray");}
-		| complexdeclar           	{$$ = b("complexdeclar");}
+avariable: declararvar 				{$$ =  b("declararvar  ");}
+		| complexvar 				{$$ = b("complexvar  ");}
+		| complexch 				{$$ = b("complexch  ");}
+		| declarearray 				{$$ = b("declarearray  ");}
+		| declarearraycmpx			{$$ = b("declarearraycmpx  ");}
+		| asignsimplearr 			{$$ = b("assignsimplearray  ");}
+		| asigncpxarr				{$$ = b("assigncomplexarray  ");}
+		| complexdeclar           	{$$ = b("complexdeclar  ");}
 		;
 
-declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA 	{$$ =  b("declararvartotal");}
-			| datatype CADENA PUNTOCOMA 				{$$ = b("declararvarsimple");}
+declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA 	{$$ =  b("declararvartotal  ");}
+			| datatype CADENA PUNTOCOMA 				{$$ = b("declararvarsimple  ");}
 			;
 
-valorvar: subvalorvar 									{$$ =  b("subvalorvar");}
-		| simplevalues operation valorvar 				{$$ = b("opsimplevalues");}
-		| returnfunction operation valorvar 			{$$ = b("retfunoper");}
-		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 	{$$ = b("valorvarparentesis");}
-		| CADENA operation valorvar 					{$$ = b("cadenaoperacionvalorvar");}
+valorvar: subvalorvar 									{$$ =  b("subvalorvar  ");}
+		| simplevalues operation valorvar 				{$$ = b("opsimplevalues  ");}
+		| returnfunction operation valorvar 			{$$ = b("retfunoper  ");}
+		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 	{$$ = b("valorvarparentesis  ");}
+		| CADENA operation valorvar 					{$$ = b("cadenaoperacionvalorvar  ");}
 		;
 
-subvalorvar: simplevalues 		{$$ = b("simplevaluessubvalorar");}
-			| returnfunction 	{$$ = b("returnfunctionsub");}
-			| CADENA 			{$$ = b("cadenasub");}
-			| DICEDMG 			{$$ = b("dicedmgsub");}
-			| ALPHAVAL          {$$ = b("alphavalsub");}
+subvalorvar: simplevalues 		{$$ = b("simplevaluessubvalorar  ");}
+			| returnfunction 	{$$ = b("returnfunctionsub  ");}
+			| CADENA 			{$$ = b("cadenasub  ");}
+			| DICEDMG 			{$$ = b("dicedmgsub  ");}
+			| ALPHAVAL          {$$ = b("alphavalsub  ");}
 			;
 
-simplevalues: INTEGER 				{$$ = b("integer");}
-			| STR 	 				{$$ = b("string");}
+simplevalues: INTEGER 				{$$ = b("integer  ");}
+			| STR 	 				{$$ = b("string  ");}
 			;
 
-datatype: INTDT 					{$$ = b("IntegerType");}
-		| STRDT  					{$$ = b("StringType");}
+datatype: INTDT 					{$$ = b("IntegerType  ");}
+		| STRDT  					{$$ = b("StringType  ");}
 		;
 
-freeendlines: ENDLINE 						{$$ = b("FreeLines1");}
-			| ENDLINE ENDLINE freeendlines 	{$$ = b("FreeLines2");}
-			| /**/  						{$$ = b("FreeLines3");}
+freeendlines: ENDLINE 						{$$ = b("FreeLines1  ");}
+			| ENDLINE ENDLINE freeendlines 	{$$ = b("FreeLines2  ");}
+			| /**/  						{$$ = b("FreeLines3  ");}
 			;
 
-operation: ADD 				{$$ = b("suma");}
-		| SUB 				{$$ = b("resta");}
-		| MUL 				{$$ = b("multiplicacion");}
-		| DIV    			{$$ = b("division");}
+operation: ADD 				{$$ = b("suma  ");}
+		| SUB 				{$$ = b("resta  ");}
+		| MUL 				{$$ = b("multiplicacion   ");}
+		| DIV    			{$$ = b("division   ");}
 		;
 
-asignarvar: CADENA IGUAL valorvar PUNTOCOMA 	{$$ = b("aignarvarcadenavalor");}
+asignarvar: CADENA IGUAL valorvar PUNTOCOMA 	{$$ = b("aignarvarcadenavalor  ");}
 		;
 
-checkearvar: valorrel operrel valorrel 		{$$ = b("checkarvar");}
+checkearvar: valorrel operrel valorrel 		{$$ = b("checkarvar   ");}
 			;
 
-valorrel: simplevalues 										{$$ = b("simplevaluesvalorrel");}
-		| returnfunction 									{$$ = b("returnfuncvalorrel");}
-		| OPEN_PARENTHESIS asignarvar CLOSE_PARENTHESIS 	{$$ = b("parentesisvalorrel");}
+valorrel: simplevalues 										{$$ = b("simplevaluesvalorrel  ");}
+		| returnfunction 									{$$ = b("returnfuncvalorrel  ");}
+		| OPEN_PARENTHESIS asignarvar CLOSE_PARENTHESIS 	{$$ = b("parentesisvalorrel  ");}
 		;
 
-operrel: GREATER		{$$ = b("greater");} 
-		| LESSER 		{$$ = b("lesser");}
-		| GREATorEQ 	{$$ = b("greateroreq");}
-		| LESSorEQ 		{$$ = b("lesseroreq");}
-		| EQUA 			{$$ = b("equals");}
-		| NOTEQ  		{$$ = b("noteq");}
+operrel: GREATER		{$$ = b("greater  ");} 
+		| LESSER 		{$$ = b("lesser  ");}
+		| GREATorEQ 	{$$ = b("greateroreq  ");}
+		| LESSorEQ 		{$$ = b("lesseroreq   ");}
+		| EQUA 			{$$ = b("equals  ");}
+		| NOTEQ  		{$$ = b("noteq  ");}
 		;
 
-complexvar: complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 	{$$ = b("complexvariniti");}
-		| complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS CLOSE_PARENTHESIS PUNTOCOMA					{$$ = b("complexvarinitisinarg");}
-		| complexdatatype CADENA PUNTOCOMA 																				{$$ = b("complexvarsininit");}
+complexvar: complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 	{$$ = b("complexvariniti  ");}
+		| complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS CLOSE_PARENTHESIS PUNTOCOMA					{$$ = b("complexvarinitisinarg  ");}
+		| complexdatatype CADENA PUNTOCOMA 																				{$$ = b("complexvarsininit  ");}
 		;
 
-complexdeclar: CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 	{$$ = b("complexvariniti");}
-			| CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS CLOSE_PARENTHESIS PUNTOCOMA					{$$ = b("complexvardeclarsinarg");}
+complexdeclar: CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 	{$$ = b("complexvariniti  ");}
+			| CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS CLOSE_PARENTHESIS PUNTOCOMA					{$$ = b("complexvardeclarsinarg  ");}
 				;
 
-complexch: CADENA POINT complexch 																			{$$ = b("complexch2");}
-		| asignarvar 																						{$$ = b("complexch3");}
+complexch: CADENA POINT complexch 																			{$$ = b("complexch2  ");}
+		| asignarvar 																						{$$ = b("complexch3  ");}
 		;
 
-declarearray: datatype CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW datatype OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA 		{$$ = b("declarearray");}
+declarearray: datatype CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW datatype OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA 		{$$ = b("declarearray  ");}
 				;
 
-declarearraycmpx: complexdatatype CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA 		{$$ = b("declarearraycmpx");}
+declarearraycmpx: complexdatatype CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA 		{$$ = b("declarearraycmpx  ");}
 				;
 
-asignsimplearr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL valorvar PUNTOCOMA 		{$$ = b("assignsimplarrvalor");}
+asignsimplearr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL valorvar PUNTOCOMA 		{$$ = b("assignsimplarrvalor  ");}
 			;
 
-asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 				{$$ = b("assigncmparr1");}
-			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS CLOSE_PARENTHESIS PUNTOCOMA							{$$ = b("assigncmparrsinarg");}
-			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexch 																				{$$ = b("assigncmparr3");}
-			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexdeclar																				{$$ = b("assigncmparr2");}
+asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 				{$$ = b("assigncmparr1  ");}
+			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS CLOSE_PARENTHESIS PUNTOCOMA							{$$ = b("assigncmparrsinarg  ");}
+			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexch 																				{$$ = b("assigncmparr3  ");}
+			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexdeclar																				{$$ = b("assigncmparr2  ");}
 			;
 
-returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS  						{$$ = b("returnfunct3");}
-			| functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS 					{$$ = b("retunrfunct4");}
+returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS  						{$$ = b("returnfunct3  ");}
+			| functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS 					{$$ = b("retunrfunct4  ");}
 			;
 
-argumentos: valorvar 						{$$ = b("argvalor1");}
-		| valorvar COMMA argumentos		{$$ = b("argvalor2omas");}
+argumentos: valorvar 						{$$ = b("argvalor1  ");}
+		| valorvar COMMA argumentos		{$$ = b("argvalor2omas  ");}
 		;
 
-functionnames: PRINT 			{$$ = b("f1");}
-			| CCHAR 			{$$ = b("f2");}
-			| CMONS 			{$$ = b("f3");}
-			| CRACE 			{$$ = b("f4");}
-			| CCLASS 			{$$ = b("f5");}
-			| CITEM 			{$$ = b("f6");}
-			| CNPC 				{$$ = b("f7");}
-			| CFEAT 			{$$ = b("f8");}
-			| CPARTY 			{$$ = b("f9");}
-			| ASTAT 			{$$ = b("f10");}
-			| ACINFO 			{$$ = b("f11");}
-			| ACBACK 			{$$ = b("f12");}
-			| ASPBK 			{$$ = b("f4");}
-			| ASTSPBK 			{$$ = b("f4");}
-			| ARMOD 			{$$ = b("f4");}
-			| ACMOD 			{$$ = b("f4");}
-			| ANPCINF 			{$$ = b("f4");}
-			| AMINF 			{$$ = b("f4");}
-			| AITDES 			{$$ = b("f4");}
-			| AITINF 			{$$ = b("f4");}
-			| APMEM 			{$$ = b("f4");}
-			| RMPMEM 			{$$ = b("f4");}
-			| CHEXP 			{$$ = b("f4");}
-			| CHCLEV 			{$$ = b("f4");}
-			| CHCLASS 			{$$ = b("f4");}
-			| CHLEV 			{$$ = b("f4");}
-			| CHRACE 			{$$ = b("f4");}
-			| BHCMULCL 			{$$ = b("f4");}
-			| CHITCLASS 		{$$ = b("f4");}
-			| CHITRAR 			{$$ = b("f4");}
-			| CHITREQ 			{$$ = b("f4");}
-			| CHNPCCLASS 		{$$ = b("f4");}
-			| EQITEM 			{$$ = b("f4");}
-			| UEQIT 			{$$ = b("f4");}
-			| CHKCLASS 			{$$ = b("f4");}
-			| CHKLEVL 			{$$ = b("f4");}
-			| CHKEXP 			{$$ = b("f4");}
-			| CHKSPLS 			{$$ = b("f4");}
-			| CHKITEM 			{$$ = b("f4");}
-			| CHKRACE 			{$$ = b("f4");}
-			| CHKITREST 		{$$ = b("f4");}
-			| CHKFEAT 			{$$ = b("f4");}
-			| CHKMONSINF 		{$$ = b("f4");}
-			| CHKPARTY 			{$$ = b("f4");}
-			| EXPSH 			{$$ = b("f4");}
-			| GETSH 			{$$ = b("f4");}
-			| ACTSH 			{$$ = b("f4");}
-			| CHTPSH 			{$$ = b("f4");}
-			| CHKSTATS 			{$$ = b("f4");}
-			| CHKSTAT 			{$$ = b("f4");}
+functionnames: PRINT 			{$$ = b("f1  ");}
+			| CCHAR 			{$$ = b("f2  ");}
+			| CMONS 			{$$ = b("f3   ");}
+			| CRACE 			{$$ = b("f4   ");}
+			| CCLASS 			{$$ = b("f5   ");}
+			| CITEM 			{$$ = b("f6   ");}
+			| CNPC 				{$$ = b("f7   ");}
+			| CFEAT 			{$$ = b("f8    ");}
+			| CPARTY 			{$$ = b("f9    ");}
+			| ASTAT 			{$$ = b("f10    ");}
+			| ACINFO 			{$$ = b("f11    ");}
+			| ACBACK 			{$$ = b("f12    ");}
+			| ASPBK 			{$$ = b("f4    ");}
+			| ASTSPBK 			{$$ = b("f4    ");}
+			| ARMOD 			{$$ = b("f4    ");}
+			| ACMOD 			{$$ = b("f4    ");}
+			| ANPCINF 			{$$ = b("f4    ");}
+			| AMINF 			{$$ = b("f4    ");}
+			| AITDES 			{$$ = b("f4    ");}
+			| AITINF 			{$$ = b("f4    ");}
+			| APMEM 			{$$ = b("f4    ");}
+			| RMPMEM 			{$$ = b("f4    ");}
+			| CHEXP 			{$$ = b("f4    ");}
+			| CHCLEV 			{$$ = b("f4    ");}
+			| CHCLASS 			{$$ = b("f4    ");}
+			| CHLEV 			{$$ = b("f4    ");}
+			| CHRACE 			{$$ = b("f4    ");}
+			| BHCMULCL 			{$$ = b("f4    ");}
+			| CHITCLASS 		{$$ = b("f4    ");}
+			| CHITRAR 			{$$ = b("f4    ");}
+			| CHITREQ 			{$$ = b("f4    ");}
+			| CHNPCCLASS 		{$$ = b("f4    ");}
+			| EQITEM 			{$$ = b("f4    ");}
+			| UEQIT 			{$$ = b("f4    ");}
+			| CHKCLASS 			{$$ = b("f4		");}
+			| CHKLEVL 			{$$ = b("f4		");}
+			| CHKEXP 			{$$ = b("f4		");}
+			| CHKSPLS 			{$$ = b("f4		");}
+			| CHKITEM 			{$$ = b("f4		");}
+			| CHKRACE 			{$$ = b("f4		");}
+			| CHKITREST 		{$$ = b("f4		");}
+			| CHKFEAT 			{$$ = b("f4		");}
+			| CHKMONSINF 		{$$ = b("f4    ");}
+			| CHKPARTY 			{$$ = b("f4    ");}
+			| EXPSH 			{$$ = b("f4   ");}
+			| GETSH 			{$$ = b("f4   ");}
+			| ACTSH 			{$$ = b("f4   ");}
+			| CHTPSH 			{$$ = b("f4   ");}
+			| CHKSTATS 			{$$ = b("f4   ");}
+			| CHKSTAT 			{$$ = b("f4   ");}
 			;
 
-aconditional: ifelse 		{$$ = b("ifelse");}
-			| dowhile 		{$$ = b("dowhile");}
-			| foriter		{$$ = b("for");}
+aconditional: ifelse 		{$$ = b("ifelse  ");}
+			| dowhile 		{$$ = b("dowhile  ");}
+			| foriter		{$$ = b("for  ");}
 			;
 
-ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES elseiter		{$$ = b("ifelsepadreconhijo");}
-		|IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES					{$$ = b("ifelsepadre");} 
+ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES elseiter		{$$ = b("ifelsepadreconhijo  ");}
+		|IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES					{$$ = b("ifelsepadre  ");} 
 		;
 
-elseiter: ELSECOND OPEN_LLAVES freeendlines programacond CLOSE_LLAVES 																{$$ = b("elseitersincond");}
-		| ELSIFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES elseiter			{$$ = b("elseiterconcond");}
+elseiter: ELSECOND OPEN_LLAVES freeendlines programacond CLOSE_LLAVES 																{$$ = b("elseitersincond  ");}
+		| ELSIFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES elseiter			{$$ = b("elseiterconcond  ");}
 		;
 
-condition: checkearvar AND condition 								{$$ = b("condition and");}
-		| checkearvar OR condition 									{$$ = b("condition or");}
-		| checkearvar 												{$$ = b("condition check");}
-		| OPEN_PARENTHESIS condition CLOSE_PARENTHESIS  			{$$ = b("condition parentesis");}
+condition: checkearvar AND condition 								{$$ = b("condition and  ");}
+		| checkearvar OR condition 									{$$ = b("condition or  ");}
+		| checkearvar 												{$$ = b("condition check  ");}
+		| OPEN_PARENTHESIS condition CLOSE_PARENTHESIS  			{$$ = b("condition parentesis  ");}
 		;
 
-dowhile: DOCOND OPEN_LLAVES freeendlines programacond  CLOSE_LLAVES WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS PUNTOCOMA  				{$$ = b("dowhile1");}
-		| WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond  CLOSE_LLAVES								{$$ = b("while");}
+dowhile: DOCOND OPEN_LLAVES freeendlines programacond  CLOSE_LLAVES WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS PUNTOCOMA  				{$$ = b("dowhile1  ");}
+		| WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond  CLOSE_LLAVES								{$$ = b("while  ");}
 		;
 
-foriter: FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES  	{$$ = b("for1");}
-		| FORCOND OPEN_PARENTHESIS PUNTOCOMA condition PUNTOCOMA CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES    				{$$ = b("for2");}
-		| FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES 			{$$ = b("for3");}
-		| FORCOND OPEN_PARENTHESIS PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES 			{$$ = b("for4");}
+foriter: FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES  	{$$ = b("for1  ");}
+		| FORCOND OPEN_PARENTHESIS PUNTOCOMA condition PUNTOCOMA CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES    				{$$ = b("for2  ");}
+		| FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES 			{$$ = b("for3  ");}
+		| FORCOND OPEN_PARENTHESIS PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES 			{$$ = b("for4  ");}
 		;
 
-argfor1: asignarvar 									{$$ = b("argfor1asignvar");}
-		| datatype CADENA IGUAL valorvar PUNTOCOMA 		{$$ = b("argfor1valor");}
+argfor1: asignarvar 									{$$ = b("argfor1asignvar  ");}
+		| datatype CADENA IGUAL valorvar PUNTOCOMA 		{$$ = b("argfor1valor  ");}
 		;
 
-argfor3: asignarvar 											{$$ = b("argfor3asignavar");}
-		| simplevalues operation valorvar 						{$$ = b("argfor3simplevalues");}
-		| returnfunction operation valorvar 					{$$ = b("argfor3returnfunction");}
-		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 			{$$ = b("argfor3parentesis");}
+argfor3: asignarvar 											{$$ = b("argfor3asignavar  ");}
+		| simplevalues operation valorvar 						{$$ = b("argfor3simplevalues  ");}
+		| returnfunction operation valorvar 					{$$ = b("argfor3returnfunction  ");}
+		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 			{$$ = b("argfor3parentesis      ");}
 		;
 %%
