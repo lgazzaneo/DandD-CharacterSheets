@@ -57,6 +57,7 @@
 	int argfor1;
 	int argfor3;
 	int freeendlines;
+	int aux;
 
 	// Terminales.
 	int token;
@@ -220,6 +221,7 @@
 //%type <argfor1> argfor1
 //%type <argfor3> argfor3
 %type <freeendlines> freeendlines
+%type <aux> aux
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
 %left ADD SUB
@@ -230,10 +232,10 @@
 
 %%
 
-mainprogram: aux					{return a("Start");} 
+mainprogram: aux					{$$ = a("Start");} 
 			;
 
-aux: startprograma 					{return b("Aux");}
+aux: startprograma 					{$$ =  b("Aux");}
 	/*| crearfunct freeendlines aux 	{return b("Crearnuevafunction");}*/
 	;
 
@@ -261,7 +263,7 @@ aux: startprograma 					{return b("Aux");}
 						| truedata CADENA 									{return b("argumetoultimoparadeclarar");}
 						;*/
 
-startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines trueprogram RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 		{return b("startPrograma");}
+startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines trueprogram RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 		{$$ =  b("startPrograma");}
 				/*| INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 							{return b("startProgramavacio");}*/
 				;
 
@@ -276,7 +278,7 @@ startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeen
 			| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA freeendlines								{return b("programacondconsoloret");}
 			;*/
 
-trueprogram: variableoper freeendlines								{return b("variableoper");}
+trueprogram: variableoper freeendlines								{$$ =  b("variableoper");}
 			/*|variableoper freeendlines trueprogram 					{return b("variableoper truep");} 	
 			| returnfunction PUNTOCOMA freeendlines trueprogram 	{return b("returnfunction truep");}	
 			| aconditional freeendlines trueprogram 				{return b("aconditional truep");}	*/
@@ -284,10 +286,10 @@ trueprogram: variableoper freeendlines								{return b("variableoper");}
 			| aconditional freeendlines								{return b("aconditional");}	*/
 			;
 
-variableoper: avariable 		{return b("variableopertrue");}
+variableoper: avariable 		{$$ =  b("variableopertrue");}
 			;
 
-avariable: declararvar 				{return b("declararvar");}
+avariable: declararvar 				{$$ =  b("declararvar");}
 		/*| complexvar 				{return b("complexvar");}
 		| complexch 				{return b("complexch");}
 		| declarearray 				{return b("declarearray");}
@@ -297,34 +299,34 @@ avariable: declararvar 				{return b("declararvar");}
 		| complexdeclar           	{return b("complexdeclar");}*/
 		;
 
-declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA 	{return b("declararvartotal");}
+declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA 	{$$ =  b("declararvartotal");}
 			//| datatype CADENA PUNTOCOMA 				{return b("declararvarsimple");}
 			;
 
-valorvar: subvalorvar 									{return b("subvalorvar");}
+valorvar: subvalorvar 									{$$ =  b("subvalorvar");}
 		/*|simplevalues operation valorvar 				{return b("opsimplevalues");}
 		| returnfunction operation valorvar 			{return b("retfunoper");}
 		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 	{return b("valorvarparentesis");}
 		| CADENA operation valorvar 					{return b("cadenaoperacionvalorvar");}*/
 		;
 
-subvalorvar: simplevalues 		{return b("simplevaluessubvalorar");}
+subvalorvar: simplevalues 		{$$ = b("simplevaluessubvalorar");}
 			/*| returnfunction 	{return b("returnfunctionsub");}
 			| CADENA 			{return b("cadenasub");}
 			| DICEDMG 			{return b("dicedmgsub");}*/
 			;
 
-simplevalues: INTEGER 				{return b("integer");}
+simplevalues: INTEGER 				{$$ = b("integer");}
 			//| STR 	 				{return b("string");}
 			;
 
-datatype: INTDT 					{return b("IntegerType");}
+datatype: INTDT 					{$$ = b("IntegerType");}
 		//| STRDT  					{return b("StringType");}
 		;
 
-freeendlines: ENDLINE 						{return b("FreeLines1");}
-			| ENDLINE ENDLINE freeendlines 	{return b("FreeLines2");}
-			| /**/							{return b("FreeLines3");}
+freeendlines: ENDLINE 						{$$ = b("FreeLines1");}
+			| ENDLINE ENDLINE freeendlines 	{$$ = b("FreeLines2");}
+			| /**/							{$$ = b("FreeLines3");}
 			;
 
 /*operation: ADD 				{return b("suma");}
