@@ -159,8 +159,6 @@ dicedamage      [0-9]+[d][0-9]([+-][0-9]+)?
 
 {dicedamage}                                {return DiceDamage(yytext);}
 
-
-
 {comillas}                                  {BEGIN(STRING);}
 <STRING>{cadena}                            {return StringPatternAction(yytext); }
 <STRING>{comillas}                          {BEGIN(INITIAL);}       

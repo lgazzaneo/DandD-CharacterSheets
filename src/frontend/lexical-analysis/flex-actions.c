@@ -155,6 +155,7 @@ token SubtractionOperatorPatternAction(const char * lexeme) {
 }
 
 token UnknownPatternAction(const char * lexeme, const int length) {
+	printf("Holamoriste");
 	LogDebug("UnknownPatternAction: '%s' (length = %d).", lexeme, length);
 	yylval.token = YYUNDEF;
 	// Al emitir este token, el compilador aborta la ejecución.
@@ -637,6 +638,7 @@ token NotEqualsComparativeAction(const char * lexeme){
 }
 
 void IgnoredPatternAction(const char * lexeme, const int length) {
+	printf("Holasoymierdaquenoimporta");
 	LogDebug("IgnoredPatternAction: '%s' (length = %d).", lexeme, length);
 	// Como no debe hacer nada con el patrón, solo se loguea en consola.
 }
