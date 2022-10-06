@@ -251,11 +251,11 @@ freeendlines: ENDLINE 						{return b("FreeLines");}
 		;
 
 datatype: INTDT 					{return b("IntegerType");}
-		| STRDT  					{return b("StringType");}
+		//| STRDT  					{return b("StringType");}
 		;
 
 simplevalues: INTEGER 				{return b("integer");}
-			| STR 	 				{return b("string");}
+			//| STR 	 				{return b("string");}
 			;
 
 /*complexdatatype : /*STAT 				{return b("STAT");}
@@ -275,7 +275,7 @@ simplevalues: INTEGER 				{return b("integer");}
 						;*/
 
 startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines trueprogram RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 		{return b("startPrograma");}
-				| INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 							{return b("startProgramavacio");}
+				/*| INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 							{return b("startProgramavacio");}*/
 				;
 
 /*programa: trueprogram RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA 		{return b("programaretornocadena");}
@@ -289,16 +289,16 @@ startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeen
 			| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA freeendlines								{return b("programacondconsoloret");}
 			;*/
 
-trueprogram: variableoper freeendlines trueprogram 					{return b("variableoper truep");}	
-			| variableoper freeendlines								{return b("variableoper");}	
-			/*| returnfunction PUNTOCOMA freeendlines trueprogram 	{return b("returnfunction truep");}	
+trueprogram: variableoper freeendlines								{return b("variableoper");}
+			/*|variableoper freeendlines trueprogram 					{return b("variableoper truep");} 	
+			| returnfunction PUNTOCOMA freeendlines trueprogram 	{return b("returnfunction truep");}	
 			| aconditional freeendlines trueprogram 				{return b("aconditional truep");}	*/
 			/*| returnfunction PUNTOCOMA freeendlines					{return b("returnfunction");}	
 			| aconditional freeendlines								{return b("aconditional");}	*/
 			;
 
 variableoper: avariable 		{return b("variableopertrue");}
-;
+			;
 
 avariable: declararvar 				{return b("declararvar");}
 		/*| complexvar 				{return b("complexvar");}
@@ -311,7 +311,7 @@ avariable: declararvar 				{return b("declararvar");}
 		;
 
 declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA 	{return b("declararvartotal");}
-			| datatype CADENA PUNTOCOMA 				{return b("declararvarsimple");}
+			//| datatype CADENA PUNTOCOMA 				{return b("declararvarsimple");}
 			;
 
 valorvar: subvalorvar 									{return b("subvalorvar");}
