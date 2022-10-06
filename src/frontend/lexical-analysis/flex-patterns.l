@@ -159,7 +159,7 @@ dicedamage      [0-9]+[d][0-9]([+-][0-9]+)?
 
 {dicedamage}                                {return DiceDamage(yytext);}
 
-{whitespace}								{ IgnoredPatternAction(yytext, yyleng); }
+
 
 {comillas}                                  {BEGIN(STRING);}
 <STRING>{cadena}                            {return StringPatternAction(yytext); }
@@ -171,5 +171,8 @@ dicedamage      [0-9]+[d][0-9]([+-][0-9]+)?
 
 {alphaval}                                  { return AlphavalPatternAction(yytext, yyleng); }
 
-.		{ return UnknownPatternAction(yytext, yyleng); }
+{whitespace}								{ IgnoredPatternAction(yytext, yyleng); }
+
+.		                                    {return UnknownPatternAction(yytext, yyleng); }
+
 %%
