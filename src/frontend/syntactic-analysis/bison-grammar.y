@@ -305,6 +305,7 @@ avariable: declararvar 				{return b("declararvar");}
 		| complexvar 				{return b("complexvar");}
 		| complexch 				{return b("complexch");}
 		| declarearray 				{return b("declarearray");}
+		| declarearraycmpx			{return b("declarearraycmpx");}
 		| asignsimplearr 			{return b("assignsimplearray");}
 		| asigncpxarr				{return b("assigncomplexarray");}
 		;
@@ -363,7 +364,10 @@ complexch: CADENA IGUAL CADENA PUNTOCOMA 																	{return b("complexch1"
 		| CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 		{return b("complexch4");}
 		;
 
-declarearray: truedata CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW truedata OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA 		{return b("declarearray");}
+declarearray: datatype CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW datatype OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA 		{return b("declarearray");}
+				;
+
+declarearraycmpx: complexdatatype CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA 		{return b("declarearraycmpx");}
 				;
 
 asignsimplearr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL valorvar PUNTOCOMA 		{return b("assignsimplarrvalor");}
