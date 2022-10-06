@@ -54,7 +54,7 @@ dicedamage      [0-9]+[d][0-9]([\+\-][0-9]+)?
 
 ","                                         {return CommaAction(yytext);}
 
-"\."                                         {return PointAction(yytext);}
+"."                                         {return PointAction(yytext);}
 
 "&&"                                        {return ANDOperator(yytext); }
 "||"                                        {return OROperator(yytext); }

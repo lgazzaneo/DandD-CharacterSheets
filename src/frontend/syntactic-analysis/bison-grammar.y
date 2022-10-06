@@ -323,9 +323,9 @@ datatype: INTDT 					{return b("IntegerType");}
 		//| STRDT  					{return b("StringType");}
 		;
 
-freeendlines: ENDLINE 						{return b("FreeLines");}
-			| ENDLINE ENDLINE freeendlines 	{return b("FreeLines");}
-			| /**/							{return b("FreeLines");}
+freeendlines: ENDLINE 						{return b("FreeLines1");}
+			| ENDLINE ENDLINE freeendlines 	{return b("FreeLines2");}
+			| /**/							{return b("FreeLines3");}
 			;
 
 /*operation: ADD 				{return b("suma");}
