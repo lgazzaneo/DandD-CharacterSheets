@@ -21,7 +21,7 @@
 digit			[0-9]
 endline			[\n]
 whitespace		[ \f\r\t\v]
-alphaval        (-+)?[0-9A-Za-z]+
+alphaval        [-+]?[0-9A-Za-z]+
 cadena          [^"']*
 comillas        ["]
 names           [A-Za-z][A-Za-z0-9_-]*
