@@ -372,10 +372,10 @@ asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdata
 			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexch 																				{return b("assigncmparr3");}
 			;
 
-returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA freeendlines 			{return b("retunrfunct1");}
-			| functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA freeendlines 		{return b("retunrnfunct2");}
-			| CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS freeendlines 						{return b("returnfunct3");}
-			| functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS freeendlines 				{return b("retunrfunct4");}
+returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA  			{return b("retunrfunct1");}
+			| functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 		{return b("retunrnfunct2");}
+			| CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS  						{return b("returnfunct3");}
+			| functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS 					{return b("retunrfunct4");}
 			;
 
 argumentos: valorvar 						{return b("argvalor1");}
