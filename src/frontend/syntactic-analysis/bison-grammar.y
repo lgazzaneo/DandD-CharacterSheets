@@ -280,7 +280,7 @@ startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeen
 
 programa: trueprogram freeendlines RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA 		{return b("programaretornocadena");}
 		| trueprogram freeendlines RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA 	{return b("programaretornovalor");}
-		| freeendlines RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA				{return b("programasintrueprogram");}
+		| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA								{return b("programasintrueprogram");}
 		;
 
 programacond: trueprogram freeendlines 	{return b("programacond");}
