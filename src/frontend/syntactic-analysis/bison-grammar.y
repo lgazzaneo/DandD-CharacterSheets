@@ -442,12 +442,12 @@ aconditional: ifelse 		{return b("ifelse");}
 			| foriter		{return b("for");}
 			;
 
-ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES freeendlines elseiter freeendlines		{return b("ifelsepadre");}
+ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES			{return b("ifelsepadre");}
+		| IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES elseiter
 		;
 
-elseiter: freeendlines 																															{return b("elseiternull");}
-		| ELSECOND OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES 																{return b("elseitersincond");}
-		| ELSIFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES elseiter		{return b("elseiterconcond");}
+elseiter: | ELSECOND OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES 																{return b("elseitersincond");}
+		| ELSIFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES elseiter			{return b("elseiterconcond");}
 		;
 
 condition: checkearvar AND condition 								{return b("condition and");}
