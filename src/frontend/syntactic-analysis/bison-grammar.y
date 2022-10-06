@@ -158,7 +158,7 @@
 %token <token>    MODIF
 %token <token>    SHEET
 
-%token <ifelse>    IFCOND
+%token <token>    IFCOND
 %token <token>    ELSECOND
 %token <token>    ELSIFCOND
 %token <token>    DOCOND
@@ -238,11 +238,6 @@ aux: startprograma 					{return b("Aux");}
 	/*| crearfunct freeendlines aux 	{return b("Crearnuevafunction");}*/
 	;
 
-freeendlines: ENDLINE 						{return b("FreeLines");}
-			| ENDLINE ENDLINE freeendlines 	{return b("FreeLines");}
-			| /**/							{return b("FreeLines");}
-			;
-
 /*crearfunct: FUNCT truedata CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES  {return b("crearfunct");} 
 			;*/
 
@@ -250,13 +245,6 @@ freeendlines: ENDLINE 						{return b("FreeLines");}
 		| complexdatatype 			{return b("truedatacomplexdata");}*/
 		;
 
-datatype: INTDT 					{return b("IntegerType");}
-		//| STRDT  					{return b("StringType");}
-		;
-
-simplevalues: INTEGER 				{return b("integer");}
-			//| STR 	 				{return b("string");}
-			;
 
 /*complexdatatype : /*STAT 				{return b("STAT");}
 				| STATS 			{return b("STATS");}
@@ -325,6 +313,19 @@ subvalorvar: simplevalues 		{return b("simplevaluessubvalorar");}
 			/*| returnfunction 	{return b("returnfunctionsub");}
 			| CADENA 			{return b("cadenasub");}
 			| DICEDMG 			{return b("dicedmgsub");}*/
+			;
+
+simplevalues: INTEGER 				{return b("integer");}
+			//| STR 	 				{return b("string");}
+			;
+
+datatype: INTDT 					{return b("IntegerType");}
+		//| STRDT  					{return b("StringType");}
+		;
+
+freeendlines: ENDLINE 						{return b("FreeLines");}
+			| ENDLINE ENDLINE freeendlines 	{return b("FreeLines");}
+			| /**/							{return b("FreeLines");}
 			;
 
 /*operation: ADD 				{return b("suma");}
