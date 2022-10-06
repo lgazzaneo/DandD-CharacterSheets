@@ -165,7 +165,7 @@ dicedamage      [0-9]+[d][0-9]([+-][0-9]+)?
 
 {endline}                                   {return EndlineAction(yytext); }
 
-{names}                                     {return Cadena(yytext); }
+{names}                                     { return Cadena(yytext); }
 
 {alphaval}                                  { return AlphavalPatternAction(yytext, yyleng); }
 
