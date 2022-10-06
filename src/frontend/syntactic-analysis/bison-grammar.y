@@ -345,6 +345,8 @@ asignarvar: CADENA IGUAL valorvar PUNTOCOMA 	{$$ = b("aignarvarcadenavalor  ");}
 		;
 
 checkearvar: valorrel operrel valorrel 		{$$ = b("checkarvar   ");}
+			| CADENA operrel CADENA  		{$$ = b("checkarvar2   ");}
+			| CADENA operrel valorrel
 			;
 
 valorrel: simplevalues 										{$$ = b("simplevaluesvalorrel  ");}

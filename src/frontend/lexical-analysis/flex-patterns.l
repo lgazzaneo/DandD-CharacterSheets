@@ -167,7 +167,7 @@ dicedamage      [0-9]+[d][0-9]([\+\-][0-9]+)?
 
 {alphaval}                                  { return AlphavalPatternAction(yytext, yyleng); }
 
-{whitespace}								{ IgnoredPatternAction(yytext, yyleng); }
+{whitespace}+								{ IgnoredPatternAction(yytext, yyleng); }
 
 {endline}                                   {return EndlineAction(yytext); }
 
