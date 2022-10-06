@@ -454,8 +454,8 @@ aconditional: ifelse 		{$$ = b("ifelse");}
 			| foriter		{$$ = b("for");}
 			;
 
-ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES			{$$ = b("ifelsepadre");}
-		| IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES elseiter
+ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES					{$$ = b("ifelsepadre");}
+		| IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES elseiter		{$$ = b("ifelsepadreconhijo");}
 		;
 
 elseiter: ELSECOND OPEN_LLAVES freeendlines programacond CLOSE_LLAVES 																{$$ = b("elseitersincond");}
