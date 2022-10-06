@@ -66,7 +66,7 @@ token IgualOperacion(const char * lexeme) {
 token IntegerPatternAction(const char * lexeme, const int length) {
 	printf("Soyunnumero");
 	LogDebug("IntegerPatternAction: '%s' (length = %d).", lexeme, length);
-	yylval.integer = atoi(lexeme);
+	yylval.token = INTEGER;
 	return INTEGER;
 }
 
