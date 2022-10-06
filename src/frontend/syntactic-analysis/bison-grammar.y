@@ -289,9 +289,9 @@ programacond: trueprogram 																			{return b("programacondsinret");}
 			| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA								{return b("programacondconsoloret");}
 			;
 
-trueprogram: variableoper trueprogram 		{return b("variableoper truep");}	
-			| returnfunction trueprogram 	{return b("returnfunction truep");}	
-			| aconditional trueprogram 		{return b("aconditional truep");}	
+trueprogram: variableoper freeendlines trueprogram 		{return b("variableoper truep");}	
+			| returnfunction freeendlines trueprogram 	{return b("returnfunction truep");}	
+			| aconditional freeendlines trueprogram 		{return b("aconditional truep");}	
 			| variableoper 					{return b("variableoper");}	
 			| returnfunction 				{return b("returnfunction");}	
 			| aconditional 					{return b("aconditional");}	
@@ -456,14 +456,14 @@ condition: checkearvar AND condition 								{return b("condition and");}
 		| OPEN_PARENTHESIS condition CLOSE_PARENTHESIS  			{return b("condition parentesis");}
 		;
 
-dowhile: DOCOND OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS PUNTOCOMA freeendlines 		{return b("dowhile1");}
-		| WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES freeendlines 							{return b("while");}
+dowhile: DOCOND OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS PUNTOCOMA  				{return b("dowhile1");}
+		| WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES								{return b("while");}
 		;
 
-foriter: FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES freeendlines  	{return b("for1");}
-		| FORCOND OPEN_PARENTHESIS PUNTOCOMA condition PUNTOCOMA CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES freeendlines   					{return b("for2");}
-		| FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES freeendlines				{return b("for3");}
-		| FORCOND OPEN_PARENTHESIS PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES freeendlines				{return b("for4");}
+foriter: FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES  	{return b("for1");}
+		| FORCOND OPEN_PARENTHESIS PUNTOCOMA condition PUNTOCOMA CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES    				{return b("for2");}
+		| FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES 			{return b("for3");}
+		| FORCOND OPEN_PARENTHESIS PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES 			{return b("for4");}
 		;
 
 argfor1: asignarvar 									{return b("argfor1asignvar");}
