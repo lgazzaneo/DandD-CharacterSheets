@@ -64,10 +64,10 @@
 }
 
 // IDs y tipos de los tokens terminales generados desde Flex.
-/*%token <token> ADD
+%token <token> ADD
 %token <token> SUB
 %token <token> MUL
-%token <token> DIV*/
+%token <token> DIV
 
 %token <token> ALPHAVAL
 %token <token> YYUNDEF
@@ -78,8 +78,8 @@
 %token <token> OPEN_LLAVES
 %token <token> CLOSE_LLAVES
 
-//%token <token> OPEN_CORCHETES
-//%token <token> CLOSE_CORCHETES
+%token <token> OPEN_CORCHETES
+%token <token> CLOSE_CORCHETES
 
 %token <integer> INTEGER
 
@@ -88,7 +88,7 @@
 %token <token> ENDLINE
 %token <token> PUNTOCOMA
 
-/*%token <token>  DICEDMG
+%token <token>  DICEDMG
 
 %token <token>    CCHAR
 %token <token>    CMONS
@@ -142,10 +142,10 @@
 %token <token>    CHTPSH
 
 %token <token>    FUNCT
-%token <token>    NEW*/
+%token <token>    NEW
 %token <token>    START
 
-/*%token <token>    CHARAC
+%token <token>    CHARAC
 %token <token>   STR
 %token <token>   STRDT
 %token <token>    PARTY
@@ -170,18 +170,18 @@
 %token <token>    EQUA
 %token <token>    NOTEQ
 %token <token>    LESSER
-%token <token>    GREATER*/
+%token <token>    GREATER
 
-//%token <token>    PRINT
+%token <token>    PRINT
 %token <token>    CADENA
-//%token <token>    COMMA
+%token <token>    COMMA
 %token <token>    IGUAL
 
-//%token <token>    AND
-//%token <token>    OR
+%token <token>    AND
+%token <token>    OR
 
 %token <token>    RET
-//%token <token>    POINT
+%token <token>    POINT
 
 // Tipos de dato para los no-terminales generados desde Bison.
 %type <mainprogram> mainprogram
@@ -223,8 +223,8 @@
 %type <freeendlines> freeendlines
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
-/*%left ADD SUB
-%left MUL DIV*/
+%left ADD SUB
+%left MUL DIV
 
 // El símbolo inicial de la gramatica.
 %start mainprogram
