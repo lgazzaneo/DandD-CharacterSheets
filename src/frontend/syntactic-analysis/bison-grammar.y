@@ -480,12 +480,13 @@ foriter: FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA argfor3 
 		;
 
 argfor1: asignarvar 									{$$ = b("argfor1asignvar  ");}
-		| datatype CADENA IGUAL valorvar 		        {$$ = b("argfor1valor  ");}
+		| datatype CADENA IGUAL valorvar 				{$$ = b("argfor1valor  ");}
 		;
 
 argfor3: asignarvar 											{$$ = b("argfor3asignavar  ");}
 		| simplevalues operation valorvar 						{$$ = b("argfor3simplevalues  ");}
 		| returnfunction operation valorvar 					{$$ = b("argfor3returnfunction  ");}
 		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 			{$$ = b("argfor3parentesis      ");}
+		| CADENA IGUAL valorvar									{$$ = b("argfor3default  ");}
 		;
 %%
