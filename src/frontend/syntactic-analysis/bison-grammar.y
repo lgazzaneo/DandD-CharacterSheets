@@ -75,6 +75,7 @@
 %token <token> ALPHAVAL
 %token <token> OPEN_PARENTHESIS
 %token <token> CLOSE_PARENTHESIS
+%token <token> YYUNDEF
 
 %token <token> OPEN_LLAVES
 %token <token> CLOSE_LLAVES
@@ -485,6 +486,4 @@ argfor3: asignarvar 											{$$ = b("argfor3asignavar");}
 		| returnfunction operation valorvar 					{$$ = b("argfor3returnfunction");}
 		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 			{$$ = b("argfor3parentesis");}
 		;
-
-
 %%
