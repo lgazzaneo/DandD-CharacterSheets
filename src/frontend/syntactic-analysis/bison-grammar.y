@@ -365,6 +365,7 @@ complexvar: complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS ar
 		;
 
 complexdeclar: CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 	{$$ = b("complexvariniti");}
+			| CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS CLOSE_PARENTHESIS PUNTOCOMA					{$$ = b("complexvardeclarsinarg");}
 				;
 
 complexch: CADENA POINT complexch 																			{$$ = b("complexch2");}
@@ -381,6 +382,7 @@ asignsimplearr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL valorvar PUN
 			;
 
 asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 				{$$ = b("assigncmparr1");}
+			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS CLOSE_PARENTHESIS PUNTOCOMA							{$$ = b("assigncmparrsinarg");}
 			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexch 																				{$$ = b("assigncmparr3");}
 			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexdeclar																				{$$ = b("assigncmparr2");}
 			;
