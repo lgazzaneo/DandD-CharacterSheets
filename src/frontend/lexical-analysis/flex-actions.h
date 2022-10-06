@@ -132,7 +132,6 @@ token StringPatternAction(const char * lexeme);
 token EndlineAction(const char * lexeme);
 token Cadena(const char * lexeme);
 token DiceDamage(const char * lexeme);
-token IfElseConditionalPatternAction(const char * lexeme);
 
 // Patrón desconocido, permite abortar debido a un error de sintaxis.
 token UnknownPatternAction(const char * lexeme, const int length);

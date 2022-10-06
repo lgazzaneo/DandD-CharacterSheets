@@ -563,12 +563,6 @@ token IfConditionalPatternAction(const char * lexeme){
 	return IFCOND;
 }
 
-token IfElseConditionalPatternAction(const char * lexeme){
-	LogDebug("IfElseConditionalPatternAction: %s", lexeme);
-	yylval.token = IFELSECOND;
-	return IFELSECOND;
-}
-
 token ElseConditionalPatternAction(const char * lexeme){
 	LogDebug("ElseConditionalPatternAction: %s", lexeme);
 	yylval.token = ELSECOND;
