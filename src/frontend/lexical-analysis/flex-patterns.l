@@ -24,7 +24,7 @@ whitespace		[ \f\r\t\v]
 alphaval        [\-\+]?[0-9A-Za-z]+
 cadena          [^"']*
 comillas        ["]
-names           [a-zA-Z][a-zA-Z0-9]*
+names           [a-zA-Z][a-zA-Z0-9_\-]*
 dicedamage      [0-9]+[d][0-9]([\+\-][0-9]+)?
 
 %%
