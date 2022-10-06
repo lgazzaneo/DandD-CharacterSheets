@@ -185,6 +185,7 @@
 
 %token <token>    RET
 %token <token>    POINT
+%token <token>    IFELSECOND
 
 // Tipos de dato para los no-terminales generados desde Bison.
 %type <mainprogram> mainprogram
@@ -454,7 +455,7 @@ aconditional: ifelse 		{$$ = b("ifelse");}
 			| foriter		{$$ = b("for");}
 			;
 
-ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES elseiter		{$$ = b("ifelsepadreconhijo");}
+ifelse: IFELSECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES elseiter		{$$ = b("ifelsepadreconhijo");}
 		|IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES					{$$ = b("ifelsepadre");} 
 		;
 
