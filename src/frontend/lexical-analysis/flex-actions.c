@@ -64,6 +64,7 @@ token IgualOperacion(const char * lexeme) {
 
 
 token IntegerPatternAction(const char * lexeme, const int length) {
+	printf("Soyunnumero");
 	LogDebug("IntegerPatternAction: '%s' (length = %d).", lexeme, length);
 	yylval.integer = atoi(lexeme);
 	return INTEGER;
@@ -83,6 +84,7 @@ token DiceDamage(const char * lexeme) {
 
 
 token IntegerDataTypeAction(const char * lexeme) {
+	printf("Imanumtype");
 	LogDebug("IntegerDataTypeAction: '%s'", lexeme);
 	yylval.token = INTDT;
 	return INTDT;
@@ -188,6 +190,7 @@ token CCharAction(const char * lexeme){
 }
 
 token Cadena(const char * lexeme){
+	printf("Soyunacadena");
 	LogDebug("Cadena: %s", lexeme);
 	yylval.token = CADENA;
 	return CADENA;
