@@ -275,6 +275,7 @@ argumentosparadeclarar: truedata CADENA COMMA argumentosparadeclarar 		{return b
 						;
 
 startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines trueprogram freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 		{return b("startPrograma");}
+				| INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 							{return b("startProgramavacio");}
 				;
 
 programa: trueprogram freeendlines RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA 		{return b("programaretornocadena");}
@@ -291,7 +292,6 @@ trueprogram: variableoper trueprogram 		{return b("variableoper truep");}
 			| variableoper 					{return b("variableoper");}	
 			| returnfunction 				{return b("returnfunction");}	
 			| aconditional 					{return b("aconditional");}	
-			| /*lambda*/ 					{return b("lambda truep");}	
 			;
 
 variableoper: avariable freeendlines 		{return b("variableopertrue");}
@@ -458,15 +458,16 @@ dowhile: DOCOND OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES 
 		;
 
 foriter: FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES freeendlines  	{return b("for1");}
+		| FORCOND OPEN_PARENTHESIS PUNTOCOMA condition PUNTOCOMA CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES freeendlines   					{return b("for2");}
+		| FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES freeendlines				{return b("for3");}
+		| FORCOND OPEN_PARENTHESIS PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES freeendlines				{return b("for4");}
 		;
 
-argfor1: /*lambda*/ 									{return b("argfor1lambda");}
-		| asignarvar 									{return b("argfor1asignvar");}
+argfor1: asignarvar 									{return b("argfor1asignvar");}
 		| datatype CADENA IGUAL valorvar PUNTOCOMA 		{return b("argfor1valor");}
 		;
 
-argfor3: /*lambda*/ 											{return b("argfor3lambda");}
-		| asignarvar 											{return b("argfor3asignavar");}
+argfor3: asignarvar 											{return b("argfor3asignavar");}
 		| simplevalues operation valorvar 						{return b("argfor3simplevalues");}
 		| returnfunction operation valorvar 					{return b("argfor3returnfunction");}
 		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 			{return b("argfor3parentesis");}
