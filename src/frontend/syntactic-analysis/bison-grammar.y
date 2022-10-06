@@ -158,7 +158,7 @@
 %token <token>    MODIF
 %token <token>    SHEET
 
-%token <token>    IFCOND
+%token <ifelse>    IFCOND
 %token <token>    ELSECOND
 %token <token>    ELSIFCOND
 %token <token>    DOCOND
