@@ -361,6 +361,7 @@ operrel: GREATER		{$$ = b("greater");}
 		;
 
 complexvar: complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 	{$$ = b("complexvariniti");}
+		| complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS CLOSE_PARENTHESIS PUNTOCOMA					{$$ = b("complexvarinitisinarg");}
 		| complexdatatype CADENA PUNTOCOMA 																				{$$ = b("complexvarsininit");}
 		;
 
