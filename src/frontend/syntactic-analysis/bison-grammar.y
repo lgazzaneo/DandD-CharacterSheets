@@ -310,7 +310,7 @@ declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA 	{$$ =  b("declararvartota
 			;
 
 valorvar: subvalorvar 									{$$ =  b("subvalorvar");}
-		|simplevalues operation valorvar 				{$$ = b("opsimplevalues");}
+		| simplevalues operation valorvar 				{$$ = b("opsimplevalues");}
 		| returnfunction operation valorvar 			{$$ = b("retfunoper");}
 		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 	{$$ = b("valorvarparentesis");}
 		| CADENA operation valorvar 					{$$ = b("cadenaoperacionvalorvar");}
@@ -320,6 +320,7 @@ subvalorvar: simplevalues 		{$$ = b("simplevaluessubvalorar");}
 			| returnfunction 	{$$ = b("returnfunctionsub");}
 			| CADENA 			{$$ = b("cadenasub");}
 			| DICEDMG 			{$$ = b("dicedmgsub");}
+			| ALPHAVAL          {$$ = b("alphavalsub");}
 			;
 
 simplevalues: INTEGER 				{$$ = b("integer");}
