@@ -243,11 +243,11 @@ freeendlines: ENDLINE 						{return b("FreeLines");}
 			| /**/							{return b("FreeLines");}
 			;
 
-crearfunct: FUNCT truedata CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES  {return b("crearfunct");} 
+crearfunct: /*FUNCT truedata CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES  {return b("crearfunct");} */
 			;
 
-truedata: datatype 					{return b("truedatadatatype");}
-		| complexdatatype 			{return b("truedatacomplexdata");}
+truedata: /*datatype 					{return b("truedatadatatype");}
+		| complexdatatype 			{return b("truedatacomplexdata");}*/
 		;
 
 datatype: INTDT 					{return b("IntegerType");}
@@ -258,7 +258,7 @@ simplevalues: INTEGER 				{return b("integer");}
 			| STR 	 				{return b("string");}
 			;
 
-complexdatatype : STAT 				{return b("STAT");}
+complexdatatype : /*STAT 				{return b("STAT");}
 				| STATS 			{return b("STATS");}
 				| ITEM 				{return b("ITEM");}
 				| MOSNTER 			{return b("MOSNTER");}
@@ -267,64 +267,64 @@ complexdatatype : STAT 				{return b("STAT");}
 				| PARTY 			{return b("PARTY");}
 				| NPC 				{return b("NPC");}
 				| RAZGO 			{return b("RAZGO");}
-				| SHEET  			{return b("SHEET");}
+				| SHEET  			{return b("SHEET");}*/
 				;
 
-argumentosparadeclarar: truedata CADENA COMMA argumentosparadeclarar 		{return b("argumetosparadeclararrec");}
-						| truedata CADENA 									{return b("argumetoultimoparadeclarar");}
+argumentosparadeclarar: /*truedata CADENA COMMA argumentosparadeclarar 		{return b("argumetosparadeclararrec");}
+						| truedata CADENA 									{return b("argumetoultimoparadeclarar");}*/
 						;
 
 startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines trueprogram RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 		{return b("startPrograma");}
 				| INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 							{return b("startProgramavacio");}
 				;
 
-programa: trueprogram RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA 		{return b("programaretornocadena");}
+programa: /*trueprogram RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA 		{return b("programaretornocadena");}
 		| trueprogram RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA 	{return b("programaretornovalor");}
-		| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA								{return b("programasintrueprogram");}
+		| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA								{return b("programasintrueprogram");}*/
 		;
 
-programacond: trueprogram 																			{return b("programacondsinret");}
+programacond: /*trueprogram 																			{return b("programacondsinret");}
 			| trueprogram RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA freeendlines		{return b("programacondconretcadea");}
 			| trueprogram RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA freeendlines				{return b("programacondconretvalor");}
-			| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA freeendlines								{return b("programacondconsoloret");}
+			| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA freeendlines								{return b("programacondconsoloret");}*/
 			;
 
 trueprogram: variableoper freeendlines trueprogram 					{return b("variableoper truep");}	
-			| returnfunction PUNTOCOMA freeendlines trueprogram 	{return b("returnfunction truep");}	
-			| aconditional freeendlines trueprogram 				{return b("aconditional truep");}	
+			/*| returnfunction PUNTOCOMA freeendlines trueprogram 	{return b("returnfunction truep");}	
+			| aconditional freeendlines trueprogram 				{return b("aconditional truep");}	*/
 			| variableoper freeendlines								{return b("variableoper");}	
-			| returnfunction PUNTOCOMA freeendlines					{return b("returnfunction");}	
-			| aconditional freeendlines								{return b("aconditional");}	
+			/*| returnfunction PUNTOCOMA freeendlines					{return b("returnfunction");}	
+			| aconditional freeendlines								{return b("aconditional");}	*/
 			;
 
 variableoper: avariable 		{return b("variableopertrue");}
 ;
 
 avariable: declararvar 				{return b("declararvar");}
-		| complexvar 				{return b("complexvar");}
+		/*| complexvar 				{return b("complexvar");}
 		| complexch 				{return b("complexch");}
 		| declarearray 				{return b("declarearray");}
 		| declarearraycmpx			{return b("declarearraycmpx");}
 		| asignsimplearr 			{return b("assignsimplearray");}
 		| asigncpxarr				{return b("assigncomplexarray");}
-		| complexdeclar           	{return b("complexdeclar");}
+		| complexdeclar           	{return b("complexdeclar");}*/
 		;
 
 declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA 	{return b("declararvartotal");}
 			| datatype CADENA PUNTOCOMA 				{return b("declararvarsimple");}
 			;
 
-valorvar: simplevalues operation valorvar 				{return b("opsimplevalues");}
+valorvar: /*simplevalues operation valorvar 				{return b("opsimplevalues");}
 		| returnfunction operation valorvar 			{return b("retfunoper");}
 		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 	{return b("valorvarparentesis");}
-		| subvalorvar 									{return b("subvalorvar");}
-		| CADENA operation valorvar 					{return b("cadenaoperacionvalorvar");}
+		| */subvalorvar 									{return b("subvalorvar");}/*
+		| CADENA operation valorvar 					{return b("cadenaoperacionvalorvar");}*/
 		;
 
 subvalorvar: simplevalues 		{return b("simplevaluessubvalorar");}
-			| returnfunction 	{return b("returnfunctionsub");}
+			/*| returnfunction 	{return b("returnfunctionsub");}
 			| CADENA 			{return b("cadenasub");}
-			| DICEDMG 			{return b("dicedmgsub");}
+			| DICEDMG 			{return b("dicedmgsub");}*/
 			;
 
 operation: ADD 				{return b("suma");}
