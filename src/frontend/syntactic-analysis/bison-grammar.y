@@ -301,7 +301,6 @@ variableoper: avariable 		{return b("variableopertrue");}
 ;
 
 avariable: declararvar 				{return b("declararvar");}
-		| asignarvar 				{return b("asignarvar");}
 		| complexvar 				{return b("complexvar");}
 		| complexch 				{return b("complexch");}
 		| declarearray 				{return b("declarearray");}
