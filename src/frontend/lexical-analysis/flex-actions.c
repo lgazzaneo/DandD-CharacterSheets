@@ -64,7 +64,6 @@ token IgualOperacion(const char * lexeme) {
 
 
 token IntegerPatternAction(const char * lexeme, const int length) {
-	printf("Soyunnumero");
 	LogDebug("IntegerPatternAction: '%s' (length = %d).", lexeme, length);
 	yylval.token = INTEGER;
 	return INTEGER;
@@ -84,7 +83,6 @@ token DiceDamage(const char * lexeme) {
 
 
 token IntegerDataTypeAction(const char * lexeme) {
-	printf("Imanumtype");
 	LogDebug("IntegerDataTypeAction: '%s'", lexeme);
 	yylval.token = INTDT;
 	return INTDT;
@@ -157,7 +155,6 @@ token SubtractionOperatorPatternAction(const char * lexeme) {
 }
 
 token UnknownPatternAction(const char * lexeme, const int length) {
-	printf("Holamoriste");
 	LogDebug("UnknownPatternAction: '%s' (length = %d).", lexeme, length);
 	yylval.token = YYUNDEF;
 	// Al emitir este token, el compilador aborta la ejecución.
@@ -172,7 +169,6 @@ token PuntoComa(const char * lexeme){
 
 token EndlineAction(const char * lexeme){
 	LogDebug("EndlineAction");
-	printf("Endlines");
 	yylval.token = ENDLINE;
 	return ENDLINE;
 }
@@ -190,7 +186,6 @@ token CCharAction(const char * lexeme){
 }
 
 token Cadena(const char * lexeme){
-	printf("Soyunacadena");
 	LogDebug("Cadena: %s", lexeme);
 	yylval.token = CADENA;
 	return CADENA;
@@ -568,6 +563,12 @@ token IfConditionalPatternAction(const char * lexeme){
 	return IFCOND;
 }
 
+token IfElseConditionalPatternAction(const char * lexeme){
+	LogDebug("IfElseConditionalPatternAction: %s", lexeme);
+	yylval.token = IFELSECOND;
+	return IFELSECOND;
+}
+
 token ElseConditionalPatternAction(const char * lexeme){
 	LogDebug("ElseConditionalPatternAction: %s", lexeme);
 	yylval.token = ELSECOND;
@@ -641,7 +642,6 @@ token NotEqualsComparativeAction(const char * lexeme){
 }
 
 void IgnoredPatternAction(const char * lexeme, const int length) {
-	printf("Holasoymierdaquenoimporta");
 	LogDebug("IgnoredPatternAction: '%s' (length = %d).", lexeme, length);
 	// Como no debe hacer nada con el patrón, solo se loguea en consola.
 }
