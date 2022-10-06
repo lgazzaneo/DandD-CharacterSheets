@@ -238,9 +238,9 @@ aux: startprograma 					{return b("Aux");}
 	| crearfunct freeendlines aux 	{return b("Crearnuevafunction");}
 	;
 
-freeendlines: ENDLINE 				{return b("FreeLines");}
-			| ENDLINE freeendlines 	{return b("FreeLines");}
-			| /**/					{return b("FreeLines");}
+freeendlines: ENDLINE 						{return b("FreeLines");}
+			| ENDLINE ENDLINE freeendlines 	{return b("FreeLines");}
+			| /**/							{return b("FreeLines");}
 			;
 
 crearfunct: FUNCT truedata CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES  {return b("crearfunct");} 
