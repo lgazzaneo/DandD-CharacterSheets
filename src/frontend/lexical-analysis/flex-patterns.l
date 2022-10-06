@@ -21,10 +21,10 @@
 digit			[0-9]
 endline			[\n]
 whitespace		[ \f\r\t\v]
-alphaval        [-+]?[0-9A-Za-z]+
+alphaval        [\-\+]?[0-9A-Za-z]+
 cadena          [^"']*
 comillas        ["]
-names           [A-Za-z][A-Za-z0-9_]*
+names           [A-Za-z][A-Za-z0-9]*
 dicedamage      [0-9]+[d][0-9]([+-][0-9]+)?
 
 %%
