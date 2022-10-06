@@ -235,7 +235,7 @@ mainprogram: aux					{return a("Start");}
 			;
 
 aux: startprograma 					{return b("Aux");}
-	| crearfunct freeendlines aux 	{return b("Crearnuevafunction");}
+	/*| crearfunct freeendlines aux 	{return b("Crearnuevafunction");}*/
 	;
 
 freeendlines: ENDLINE 						{return b("FreeLines");}
@@ -243,10 +243,10 @@ freeendlines: ENDLINE 						{return b("FreeLines");}
 			| /**/							{return b("FreeLines");}
 			;
 
-crearfunct: /*FUNCT truedata CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES  {return b("crearfunct");} */
-			;
+/*crearfunct: FUNCT truedata CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES  {return b("crearfunct");} 
+			;*/
 
-truedata: /*datatype 					{return b("truedatadatatype");}
+/*truedata: datatype 					{return b("truedatadatatype");}
 		| complexdatatype 			{return b("truedatacomplexdata");}*/
 		;
 
@@ -258,7 +258,7 @@ simplevalues: INTEGER 				{return b("integer");}
 			| STR 	 				{return b("string");}
 			;
 
-complexdatatype : /*STAT 				{return b("STAT");}
+/*complexdatatype : /*STAT 				{return b("STAT");}
 				| STATS 			{return b("STATS");}
 				| ITEM 				{return b("ITEM");}
 				| MOSNTER 			{return b("MOSNTER");}
@@ -267,32 +267,32 @@ complexdatatype : /*STAT 				{return b("STAT");}
 				| PARTY 			{return b("PARTY");}
 				| NPC 				{return b("NPC");}
 				| RAZGO 			{return b("RAZGO");}
-				| SHEET  			{return b("SHEET");}*/
-				;
+				| SHEET  			{return b("SHEET");}
+				;*/
 
-argumentosparadeclarar: /*truedata CADENA COMMA argumentosparadeclarar 		{return b("argumetosparadeclararrec");}
-						| truedata CADENA 									{return b("argumetoultimoparadeclarar");}*/
-						;
+/*argumentosparadeclarar: truedata CADENA COMMA argumentosparadeclarar 		{return b("argumetosparadeclararrec");}
+						| truedata CADENA 									{return b("argumetoultimoparadeclarar");}
+						;*/
 
 startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines trueprogram RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 		{return b("startPrograma");}
 				| INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 							{return b("startProgramavacio");}
 				;
 
-programa: /*trueprogram RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA 		{return b("programaretornocadena");}
+/*programa: trueprogram RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA 		{return b("programaretornocadena");}
 		| trueprogram RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA 	{return b("programaretornovalor");}
-		| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA								{return b("programasintrueprogram");}*/
-		;
+		| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA								{return b("programasintrueprogram");}
+		;*/
 
-programacond: /*trueprogram 																			{return b("programacondsinret");}
+/*programacond: trueprogram 																			{return b("programacondsinret");}
 			| trueprogram RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA freeendlines		{return b("programacondconretcadea");}
 			| trueprogram RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA freeendlines				{return b("programacondconretvalor");}
-			| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA freeendlines								{return b("programacondconsoloret");}*/
-			;
+			| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA freeendlines								{return b("programacondconsoloret");}
+			;*/
 
 trueprogram: variableoper freeendlines trueprogram 					{return b("variableoper truep");}	
+			| variableoper freeendlines								{return b("variableoper");}	
 			/*| returnfunction PUNTOCOMA freeendlines trueprogram 	{return b("returnfunction truep");}	
 			| aconditional freeendlines trueprogram 				{return b("aconditional truep");}	*/
-			| variableoper freeendlines								{return b("variableoper");}	
 			/*| returnfunction PUNTOCOMA freeendlines					{return b("returnfunction");}	
 			| aconditional freeendlines								{return b("aconditional");}	*/
 			;
@@ -314,10 +314,10 @@ declararvar: datatype CADENA IGUAL valorvar PUNTOCOMA 	{return b("declararvartot
 			| datatype CADENA PUNTOCOMA 				{return b("declararvarsimple");}
 			;
 
-valorvar: /*simplevalues operation valorvar 				{return b("opsimplevalues");}
+valorvar: subvalorvar 									{return b("subvalorvar");}
+		/*|simplevalues operation valorvar 				{return b("opsimplevalues");}
 		| returnfunction operation valorvar 			{return b("retfunoper");}
 		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 	{return b("valorvarparentesis");}
-		| */subvalorvar 									{return b("subvalorvar");}/*
 		| CADENA operation valorvar 					{return b("cadenaoperacionvalorvar");}*/
 		;
 
@@ -327,64 +327,65 @@ subvalorvar: simplevalues 		{return b("simplevaluessubvalorar");}
 			| DICEDMG 			{return b("dicedmgsub");}*/
 			;
 
-operation: ADD 				{return b("suma");}
+/*operation: ADD 				{return b("suma");}
 		| SUB 				{return b("resta");}
 		| MUL 				{return b("multiplicacion");}
 		| DIV    			{return b("division");}
-		;
+		;*/
 
-asignarvar: CADENA IGUAL valorvar PUNTOCOMA 	{return b("aignarvarcadenavalor");}
-		;
+/*asignarvar: CADENA IGUAL valorvar PUNTOCOMA 	{return b("aignarvarcadenavalor");}
+		;*/
 
-checkearvar: valorrel operrel valorrel 		{return b("checkarvar");}
-			;
+/*checkearvar: valorrel operrel valorrel 		{return b("checkarvar");}
+			;*/
 
-valorrel: simplevalues 										{return b("simplevaluesvalorrel");}
+/*valorrel: simplevalues 										{return b("simplevaluesvalorrel");}
 		| returnfunction 									{return b("returnfuncvalorrel");}
 		| OPEN_PARENTHESIS asignarvar CLOSE_PARENTHESIS 	{return b("parentesisvalorrel");}
-		;
+		;*/
 
-operrel: GREATER		{return b("greater");} 
+/*operrel: GREATER		{return b("greater");} 
 		| LESSER 		{return b("lesser");}
 		| GREATorEQ 	{return b("greateroreq");}
 		| LESSorEQ 		{return b("lesseroreq");}
 		| EQUA 			{return b("equals");}
 		| NOTEQ  		{return b("noteq");}
-		;
+		;*/
 
-complexvar: complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 	{return b("complexvariniti");}
+/*complexvar: complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 	{return b("complexvariniti");}
 		| complexdatatype CADENA PUNTOCOMA 																				{return b("complexvarsininit");}
-		;
+		;*/
 
-complexdeclar: CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 	{return b("complexvariniti");}
+/*complexdeclar: CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 	{return b("complexvariniti");}
+				;*/
 
-complexch: CADENA POINT complexch 																			{return b("complexch2");}
+/*complexch: CADENA POINT complexch 																			{return b("complexch2");}
 		| asignarvar 																						{return b("complexch3");}
-		;
+		;*/
 
-declarearray: datatype CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW datatype OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA 		{return b("declarearray");}
-				;
+/*declarearray: datatype CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW datatype OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA 		{return b("declarearray");}
+				;*/
 
-declarearraycmpx: complexdatatype CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA 		{return b("declarearraycmpx");}
-				;
+/*declarearraycmpx: complexdatatype CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA 		{return b("declarearraycmpx");}
+				;*/
 
-asignsimplearr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL valorvar PUNTOCOMA 		{return b("assignsimplarrvalor");}
-			;
+/*asignsimplearr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL valorvar PUNTOCOMA 		{return b("assignsimplarrvalor");}
+			;*/
 
-asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 				{return b("assigncmparr1");}
+/*asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 				{return b("assigncmparr1");}
 			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexch 																				{return b("assigncmparr3");}
 			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexdeclar																				{return b("assigncmparr2");}
-			;
+			;*/
 
-returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS  						{return b("returnfunct3");}
+/*returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS  						{return b("returnfunct3");}
 			| functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS 					{return b("retunrfunct4");}
-			;
+			;*/
 
-argumentos: valorvar 						{return b("argvalor1");}
+/*argumentos: valorvar 						{return b("argvalor1");}
 		| valorvar COMMA argumentos		{return b("argvalor2omas");}
-		;
+		;*/
 
-functionnames: PRINT 			{return b("f1");}
+/*functionnames: PRINT 			{return b("f1");}
 			| CCHAR 			{return b("f2");}
 			| CMONS 			{return b("f3");}
 			| CRACE 			{return b("f4");}
@@ -434,46 +435,46 @@ functionnames: PRINT 			{return b("f1");}
 			| CHTPSH 			{return b("f4");}
 			| CHKSTATS 			{return b("f4");}
 			| CHKSTAT 			{return b("f4");}
-			;
+			;*/
 
-aconditional: ifelse 		{return b("ifelse");}
+/*aconditional: ifelse 		{return b("ifelse");}
 			| dowhile 		{return b("dowhile");}
 			| foriter		{return b("for");}
-			;
+			;*/
 
-ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES			{return b("ifelsepadre");}
+/*ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES			{return b("ifelsepadre");}
 		| IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES elseiter
-		;
+		;*/
 
-elseiter: ELSECOND OPEN_LLAVES freeendlines programacond CLOSE_LLAVES 																{return b("elseitersincond");}
-		| ELSIFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES elseiter			{return b("elseiterconcond");}
-		;
+//elseiter: ELSECOND OPEN_LLAVES freeendlines programacond CLOSE_LLAVES 																{return b("elseitersincond");}
+//		| ELSIFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES elseiter			{return b("elseiterconcond");}
+//		;
 
-condition: checkearvar AND condition 								{return b("condition and");}
-		| checkearvar OR condition 									{return b("condition or");}
-		| checkearvar 												{return b("condition check");}
-		| OPEN_PARENTHESIS condition CLOSE_PARENTHESIS  			{return b("condition parentesis");}
-		;
+//condition: checkearvar AND condition 								{return b("condition and");}
+	//	| checkearvar OR condition 									{return b("condition or");}
+	//	| checkearvar 												{return b("condition check");}
+	//	| OPEN_PARENTHESIS condition CLOSE_PARENTHESIS  			{return b("condition parentesis");}
+	//	;
 
-dowhile: DOCOND OPEN_LLAVES freeendlines programacond  CLOSE_LLAVES WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS PUNTOCOMA  				{return b("dowhile1");}
-		| WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond  CLOSE_LLAVES								{return b("while");}
-		;
+//dowhile: DOCOND OPEN_LLAVES freeendlines programacond  CLOSE_LLAVES WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS PUNTOCOMA  				{return b("dowhile1");}
+		//| WHILECOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond  CLOSE_LLAVES								{return b("while");}
+		//;
 
-foriter: FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES  	{return b("for1");}
-		| FORCOND OPEN_PARENTHESIS PUNTOCOMA condition PUNTOCOMA CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES    				{return b("for2");}
-		| FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES 			{return b("for3");}
-		| FORCOND OPEN_PARENTHESIS PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES 			{return b("for4");}
-		;
+//foriter: FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES  	{return b("for1");}
+		//| FORCOND OPEN_PARENTHESIS PUNTOCOMA condition PUNTOCOMA CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES    				{return b("for2");}
+		//| FORCOND OPEN_PARENTHESIS argfor1 PUNTOCOMA condition PUNTOCOMA CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES 			{return b("for3");}
+		//| FORCOND OPEN_PARENTHESIS PUNTOCOMA condition PUNTOCOMA argfor3 CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond CLOSE_LLAVES 			{return b("for4");}
+		//;
 
-argfor1: asignarvar 									{return b("argfor1asignvar");}
-		| datatype CADENA IGUAL valorvar PUNTOCOMA 		{return b("argfor1valor");}
-		;
+//argfor1: asignarvar 									{return b("argfor1asignvar");}
+		//| datatype CADENA IGUAL valorvar PUNTOCOMA 		{return b("argfor1valor");}
+		//;
 
-argfor3: asignarvar 											{return b("argfor3asignavar");}
-		| simplevalues operation valorvar 						{return b("argfor3simplevalues");}
-		| returnfunction operation valorvar 					{return b("argfor3returnfunction");}
-		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 			{return b("argfor3parentesis");}
-		;
+//argfor3: asignarvar 											{return b("argfor3asignavar");}
+		//| simplevalues operation valorvar 						{return b("argfor3simplevalues");}
+		//| returnfunction operation valorvar 					{return b("argfor3returnfunction");}
+		//| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 			{return b("argfor3parentesis");}
+		//;
 
 
 %%
