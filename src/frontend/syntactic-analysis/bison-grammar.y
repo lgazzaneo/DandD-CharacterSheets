@@ -446,7 +446,7 @@ ifelse: IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendl
 		| IFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES elseiter
 		;
 
-elseiter: | ELSECOND OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES 																{return b("elseitersincond");}
+elseiter: ELSECOND OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES 																{return b("elseitersincond");}
 		| ELSIFCOND OPEN_PARENTHESIS condition CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programacond freeendlines CLOSE_LLAVES elseiter			{return b("elseiterconcond");}
 		;
 
