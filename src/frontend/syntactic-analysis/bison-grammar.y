@@ -289,12 +289,12 @@ programacond: trueprogram 																			{return b("programacondsinret");}
 			| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA freeendlines								{return b("programacondconsoloret");}
 			;
 
-trueprogram: variableoper freeendlines trueprogram 		{return b("variableoper truep");}	
-			| returnfunction freeendlines trueprogram 	{return b("returnfunction truep");}	
-			| aconditional freeendlines trueprogram 		{return b("aconditional truep");}	
-			| variableoper freeendlines			{return b("variableoper");}	
-			| returnfunction freeendlines				{return b("returnfunction");}	
-			| aconditional freeendlines			{return b("aconditional");}	
+trueprogram: variableoper freeendlines trueprogram 					{return b("variableoper truep");}	
+			| returnfunction PUNTOCOMA freeendlines trueprogram 	{return b("returnfunction truep");}	
+			| aconditional freeendlines trueprogram 				{return b("aconditional truep");}	
+			| variableoper freeendlines								{return b("variableoper");}	
+			| returnfunction PUNTOCOMA freeendlines					{return b("returnfunction");}	
+			| aconditional freeendlines								{return b("aconditional");}	
 			;
 
 variableoper: avariable 		{return b("variableopertrue");}
@@ -357,8 +357,7 @@ complexvar: complexdatatype CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS ar
 		| CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA						{return b("complexvarinitsindecl");}
 		;
 
-complexch: CADENA IGUAL CADENA PUNTOCOMA 																	{return b("complexch1");}
-		| CADENA POINT complexch 																			{return b("complexch2");}
+complexch: CADENA POINT complexch 																			{return b("complexch2");}
 		| CADENA IGUAL valorvar PUNTOCOMA 																	{return b("complexch3");}
 		| CADENA IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 		{return b("complexch4");}
 		;
@@ -378,9 +377,7 @@ asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdata
 			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexch 																				{return b("assigncmparr3");}
 			;
 
-returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA  			{return b("retunrfunct1");}
-			| functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 		{return b("retunrnfunct2");}
-			| CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS  						{return b("returnfunct3");}
+returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS  						{return b("returnfunct3");}
 			| functionnames OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS 					{return b("retunrfunct4");}
 			;
 
