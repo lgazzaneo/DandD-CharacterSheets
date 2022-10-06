@@ -274,7 +274,7 @@ argumentosparadeclarar: truedata CADENA COMMA argumentosparadeclarar 		{return b
 						| truedata CADENA 									{return b("argumetoultimoparadeclarar");}
 						;
 
-startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines trueprogram freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 		{return b("startPrograma");}
+startprograma: INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines trueprogram RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 		{return b("startPrograma");}
 				| INTDT START OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_LLAVES freeendlines RET OPEN_PARENTHESIS INTEGER CLOSE_PARENTHESIS PUNTOCOMA freeendlines CLOSE_LLAVES 							{return b("startProgramavacio");}
 				;
 
@@ -292,9 +292,9 @@ programacond: trueprogram 																			{return b("programacondsinret");}
 trueprogram: variableoper freeendlines trueprogram 		{return b("variableoper truep");}	
 			| returnfunction freeendlines trueprogram 	{return b("returnfunction truep");}	
 			| aconditional freeendlines trueprogram 		{return b("aconditional truep");}	
-			| variableoper 					{return b("variableoper");}	
-			| returnfunction 				{return b("returnfunction");}	
-			| aconditional 					{return b("aconditional");}	
+			| variableoper freeendlines			{return b("variableoper");}	
+			| returnfunction freeendlines				{return b("returnfunction");}	
+			| aconditional freeendlines			{return b("aconditional");}	
 			;
 
 variableoper: avariable 		{return b("variableopertrue");}
