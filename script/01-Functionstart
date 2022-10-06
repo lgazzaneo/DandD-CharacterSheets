@@ -1,4 +1,0 @@
-Integer start(){
-    Integer alpha = 23;
-    return(0);
-}
