@@ -59,8 +59,7 @@
 	int freeendlines;
 
 	// Terminales.
-	token token;
-	int integer;
+	int token;
 }
 
 // IDs y tipos de los tokens terminales generados desde Flex.
@@ -81,7 +80,7 @@
 %token <token> OPEN_CORCHETES
 %token <token> CLOSE_CORCHETES
 
-%token <integer> INTEGER
+%token <token> INTEGER
 
 %token <token> INTDT
 
