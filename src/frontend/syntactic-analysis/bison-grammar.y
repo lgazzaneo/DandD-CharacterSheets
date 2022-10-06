@@ -61,6 +61,7 @@
 	int programacond;
 	int complexdeclar;
 	int declarearraycmpx;
+	int arrayvalues;
 
 	// Terminales.
 	int token;
@@ -227,6 +228,7 @@
 %type <complexdeclar> complexdeclar
 %type <declarearraycmpx> declarearraycmpx
 %type <aux> aux
+%type <arrayvalues> arrayvalues
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
 %left ADD SUB
@@ -326,6 +328,10 @@ simplevalues: INTEGER 				{$$ = b("integer  ");}
 			| STR 	 				{$$ = b("string  ");}
 			;
 
+arrayvalues: INTEGER				{$$ = b("integerforarrays  ");}
+			| CADENA				{$$ = b("cadenaforarrays  ");}
+			;
+
 datatype: INTDT 					{$$ = b("IntegerType  ");}
 		| STRDT  					{$$ = b("StringType  ");}
 		;
@@ -381,13 +387,13 @@ declarearray: datatype CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW datatype 
 declarearraycmpx: complexdatatype CADENA OPEN_CORCHETES CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_CORCHETES INTEGER CLOSE_CORCHETES PUNTOCOMA 		{$$ = b("declarearraycmpx  ");}
 				;
 
-asignsimplearr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL valorvar PUNTOCOMA 		{$$ = b("assignsimplarrvalor  ");}
+asignsimplearr: CADENA OPEN_CORCHETES arrayvalues CLOSE_CORCHETES IGUAL valorvar PUNTOCOMA 		{$$ = b("assignsimplarrvalor  ");}
 			;
 
-asigncpxarr: CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 				{$$ = b("assigncmparr1  ");}
-			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS CLOSE_PARENTHESIS PUNTOCOMA							{$$ = b("assigncmparrsinarg  ");}
-			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexch 																				{$$ = b("assigncmparr3  ");}
-			| CADENA OPEN_CORCHETES INTEGER CLOSE_CORCHETES POINT complexdeclar																				{$$ = b("assigncmparr2  ");}
+asigncpxarr: CADENA OPEN_CORCHETES arrayvalues CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS PUNTOCOMA 				{$$ = b("assigncmparr1  ");}
+			| CADENA OPEN_CORCHETES arrayvalues CLOSE_CORCHETES IGUAL NEW complexdatatype OPEN_PARENTHESIS CLOSE_PARENTHESIS PUNTOCOMA							{$$ = b("assigncmparrsinarg  ");}
+			| CADENA OPEN_CORCHETES arrayvalues CLOSE_CORCHETES POINT complexch 																				{$$ = b("assigncmparr3  ");}
+			| CADENA OPEN_CORCHETES arrayvalues CLOSE_CORCHETES POINT complexdeclar																				{$$ = b("assigncmparr2  ");}
 			;
 
 returnfunction: CADENA OPEN_PARENTHESIS argumentos CLOSE_PARENTHESIS  						{$$ = b("returnfunct3  ");}
