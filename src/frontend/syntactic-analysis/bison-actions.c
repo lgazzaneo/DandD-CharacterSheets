@@ -94,6 +94,6 @@ int a(char * string){
 }
 
 int b(char * str){
-	printf(strcat(str, "/t"));
+	printf(str);
 	return 0;
 }
