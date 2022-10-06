@@ -284,8 +284,8 @@ programa: trueprogram freeendlines RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS
 		;
 
 programacond: trueprogram 																			{return b("programacondsinret");}
-			| trueprogram freeendlines RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA 		{return b("programacondconretcadea");}
-			| trueprogram freeendlines RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA 	{return b("programacondconretvalor");}
+			| trueprogram RET OPEN_PARENTHESIS CADENA CLOSE_PARENTHESIS PUNTOCOMA 		{return b("programacondconretcadea");}
+			| trueprogram RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA 	{return b("programacondconretvalor");}
 			| RET OPEN_PARENTHESIS valorrel CLOSE_PARENTHESIS PUNTOCOMA								{return b("programacondconsoloret");}
 			;
 
