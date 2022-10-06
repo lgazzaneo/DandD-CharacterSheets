@@ -1,4 +1,4 @@
 Integer start ( ){
-    Integer alpha = 23;
+    Integer Nkge  = 23;
     return(0);
 }
