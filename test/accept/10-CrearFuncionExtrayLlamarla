@@ -1,4 +1,4 @@
-Integer devuelvo7(Interger a){
+function Integer devuelvo7(Integer a){
     return(7);
 }
 
