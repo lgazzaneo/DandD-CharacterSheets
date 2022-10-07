@@ -76,7 +76,6 @@
 %token <token> ALPHAVAL
 %token <token> OPEN_PARENTHESIS
 %token <token> CLOSE_PARENTHESIS
-%token <token> YYUNDEF
 
 %token <token> OPEN_LLAVES
 %token <token> CLOSE_LLAVES
