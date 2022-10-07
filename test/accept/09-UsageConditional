@@ -3,7 +3,7 @@ Integer start(){
     
     do{
         print("%d", i);
-        i = i + 2
+        i = i + 2;
     }while(i < 10);
 
     return(0);

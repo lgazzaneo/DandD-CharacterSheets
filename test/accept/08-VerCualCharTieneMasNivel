@@ -5,7 +5,7 @@ Integer start(){
     TheOldOnesScion = AddStats(15, 10, 9, 17, 15, 15, 19);
     changeLevel(Legolas, 3);
     if(checkLevel(Legolas) > checkLevel(TheOldOnesScion)){
-        print("Legolas tiene mayor nivel")
+        print("Legolas tiene mayor nivel");
     }
     return(0);
 }
