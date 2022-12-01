@@ -72,7 +72,7 @@ token IntegerPatternAction(const char * lexeme, const int length) {
     // (no debería llamar a free(.), si “text” debe ser utilizado en Bison):
     free(text);
 
-	yylval.token = INTEGER;
+	//yylval.token = INTEGER;
 	return INTEGER;
 }
 
@@ -128,7 +128,7 @@ token DiceDamage(const char * lexeme, const int length) {
     // Liberar la memoria, ya que solo nos interesa el resultado de atoi(.)
     // (no debería llamar a free(.), si “text” debe ser utilizado en Bison):
     free(text);
-	yylval.token = DICEDMG;
+	//yylval.token = DICEDMG;
 	return DICEDMG;
 }
 
@@ -146,7 +146,7 @@ token StringPatternAction(const char * lexeme, const int length) {
 	strcpy(aux3->text, lexeme);
 	aux3->len = length;
 	yylval.text = aux3;
-	yylval.token = STR;
+	//yylval.token = STR;
 	return STR;
 }
 
