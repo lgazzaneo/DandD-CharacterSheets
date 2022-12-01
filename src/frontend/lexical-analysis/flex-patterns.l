@@ -25,7 +25,7 @@ alphaval        [\-\+]?[0-9A-Za-z]+
 cadena          [^"']*
 comillas        ["]
 names           [a-zA-Z][a-zA-Z0-9_\-]*
-dicedamage      [0-9]+[d][0-9]([\+\-][0-9]+)?
+dicedamage      [0-9]+[d][0-9]+([\+\-][0-9]+)?
 
 %%
 
@@ -39,7 +39,6 @@ dicedamage      [0-9]+[d][0-9]([\+\-][0-9]+)?
 "*"											{ return MultiplicationOperatorPatternAction(yytext); }
 "/"											{ return DivisionOperatorPatternAction(yytext); }
 
-"="                                         {return IgualOperacion(yytext);}
 
 "("										    { return OpenParenthesisPatternAction(yytext); }
 ")"											{ return CloseParenthesisPatternAction(yytext); }
@@ -54,7 +53,6 @@ dicedamage      [0-9]+[d][0-9]([\+\-][0-9]+)?
 
 ","                                         {return CommaAction(yytext);}
 
-"."                                         {return PointAction(yytext);}
 
 ":"                                         {return DosPuntosAction(yytext);}
 
@@ -91,7 +89,6 @@ dicedamage      [0-9]+[d][0-9]([\+\-][0-9]+)?
 "new"                                       {return NewPatternAction(yytext); }
 "start"                                     {return StartPatternAction(yytext); }
 
-"Party"                                     {return PartyTypePatternAction(yytext); }
 "Character"                                 {return CharcterTypePatternAction(yytext); }
 "Item"                                      {return ItemTypePatternAction(yytext); }                                   
 "String"                                    {return StringTypeDataAction(yytext);}
@@ -105,10 +102,10 @@ dicedamage      [0-9]+[d][0-9]([\+\-][0-9]+)?
 
 {digit}+									{ return IntegerPatternAction(yytext, yyleng); }
 
-{dicedamage}                                {return DiceDamage(yytext);}
+{dicedamage}                                {return DiceDamage(yytext, yyleng);}
 
 {comillas}                                  {BEGIN(STRING);}
-<STRING>{cadena}                            {return StringPatternAction(yytext); }
+<STRING>{cadena}                            {return StringPatternAction(yytext, yyleng);}
 <STRING>{comillas}                          {BEGIN(INITIAL);}       
 
 {names}                                     { return Cadena(yytext); }

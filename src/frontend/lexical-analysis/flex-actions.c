@@ -1,6 +1,8 @@
 #include "../../backend/support/logger.h"
 #include "flex-actions.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 /**
  * Implementación de "flex-actions.h".
@@ -58,6 +60,16 @@ token DivisionOperatorPatternAction(const char * lexeme) {
 
 token IntegerPatternAction(const char * lexeme, const int length) {
 	LogDebug("IntegerPatternAction: '%s' (length = %d).", lexeme, length);
+	// Reservar memoria para el lexema identificado y el \0 final:
+    char * text = (char *) calloc(length + 1, sizeof(char));
+    // Copiar el lexema y \0 para evitar segmentation-faults:
+    strncpy(text, lexeme, length);
+    // Convertir el lexema en un entero de verdad:
+    yylval.value->value = atoi(text);
+    // Liberar la memoria, ya que solo nos interesa el resultado de atoi(.)
+    // (no debería llamar a free(.), si “text” debe ser utilizado en Bison):
+    free(text);
+
 	yylval.token = INTEGER;
 	return INTEGER;
 }
@@ -68,8 +80,50 @@ token AlphavalPatternAction(const char * lexeme, const int length) {
 	return ALPHAVAL;
 }
 
-token DiceDamage(const char * lexeme) {
+token DiceDamage(const char * lexeme, const int length) {
 	LogDebug("DiceDamage: '%s'", lexeme);
+	// Reservar memoria para el lexema identificado y el \0 final:
+    char * text = (char *) calloc(length + 1, sizeof(char));
+    // Copiar el lexema y \0 para evitar segmentation-faults:
+    strncpy(text, lexeme, length);
+    
+	int i = 0;
+	int cambio = 1;
+	while (text[i] != 'd'){
+		i++;
+	}
+	int j = i + 1;
+	while (text[j] != 0 || text[j] != '+' || text[j] != '-'){
+		j++;
+	}
+	if (text[j] == '+' || text[j] != '-'){
+		if(text[j] == '-')
+			cambio = -1;
+		int x = j + 1;
+		while (text[x] != 0){
+			x++;
+		}
+		x = x - j - 1;
+	}
+	j = j - i - 1;
+	
+	char delimitadores[] = "+-d ";
+	char * tok;
+
+	tok = strtok(text, delimitadores);
+	if (tok != NULL)
+		yylval.damage->cantDice = atoi(tok);
+	tok = strtok(NULL, delimitadores);
+	if(tok != NULL)
+		yylval.damage->typeofdice = atoi(tok);
+	tok = strtok(NULL, delimitadores);
+	if(tok != NULL)
+		yylval.damage->modif = cambio * atoi(tok);
+
+
+    // Liberar la memoria, ya que solo nos interesa el resultado de atoi(.)
+    // (no debería llamar a free(.), si “text” debe ser utilizado en Bison):
+    free(text);
 	yylval.token = DICEDMG;
 	return DICEDMG;
 }
@@ -82,8 +136,10 @@ token IntegerDataTypeAction(const char * lexeme) {
 }
 
 
-token StringPatternAction(const char * lexeme) {
+token StringPatternAction(const char * lexeme, const int length) {
 	LogDebug("StringPatternAction: '%s'", lexeme);
+	strcpy(yylval.text->text, lexeme);
+	yylval.text->len = length;
 	yylval.token = STR;
 	return STR;
 }

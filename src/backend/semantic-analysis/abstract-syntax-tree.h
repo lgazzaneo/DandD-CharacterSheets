@@ -107,6 +107,8 @@ typedef struct{
 	ItemDescription * ItDescript;
 }ItemBody;
 
+//
+
 typedef struct{
 	objecttext * Itemname;
 	objecttext * Itemdescription;
@@ -126,6 +128,8 @@ typedef struct{
 typedef struct{
 	Merchant * merchant;
 }NPCBody;
+
+//
 
 typedef struct{
 	objecttext * splname;
@@ -308,6 +312,8 @@ typedef struct{
 	restofbodyCharac * restofbody;
 }Body;
 
+//
+
 typedef struct{
 	objecttext * typeofMons;
 }TypeofMonster;
@@ -321,6 +327,7 @@ struct ListofAttacks{
 	objecttext * nameofAttack;
 	objecttext * attackDesc;
 	DiceDmg * attackDamage;
+	IsRecursive type;
 };
 
 typedef struct{
@@ -331,6 +338,8 @@ typedef struct{
 	MonsterAttacks * attacksMonst;
 	Spellbook * spellbook;	
 }MonsterBody;
+
+//
 
 typedef enum{
 	ZEROENDLINES,
@@ -350,6 +359,7 @@ typedef struct{
 	MonsterBody * mbody;
 	ItemBody * itembody;
 	NPCBody * npcbody;
+	Constant * id;
 }Sheet;
 
 typedef struct{

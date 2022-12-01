@@ -31,7 +31,7 @@ token IntegerPatternAction(const char * lexeme, const int length);
 token MultiplicationOperatorPatternAction(const char * lexeme);
 token OpenParenthesisPatternAction(const char * lexeme);
 token SubtractionOperatorPatternAction(const char * lexeme);
-token IgualOperacion(const char * lexeme);
+//token IgualOperacion(const char * lexeme);
 token OpenLlavesPatternAction(const char * lexeme);
 token CloseLlavesPatternAction(const char * lexeme);
 token CloseParenthesisPatternAction(const char * lexeme);
@@ -39,9 +39,9 @@ token OpenCorchetesPatternAction(const char * lexeme);
 token CloseCorchetesPatternAction(const char * lexeme);
 token PuntoComa(const char * lexeme);
 token CommaAction(const char * lexeme);
-token PointAction(const char * lexeme);
-/*token ANDOperator(const char * lexeme);
-token OROperator(const char * lexeme);
+//token PointAction(const char * lexeme);
+token ANDOperator(const char * lexeme);
+token OROperator(const char * lexeme);/*
 token CCharAction(const char * lexeme);
 token CMonsAction(const char * lexeme);
 token CRaceAction(const char * lexeme);
@@ -98,7 +98,7 @@ token ChangeTempSheet(const char * lexeme);*/
 token FunctionPatternAction(const char * lexeme);
 token NewPatternAction(const char * lexeme);
 token StartPatternAction(const char * lexeme);
-token PartyTypePatternAction(const char * lexeme);
+//token PartyTypePatternAction(const char * lexeme);
 token CharcterTypePatternAction(const char * lexeme);
 
 token ItemTypePatternAction(const char * lexeme);
@@ -129,10 +129,10 @@ token PrintAction(const char * lexeme);
 token ReturnAction(const char * lexeme); 
 */
 token AlphavalPatternAction(const char * lexeme, const int lenght);
-token StringPatternAction(const char * lexeme);
+token StringPatternAction(const char * lexeme, const int length);
 token EndlineAction(const char * lexeme);
 token Cadena(const char * lexeme);
-token DiceDamage(const char * lexeme);
+token DiceDamage(const char * lexeme, const int length);
 
 token DosPuntosAction(const char * lexeme);
 

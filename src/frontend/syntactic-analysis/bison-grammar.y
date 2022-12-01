@@ -145,8 +145,40 @@
 %type <freeendlines> freeendlines
 %type <Sheet> sheet
 %type <MainBody> body
-
-
+%type <Characname> name
+%type <levelCharac> level
+%type <classCharac> class
+%type <backgroundCharac> background
+%type <playername> playername
+%type <characrace> race
+%type <alignmentCharac> alignment
+%type <exppointsCharac> exppoints
+%type <restofbodyCharac> restofbody
+%type <statsSpread> stats
+%type <ArmorClass> armorclass
+%type <Initiative> initiative
+%type <Speed> speed
+%type <CharacBackStory> backstory
+%type <proficienciesCh> proficiencies
+%type <featuresCh> features
+%type <itemsCh> items
+%type <equipmentCh> equipment
+%type <Spellbook> spellbook
+%type <spellcasterspells> spellcasterspells
+%type <LevelSplb> levelsplb
+%type <Spell> spell
+%type <NPCBody> npcbody
+%type <Merchant> merchantbody
+%type <Store> store
+%type <ItemstoSell> itemtosell
+%type <ItemBody> itembody
+%type <ItemName> itemname
+%type <ItemRarity> rarity
+%type <ItemDescription> description
+%type <MonsterBody> monsterbody
+%type <TypeofMonster> typeofmonster
+%type <MonsterAttacks> attacks
+%type <ListofAttacks> listofat
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
 %left ADD SUB
@@ -157,8 +189,140 @@
 
 %%
 
-mainprogram: sheet					{$$ = a("hola");} 
-			;
+mainprogram: sheet					{$$ = ProgramStart($1);} 
+;
+
+freeendlines: ENDLINE 						{$$ = b("FreeLines1  ");}
+			| ENDLINE ENDLINE freeendlines 	{$$ = b("FreeLines2  ");}
+			| /**/  						{$$ = b("FreeLines3  ");}
+;
+
+sheet: NEW CHARAC DOSPTS INTEGER freeendlines body
+	| NEW MOSNTER DOSPTS INTEGER freeendlines monsterbody
+	| NEW ITEM DOSPTS INTEGER freeendlines itembody
+	| NEW NPC DOSPTS INTEGER freeendlines npcbody
+;
+
+body: name freeendlines level freeendlines class freeendlines background freeendlines playername freeendlines race freeendlines alignment freeendlines exppoints freeendlines restofbody
+;
+
+name: NAME DOSPTS STR PUNTOCOMA
+;
+
+level: LVL DOSPTS INTEGER PUNTOCOMA
+;
+
+class: CLASS DOSPTS STR PUNTOCOMA
+	| DUALCLASS DOSPTS STR COMMA STR
+;
+
+background: BKGR DOSPTS STR PUNTOCOMA
+;
+
+playername: PLYNAME DOSPTS STR PUNTOCOMA
+;
+
+race: RACE DOSPTS STR PUNTOCOMA
+;
+
+alignment: ALIGN DOSPTS STR PUNTOCOMA
+;
+
+exppoints: EXP DOSPTS INTEGER PUNTOCOMA
+;
+
+restofbody: stats freeendlines armorclass freeendlines initiative freeendlines speed freeendlines proficiencies freeendlines features freeendlines equipment freeendlines items freeendlines backstory freeendlines spellbook
+		| /**/
+;
+
+stats: STATS DOSPTS INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER PUNTOCOMA
+;
+
+armorclass: ACLASS DOSPTS INTEGER PUNTOCOMA
+;
+
+initiative: INIT DOSPTS INTEGER PUNTOCOMA
+;
+
+speed: SPD DOSPTS INTEGER PUNTOCOMA
+;
+
+proficiencies: PROF DOSPTS STR DOSPTS STR COMMA INTEGER COMMA proficiencies
+			|  PROF DOSPTS STR DOSPTS STR COMMA INTEGER PUNTOCOMA
+;
+
+features: FEAT DOSPTS STR COMMA STR PUNTOCOMA freeendlines features
+		| FEAT DOSPTS STR COMMA STR PUNTOCOMA
+;
+
+equipment: EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA freeendlines equipment
+		|  EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA
+;
+
+items: ITEMS DOSPTS STR COMMA STR PUNTOCOMA freeendlines equipment
+		|  ITEMS DOSPTS STR COMMA STR PUNTOCOMA
+;
+
+backstory: BACKSTORY DOSPTS STR PUNTOCOMA
+;
+
+spellbook: spellcasterspells
+		|  /**/
+;
+
+spellcasterspells: SPLLBOOK DOSPTS INTEGER DOSPTS levelsplb freeendlines spellcasterspells;
+				|  SPLLBOOK DOSPTS INTEGER DOSPTS levelsplb
+;
+
+levelsplb: spell freeendlines levelsplb
+		| spell 
+;
+
+spell: STR COMMA STR COMMA DICEDMG PUNTOCOMA
+;
+//startofnpc
+npcbody: merchantbody
+;
+
+merchantbody: STORE DOSPTS store
+;
+
+store: itemtosell INTEGER PUNTOCOMA freeendlines store
+	| itemtosell INTEGER PUNTOCOMA
+;	
+
+itemtosell: STR COMMA STR COMMA
+;
+//end npc
+
+//startitem
+itembody: itemname freeendlines rarity freeendlines description freeendlines
+;
+
+itemname: ITEMNAME DOSPTS STR PUNTOCOMA
+;
+
+rarity: RAR DOSPTS STR PUNTOCOMA
+;
+
+description: DES DOSPTS STR PUNTOCOMA
+;
+//enditem 
+
+//startmonster
+monsterbody: name freeendlines typeofmonster freeendlines stats freeendlines backstory freeendlines attacks freeendlines spellbook
+;
+
+typeofmonster: TYPEMONS DOSPTS STR PUNTOCOMA
+;
+
+attacks: ATTACKS DOSPTS listofat
+;
+
+listofat: STR COMMA STR COMMA DICEDMG PUNTOCOMA freeendlines listofat
+		| STR COMMA STR COMMA DICEDMG PUNTOCOMA
+;
+//endmonster
 
 /*aux: startprograma 					{$$ = StartProgramAction($1);}
 	| crearfunct freeendlines aux 	{$$ = CrearnuevafunctionAction($1);}
@@ -254,10 +418,7 @@ datatype: INTDT 					{$$ = b("IntegerType  ");}
 		| STRDT  					{$$ = b("StringType  ");}
 		;
 */
-freeendlines: ENDLINE 						{$$ = b("FreeLines1  ");}
-			| ENDLINE ENDLINE freeendlines 	{$$ = b("FreeLines2  ");}
-			| /**/  						{$$ = b("FreeLines3  ");}
-			;
+
 /*
 operation: ADD 				{$$ = b("suma  ");}
 		| SUB 				{$$ = b("resta  ");}
@@ -414,131 +575,4 @@ argfor3: asignarvar 											{$$ = b("argfor3asignavar  ");}
 		| CADENA IGUAL valorvar									{$$ = b("argfor3default  ");}
 		;
 */
-
-sheet: NEW CHARAC DOSPTS INTEGER freeendlines body
-	| NEW MOSNTER DOSPTS INTEGER freeendlines monsterbody
-	| NEW ITEM DOSPTS INTEGER freeendlines itembody
-	| NEW NPC DOSPTS INTEGER freeendlines npcbody
-;
-
-body: name freeendlines level freeendlines class freeendlines background freeendlines playername freeendlines race freeendlines alignment freeendlines exppoints freeendlines restofbody
-;
-
-name: NAME DOSPTS STR PUNTOCOMA
-;
-
-level: LVL DOSPTS INTEGER PUNTOCOMA
-;
-
-class: CLASS DOSPTS STR PUNTOCOMA
-	| DUALCLASS DOSPTS STR COMMA STR
-;
-
-background: BKGR DOSPTS STR PUNTOCOMA
-;
-
-playername: PLYNAME DOSPTS STR PUNTOCOMA
-;
-
-race: RACE DOSPTS STR PUNTOCOMA
-;
-
-alignment: ALIGN DOSPTS STR PUNTOCOMA
-;
-
-exppoints: EXP DOSPTS INTEGER PUNTOCOMA
-;
-
-restofbody: stats freeendlines armorclass freeendlines initiative freeendlines speed freeendlines proficiencies freeendlines features freeendlines equipment freeendlines items freeendlines backstory freeendlines spellbook
-		| /**/
-;
-
-stats: STATS DOSPTS INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER PUNTOCOMA
-;
-
-armorclass: ACLASS DOSPTS INTEGER PUNTOCOMA
-;
-
-initiative: INIT DOSPTS INTEGER PUNTOCOMA
-;
-
-speed: SPD DOSPTS INTEGER PUNTOCOMA
-;
-
-proficiencies: PROF DOSPTS STR DOSPTS STR COMMA INTEGER COMMA proficiencies
-			|  PROF DOSPTS STR DOSPTS STR COMMA INTEGER PUNTOCOMA
-;
-
-features: FEAT DOSPTS STR COMMA STR PUNTOCOMA freeendlines features
-		| FEAT DOSPTS STR COMMA STR PUNTOCOMA
-;
-
-equipment: EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA freeendlines equipment
-		|  EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA
-;
-
-items: ITEMS DOSPTS STR COMMA STR PUNTOCOMA freeendlines equipment
-		|  ITEMS DOSPTS STR COMMA STR PUNTOCOMA
-;
-
-backstory: BACKSTORY DOSPTS STR PUNTOCOMA
-;
-
-spellbook: spellcasterspells
-		|  /**/
-;
-
-spellcasterspells: SPLLBOOK DOSPTS INTEGER DOSPTS levelsplb freeendlines spellcasterspells;
-				|  SPLLBOOK DOSPTS INTEGER DOSPTS levelsplb
-;
-
-levelsplb: spell freeendlines levelsplb
-		| spell 
-;
-
-spell: STR COMMA STR COMMA DICEDMG PUNTOCOMA
-;
-//startofnpc
-npcbody: merchantbody
-;
-
-merchantbody: STORE DOSPTS store
-;
-
-store: itemtosell INTEGER PUNTOCOMA freeendlines store
-	| itemtosell INTEGER PUNTOCOMA
-;	
-
-itemtosell: STR COMMA STR COMMA
-;
-//end npc
-
-//startitem
-itembody: itemname freeendlines rarity freeendlines description freeendlines
-;
-
-itemname: ITEMNAME DOSPTS STR PUNTOCOMA
-;
-
-rarity: RAR DOSPTS STR PUNTOCOMA
-;
-
-description: DES DOSPTS STR PUNTOCOMA
-;
-//enditem 
-
-//startmonster
-monsterbody: name freeendlines typeofmonster freeendlines stats freeendlines backstory freeendlines attacks freeendlines spellbook
-;
-
-typeofmonster: TYPEMONS DOSPTS STR PUNTOCOMA
-;
-
-attacks: ATTACKS DOSPTS listofat
-;
-
-listofat: STR COMMA STR COMMA DICEDMG PUNTOCOMA freeendlines listofat
-		| STR COMMA STR COMMA DICEDMG PUNTOCOMA
-;
-//endmonster
 %%
