@@ -40,7 +40,7 @@
 	equipmentCh * equipmentCh;
 	Spellbook * Spellbook;
 	spellcasterspells * spellcasterspells;
-	LevelSplb * LevelSplb;
+	//LevelSplb * LevelSplb;
 	Spell * Spell;
 	NPCBody * NPCBody;
 	Merchant * Merchant;
@@ -165,7 +165,7 @@
 %type <equipmentCh> equipment
 %type <Spellbook> spellbook
 %type <spellcasterspells> spellcasterspells
-%type <LevelSplb> levelsplb
+//%type <LevelSplb> levelsplb
 %type <Spell> spell
 %type <NPCBody> npcbody
 %type <Merchant> merchantbody
@@ -270,13 +270,13 @@ spellbook: spellcasterspells						{$$ = SpellbookFunction(SPBOOK, $1);}
 		|  /**/										{$$ = SpellbookFunction(NOSPBOOK, NULL);}
 ;
 
-spellcasterspells: SPLLBOOK DOSPTS INTEGER DOSPTS levelsplb freeendlines spellcasterspells		{$$ = spellcasterspellsFunction(RECURSPELL, $5, $3, $7);}
-				|  SPLLBOOK DOSPTS INTEGER DOSPTS levelsplb										{$$ = spellcasterspellsFunction(ONLYONE, $5, $3, NULL);}
+spellcasterspells: SPLLBOOK DOSPTS INTEGER DOSPTS spell freeendlines spellcasterspells		{$$ = spellcasterspellsFunction(RECURSPELL, $5, $3, $7);}
+				|  SPLLBOOK DOSPTS INTEGER DOSPTS spell										{$$ = spellcasterspellsFunction(ONLYONE, $5, $3, NULL);}
 ;
-
+/*
 levelsplb: spell freeendlines levelsplb				{$$ = LevelSplbFunction(RECURSIVELVLSPB, $1, $3);}
 		| spell 									{$$ = LevelSplbFunction(ONLYONELEVELSPELL, $1, NULL);}
-;
+;*/
 
 spell: STR COMMA STR COMMA DICEDMG PUNTOCOMA		{$$ = SpellFunction($1, $3, $5);}
 ;

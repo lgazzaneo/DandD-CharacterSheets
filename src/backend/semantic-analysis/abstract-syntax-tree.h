@@ -137,7 +137,7 @@ typedef struct{
 	DiceDmg * spldamage;
 }Spell;
 
-typedef enum{
+/*typedef enum{
 	RECURSIVELVLSPB,
 	ONLYONELEVELSPELL
 }levelspmode;
@@ -146,7 +146,7 @@ struct LevelSplb{
 	levelspmode mode;
 	Spell * spell;
 	LevelSplb * recursivelevelspb;
-};
+};*/
 
 typedef enum{
 	ONLYONE,
@@ -156,7 +156,7 @@ typedef enum{
 struct spellcasterspells{
 	spellbookmode mode;
 	spellcasterspells * spellcasterspells;
-	LevelSplb * levelspellbook;
+	Spell * spell;
 	Constant * Spellslevel;
 };
 

@@ -57,8 +57,8 @@ featuresCh * featuresChFunction(IsRecursive type, objecttext * arg1, objecttext 
 itemsCh * itemsChFunction(IsRecursive type, objecttext * arg1, objecttext * arg2, itemsCh * itemsChRecursive);
 equipmentCh * equipmentChFunction(IsRecursive type, objecttext * arg1, objecttext * arg2, objecttext * arg3, equipmentCh * profChRecursive);
 Spellbook * SpellbookFunction(spbookMode mode, spellcasterspells * spellcasterspeels);
-spellcasterspells * spellcasterspellsFunction(spellbookmode mode, LevelSplb * levelspells, Constant * level, spellcasterspells * recursive);
-LevelSplb * LevelSplbFunction(levelspmode mode, Spell * spell, LevelSplb * recursive);
+spellcasterspells * spellcasterspellsFunction(spellbookmode mode, Spell * spell, Constant * level, spellcasterspells * recursive);
+//LevelSplb * LevelSplbFunction(levelspmode mode, Spell * spell, LevelSplb * recursive);
 Spell * SpellFunction(objecttext * splname, objecttext * spldesc, DiceDmg * spldamage);
 
 //NPC Sheet Functions

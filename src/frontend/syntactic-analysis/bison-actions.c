@@ -389,10 +389,10 @@ Spellbook * SpellbookFunction(spbookMode mode, spellcasterspells * spellcastersp
 	return t;
 }
 
-spellcasterspells * spellcasterspellsFunction(spellbookmode mode, LevelSplb * levelspells, Constant * level, spellcasterspells * recursive){
+spellcasterspells * spellcasterspellsFunction(spellbookmode mode, Spell * spell, Constant * level, spellcasterspells * recursive){
 	spellcasterspells * t = malloc(sizeof(spellcasterspells));
 	t->Spellslevel = level;
-	t->levelspellbook = levelspells;
+	t->spell = spell;
 	if(mode == RECURSPELL){
 		t->spellcasterspells = recursive;
 		t->mode = RECURSPELL;
@@ -404,7 +404,7 @@ spellcasterspells * spellcasterspellsFunction(spellbookmode mode, LevelSplb * le
 	return t;
 }
 
-LevelSplb * LevelSplbFunction(levelspmode mode, Spell * spell, LevelSplb * recursive){
+/*LevelSplb * LevelSplbFunction(levelspmode mode, Spell * spell, LevelSplb * recursive){
 	LevelSplb * t = malloc(sizeof(LevelSplb));
 	t->spell = spell;
 	if (mode == RECURSIVELVLSPB){
@@ -416,7 +416,7 @@ LevelSplb * LevelSplbFunction(levelspmode mode, Spell * spell, LevelSplb * recur
 		t->mode = ONLYONELEVELSPELL;
 	}
 	return t;
-}
+}*/
 
 Spell * SpellFunction(objecttext * splname, objecttext * spldesc, DiceDmg * spldamage){
 	Spell * t = malloc(sizeof(Spell));
