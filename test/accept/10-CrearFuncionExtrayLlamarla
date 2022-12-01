@@ -1,8 +1,0 @@
-function Integer devuelvo7(Integer a){
-    return(7);
-}
-
-Integer start(){
-    print("%d", devuelvo7(1));
-    return(0);
-}

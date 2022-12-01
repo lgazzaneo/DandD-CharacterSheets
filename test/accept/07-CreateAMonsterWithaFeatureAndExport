@@ -1,8 +1,0 @@
-Integer start(){
-    Razgo M_razgo = new Razgo("Each AtackRoll adds half of his Str as Dmg");
-    Stats M_stats = new Stats(1500, 40, 25, 10, 29, 10, 10);
-    Monster Behemoth = new Monster("Behemoth", "PrimalBeast", M_stats, M_razgo, 5d6);
-    Sheet M_Sheet = new Sheet(Behemoth, Theme_Fancy);
-    exportSheet(M_Sheet);
-    return(0);
-}

@@ -1,3 +1,1 @@
-String start(){
-    return();
-}
+new Monster : "awfa";
