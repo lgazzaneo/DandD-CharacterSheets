@@ -22,6 +22,8 @@ int DivisionExpressionGrammarAction(const int leftValue, const int rightValue);
 int FactorExpressionGrammarAction(const int value);
 int a(char * str);
 int b(char * str);
+int StartProgramAction(const int value);
+int CrearnuevafunctionAction(const int value);
 
 
 // Factores.

@@ -8,7 +8,7 @@
 %union {
 	// No-terminales (backend).
 	/*
-	Program program;
+	Program * program;
 	Expression expression;
 	Factor factor;
 	Constant constant;
@@ -16,55 +16,51 @@
 	*/
 
 	// No-terminales (frontend).
-	int program;
-	int expression;
-	int factor;
-	int constant;
-	int mainprogram;
-	int crearfunct;
-	int truedata;
-	int datatype;
-	int simplevalues;
-	int complexdatatype;
-	int argumentosparadeclarar;
-	int startprograma;
-	int programa;
-	int trueprogram;
-	int variableoper;
-	int avariable;
-	int declararvar;
-	int valorvar;
-	int subvalorvar;
-	int operation;
-	int asignarvar;
-	int checkearvar;
-	int valorrel;
-	int operrel;
-	int complexvar;
-	int complexch;
-	int declarearray;
-	int asignsimplearr;
-	int asigncpxarr;
-	int returnfunction;
-	int argumentos;
-	int functionnames;
-	int aconditional;
-	int ifelse;
-	int elseiter;
-	int condition;
-	int dowhile;
-	int foriter;
-	int argfor1;
-	int argfor3;
-	int freeendlines;
-	int aux;
-	int programacond;
-	int complexdeclar;
-	int declarearraycmpx;
-	int arrayvalues;
+	mainprogram * mainprogram;
+	freeendlines * freeendlines;
+	Sheet * Sheet;
+	Body * MainBody;
+	nameCharac * Characname;
+	levelCharac * levelCharac;
+	classCharac * classCharac;
+	backgroundCharac * backgroundCharac;
+	playername * playername;
+	characrace * characrace;
+	alignmentCharac * alignmentCharac;
+	exppointsCharac * exppointsCharac;
+	restofbodyCharac * restofbodyCharac;
+	statsSpread * statsSpread;
+	ArmorClass * ArmorClass;
+	Initiative * Initiative;
+	Speed * Speed;
+	CharacBackStory * CharacBackStory;
+	proficienciesCh * proficienciesCh;
+	featuresCh * featuresCh;
+	itemsCh * itemsCh;
+	equipmentCh * equipmentCh;
+	Spellbook * Spellbook;
+	spellcasterspells * spellcasterspells;
+	LevelSplb * LevelSplb;
+	Spell * Spell;
+	NPCBody * NPCBody;
+	Merchant * Merchant;
+	Store * Store;
+	ItemstoSell * ItemstoSell;
+	ItemBody * ItemBody;
+	ItemName * ItemName;
+	ItemRarity * ItemRarity;
+	ItemDescription * ItemDescription;
+	MonsterBody * MonsterBody;
+	TypeofMonster * TypeofMonster;
+	MonsterAttacks * MonsterAttacks;
+	ListofAttacks * ListofAttacks;
+
 
 	// Terminales.
 	int token;
+	Constant * value;
+	objecttext * text;
+	DiceDmg * damage;
 }
 
 // IDs y tipos de los tokens terminales generados desde Flex.
@@ -72,6 +68,11 @@
 %token <token> SUB
 %token <token> MUL
 %token <token> DIV
+
+%token <token> AND
+%token <token> OR
+
+%token <token> UNKNOWN_ERROR
 
 %token <token> ALPHAVAL
 %token <token> OPEN_PARENTHESIS
@@ -92,57 +93,6 @@
 
 %token <token>  DICEDMG
 
-%token <token>    CCHAR
-%token <token>    CMONS
-%token <token>    CRACE
-%token <token>    CCLASS
-%token <token>    CITEM
-%token <token>    CNPC
-%token <token>    CFEAT
-%token <token>    CPARTY
-%token <token>    ASTAT
-%token <token>    ACINFO
-%token <token>    ACBACK
-%token <token>    ASPBK
-%token <token>   ASTSPBK
-%token <token>    ARMOD
-%token <token>    ACMOD
-%token <token>    ANPCINF
-%token <token>    AMINF
-%token <token>    AITDES
-%token <token>   AITINF
-%token <token>   APMEM
-%token <token>    RMPMEM
-%token <token>   CHEXP
-%token <token>   CHLEV
-%token <token>   CHCLEV
-%token <token>    CHCLASS
-%token <token>    CHRACE
-%token <token>   BHCMULCL
-%token <token>    CHITCLASS
-%token <token>   CHITRAR
-%token <token>    CHITREQ
-%token <token>   CHNPCCLASS
-%token <token>    EQITEM
-%token <token>    UEQIT
-%token <token>    CHKCLASS
-%token <token>    CHKLEVL
-%token <token>    CHKEXP
-%token <token>    CHKSPLS
-%token <token>    CHKITEM
-%token <token>    CHKRACE
-%token <token>    CHKITREST
-%token <token>    CHKFEAT
-%token <token>    CHKMONSINF
-%token <token>    CHKPARTY
-%token <token>    CHKSTATS
-%token <token>    CHKSTAT
-
-%token <token>    EXPSH
-%token <token>    GETSH    
-%token <token>    ACTSH
-%token <token>    CHTPSH
-
 %token <token>    FUNCT
 %token <token>    NEW
 %token <token>    START
@@ -150,84 +100,53 @@
 %token <token>    CHARAC
 %token <token>   STR
 %token <token>   STRDT
-%token <token>    PARTY
 %token <token>   ITEM
 %token <token>    STATS
-%token <token>    STAT
 %token <token>    NPC
 %token <token>    MOSNTER
 %token <token>    RAZGO
 %token <token>    MODIF
 %token <token>    SHEET
 
-%token <token>    IFCOND
-%token <token>    ELSECOND
-%token <token>    ELSIFCOND
-%token <token>    DOCOND
-%token <token>    WHILECOND
-%token <token>    FORCOND
 
-%token <token>    GREATorEQ
-%token <token>    LESSorEQ
-%token <token>    EQUA
-%token <token>    NOTEQ
-%token <token>    LESSER
-%token <token>    GREATER
-
-%token <token>    PRINT
+%token <token>    DOSPTS
 %token <token>    CADENA
 %token <token>    COMMA
-%token <token>    IGUAL
 
-%token <token>    AND
-%token <token>    OR
+%token <token>    NAME
+%token <token>    CLASS
+%token <token>    DUALCLASS
+%token <token>    LVL
+%token <token>    BKGR
+%token <token>    PLYNAME
+%token <token>    RACE
+%token <token>    ALIGN
+%token <token>    EXP
+%token <token>    ACLASS
+%token <token>    INIT
+%token <token>    SPD
+%token <token>    PROF
+%token <token>    FEAT
+%token <token>    EQUIP
+%token <token>    ITEMS
+%token <token>    BACKSTORY
+%token <token>    SPLLBOOK
+%token <token>    STORE
+%token <token>    ITEMNAME
+%token <token>    RAR
+%token <token>    DES
+%token <token>    TYPEMONS
+%token <token>    ATTACKS
 
-%token <token>    RET
-%token <token>    POINT
+
 
 // Tipos de dato para los no-terminales generados desde Bison.
 %type <mainprogram> mainprogram
-%type <crearfunct> crearfunct
-%type <truedata> truedata
-%type <datatype> datatype
-%type <simplevalues> simplevalues
-%type <complexdatatype> complexdatatype
-%type <argumentosparadeclarar> argumentosparadeclarar
-%type <startprograma> startprograma
-%type <programa> programa
-%type <trueprogram> trueprogram
-%type <variableoper> variableoper
-%type <avariable> avariable
-%type <declararvar> declararvar
-%type <valorvar> valorvar
-%type <subvalorvar> subvalorvar
-%type <operation> operation
-%type <asignarvar> asignarvar
-%type <valorrel> valorrel
-%type <checkearvar> checkearvar
-%type <operrel> operrel
-%type <complexvar> complexvar
-%type <complexch> complexch
-%type <declarearray> declarearray
-%type <asignsimplearr> asignsimplearr
-%type <asigncpxarr> asigncpxarr
-%type <returnfunction> returnfunction
-%type <argumentos> argumentos
-%type <functionnames> functionnames
-%type <aconditional> aconditional
-%type <ifelse> ifelse
-%type <elseiter> elseiter
-%type <condition> condition
-%type <dowhile> dowhile
-%type <foriter> foriter
-%type <argfor1> argfor1
-%type <argfor3> argfor3
 %type <freeendlines> freeendlines
-%type <programacond> programacond
-%type <complexdeclar> complexdeclar
-%type <declarearraycmpx> declarearraycmpx
-%type <aux> aux
-%type <arrayvalues> arrayvalues
+%type <Sheet> sheet
+%type <MainBody> body
+
+
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
 %left ADD SUB
@@ -238,11 +157,11 @@
 
 %%
 
-mainprogram: aux					{$$ = a("Start     ");} 
+mainprogram: sheet					{$$ = a("hola");} 
 			;
 
-aux: startprograma 					{$$ =  b("Aux     ");}
-	| crearfunct freeendlines aux 	{$$ = b("Crearnuevafunction     ");}
+/*aux: startprograma 					{$$ = StartProgramAction($1);}
+	| crearfunct freeendlines aux 	{$$ = CrearnuevafunctionAction($1);}
 	;
 
 crearfunct: FUNCT truedata CADENA OPEN_PARENTHESIS argumentosparadeclarar CLOSE_PARENTHESIS OPEN_LLAVES freeendlines programa freeendlines CLOSE_LLAVES  {$$ = b("crearfunct     ");} 
@@ -334,12 +253,12 @@ arrayvalues: INTEGER				{$$ = b("integerforarrays  ");}
 datatype: INTDT 					{$$ = b("IntegerType  ");}
 		| STRDT  					{$$ = b("StringType  ");}
 		;
-
+*/
 freeendlines: ENDLINE 						{$$ = b("FreeLines1  ");}
 			| ENDLINE ENDLINE freeendlines 	{$$ = b("FreeLines2  ");}
 			| /**/  						{$$ = b("FreeLines3  ");}
 			;
-
+/*
 operation: ADD 				{$$ = b("suma  ");}
 		| SUB 				{$$ = b("resta  ");}
 		| MUL 				{$$ = b("multiplicacion   ");}
@@ -494,4 +413,132 @@ argfor3: asignarvar 											{$$ = b("argfor3asignavar  ");}
 		| OPEN_PARENTHESIS valorvar CLOSE_PARENTHESIS 			{$$ = b("argfor3parentesis      ");}
 		| CADENA IGUAL valorvar									{$$ = b("argfor3default  ");}
 		;
+*/
+
+sheet: NEW CHARAC DOSPTS INTEGER freeendlines body
+	| NEW MOSNTER DOSPTS INTEGER freeendlines monsterbody
+	| NEW ITEM DOSPTS INTEGER freeendlines itembody
+	| NEW NPC DOSPTS INTEGER freeendlines npcbody
+;
+
+body: name freeendlines level freeendlines class freeendlines background freeendlines playername freeendlines race freeendlines alignment freeendlines exppoints freeendlines restofbody
+;
+
+name: NAME DOSPTS STR PUNTOCOMA
+;
+
+level: LVL DOSPTS INTEGER PUNTOCOMA
+;
+
+class: CLASS DOSPTS STR PUNTOCOMA
+	| DUALCLASS DOSPTS STR COMMA STR
+;
+
+background: BKGR DOSPTS STR PUNTOCOMA
+;
+
+playername: PLYNAME DOSPTS STR PUNTOCOMA
+;
+
+race: RACE DOSPTS STR PUNTOCOMA
+;
+
+alignment: ALIGN DOSPTS STR PUNTOCOMA
+;
+
+exppoints: EXP DOSPTS INTEGER PUNTOCOMA
+;
+
+restofbody: stats freeendlines armorclass freeendlines initiative freeendlines speed freeendlines proficiencies freeendlines features freeendlines equipment freeendlines items freeendlines backstory freeendlines spellbook
+		| /**/
+;
+
+stats: STATS DOSPTS INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER PUNTOCOMA
+;
+
+armorclass: ACLASS DOSPTS INTEGER PUNTOCOMA
+;
+
+initiative: INIT DOSPTS INTEGER PUNTOCOMA
+;
+
+speed: SPD DOSPTS INTEGER PUNTOCOMA
+;
+
+proficiencies: PROF DOSPTS STR DOSPTS STR COMMA INTEGER COMMA proficiencies
+			|  PROF DOSPTS STR DOSPTS STR COMMA INTEGER PUNTOCOMA
+;
+
+features: FEAT DOSPTS STR COMMA STR PUNTOCOMA freeendlines features
+		| FEAT DOSPTS STR COMMA STR PUNTOCOMA
+;
+
+equipment: EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA freeendlines equipment
+		|  EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA
+;
+
+items: ITEMS DOSPTS STR COMMA STR PUNTOCOMA freeendlines equipment
+		|  ITEMS DOSPTS STR COMMA STR PUNTOCOMA
+;
+
+backstory: BACKSTORY DOSPTS STR PUNTOCOMA
+;
+
+spellbook: spellcasterspells
+		|  /**/
+;
+
+spellcasterspells: SPLLBOOK DOSPTS INTEGER DOSPTS levelsplb freeendlines spellcasterspells;
+				|  SPLLBOOK DOSPTS INTEGER DOSPTS levelsplb
+;
+
+levelsplb: spell freeendlines levelsplb
+		| spell 
+;
+
+spell: STR COMMA STR COMMA DICEDMG PUNTOCOMA
+;
+//startofnpc
+npcbody: merchantbody
+;
+
+merchantbody: STORE DOSPTS store
+;
+
+store: itemtosell INTEGER PUNTOCOMA freeendlines store
+	| itemtosell INTEGER PUNTOCOMA
+;	
+
+itemtosell: STR COMMA STR COMMA
+;
+//end npc
+
+//startitem
+itembody: itemname freeendlines rarity freeendlines description freeendlines
+;
+
+itemname: ITEMNAME DOSPTS STR PUNTOCOMA
+;
+
+rarity: RAR DOSPTS STR PUNTOCOMA
+;
+
+description: DES DOSPTS STR PUNTOCOMA
+;
+//enditem 
+
+//startmonster
+monsterbody: name freeendlines typeofmonster freeendlines stats freeendlines backstory freeendlines attacks freeendlines spellbook
+;
+
+typeofmonster: TYPEMONS DOSPTS STR PUNTOCOMA
+;
+
+attacks: ATTACKS DOSPTS listofat
+;
+
+listofat: STR COMMA STR COMMA DICEDMG PUNTOCOMA freeendlines listofat
+		| STR COMMA STR COMMA DICEDMG PUNTOCOMA
+;
+//endmonster
 %%

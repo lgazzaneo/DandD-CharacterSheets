@@ -56,13 +56,6 @@ token DivisionOperatorPatternAction(const char * lexeme) {
 	return DIV;
 }
 
-token IgualOperacion(const char * lexeme) {
-	LogDebug("IgualOperacion: '%s'.", lexeme);
-	yylval.token = IGUAL;
-	return IGUAL;
-}
-
-
 token IntegerPatternAction(const char * lexeme, const int length) {
 	LogDebug("IntegerPatternAction: '%s' (length = %d).", lexeme, length);
 	yylval.token = INTEGER;
@@ -88,11 +81,6 @@ token IntegerDataTypeAction(const char * lexeme) {
 	return INTDT;
 }
 
-token ReturnAction(const char * lexeme) {
-	LogDebug("ReturnAction: '%s'", lexeme);
-	yylval.token = RET;
-	return RET;
-}
 
 token StringPatternAction(const char * lexeme) {
 	LogDebug("StringPatternAction: '%s'", lexeme);
@@ -156,9 +144,9 @@ token SubtractionOperatorPatternAction(const char * lexeme) {
 
 token UnknownPatternAction(const char * lexeme, const int length) {
 	LogDebug("UnknownPatternAction: '%s' (length = %d).", lexeme, length);
-	yylval.token = YYUNDEF;
+	yylval.token = UNKNOWN_ERROR;
 	// Al emitir este token, el compilador aborta la ejecución.
-	return YYUNDEF;
+	return UNKNOWN_ERROR;
 }
 
 token PuntoComa(const char * lexeme){
@@ -173,24 +161,146 @@ token EndlineAction(const char * lexeme){
 	return ENDLINE;
 }
 
-token PointAction(const char * lexeme){
-	LogDebug("PointAction: %s", lexeme);
-	yylval.token = POINT;
-	return POINT;
-}
-
+/*
 token CCharAction(const char * lexeme){
 	LogDebug("CreateCharAction: %s", lexeme);
 	yylval.token = CCHAR;
 	return CCHAR;
 }
-
+*/
 token Cadena(const char * lexeme){
 	LogDebug("Cadena: %s", lexeme);
 	yylval.token = CADENA;
 	return CADENA;
 }
 
+token DosPuntosAction(const char * lexeme){
+	LogDebug("dospts: %s", lexeme);
+	yylval.token = DOSPTS;
+	return DOSPTS;
+}
+
+token NameAction(const char * lexeme, const int lenght){
+	LogDebug("nameAction: %s", lexeme);
+	yylval.token = NAME;
+	return NAME;
+}
+token LevelAction(const char * lexeme, const int lenght){
+	LogDebug("LevelAction: %s", lexeme);
+	yylval.token = LVL;
+	return LVL;
+}
+token ClassAction(const char * lexeme, const int lenght){
+	LogDebug("ClassAction: %s", lexeme);
+	yylval.token = CLASS;
+	return CLASS;
+}
+token DualClassAction(const char * lexeme, const int lenght){
+	LogDebug("DualClassAction: %s", lexeme);
+	yylval.token = DUALCLASS;
+	return DUALCLASS;
+}
+token BackgroundAction(const char * lexeme, const int lenght){
+	LogDebug("BackgroundAction: %s", lexeme);
+	yylval.token = BKGR;
+	return BKGR;
+}
+token PlayerNameAction(const char * lexeme, const int lenght){
+	LogDebug("PlayernameAction: %s", lexeme);
+	yylval.token = PLYNAME;
+	return PLYNAME;
+}
+token RaceAction(const char * lexeme, const int lenght){
+	LogDebug("RaceAction: %s", lexeme);
+	yylval.token = RACE;
+	return RACE;
+}
+token AlignmentAction(const char * lexeme, const int lenght){
+	LogDebug("AlignmentAction: %s", lexeme);
+	yylval.token = ALIGN;
+	return ALIGN;
+}
+token ExperienceAction(const char * lexeme, const int lenght){
+	LogDebug("ExpAction: %s", lexeme);
+	yylval.token = EXP;
+	return EXP;
+}
+token ACAction(const char * lexeme, const int lenght){
+	LogDebug("ACAction: %s", lexeme);
+	yylval.token = ACLASS;
+	return ACLASS;
+}
+token InitiativeAction(const char * lexeme, const int lenght){
+	LogDebug("InititiveAction: %s", lexeme);
+	yylval.token = INIT;
+	return INIT;
+}
+token SpeedAction(const char * lexeme, const int lenght){
+	LogDebug("SpeedAction: %s", lexeme);
+	yylval.token = SPD;
+	return SPD;
+}
+token ProficiencyAction(const char * lexeme, const int lenght){
+	LogDebug("ProficienciesAction: %s", lexeme);
+	yylval.token = PROF;
+	return PROF;
+}
+token FeaturesAction(const char * lexeme, const int lenght){
+	LogDebug("FeaturesAction: %s", lexeme);
+	yylval.token = FEAT;
+	return FEAT;
+}
+token EquipmentAction(const char * lexeme, const int lenght){
+	LogDebug("EquipmentAction: %s", lexeme);
+	yylval.token = EQUIP;
+	return EQUIP;
+}
+token ItemsAction(const char * lexeme, const int lenght){
+	LogDebug("ItemsAction: %s", lexeme);
+	yylval.token = ITEMS;
+	return ITEMS;
+}
+token BackstoryAction(const char * lexeme, const int lenght){
+	LogDebug("BackstoryAction: %s", lexeme);
+	yylval.token = BACKSTORY;
+	return BACKSTORY;
+}
+token SpellcasterBookAction(const char * lexeme, const int lenght){
+	LogDebug("SpellBookAction: %s", lexeme);
+	yylval.token = SPLLBOOK;
+	return SPLLBOOK;
+}
+token StoreAction(const char * lexeme, const int lenght){
+	LogDebug("StoreAction: %s", lexeme);
+	yylval.token = STORE;
+	return STORE;
+}
+token ItemnameAction(const char * lexeme, const int lenght){
+	LogDebug("ItemNameAction: %s", lexeme);
+	yylval.token = ITEMNAME;
+	return ITEMNAME;
+}
+token RarityAction(const char * lexeme, const int lenght){
+	LogDebug("RarityAction: %s", lexeme);
+	yylval.token = RAR;
+	return RAR;
+}
+token DescriptionAction(const char * lexeme, const int lenght){
+	LogDebug("DescriptionAction: %s", lexeme);
+	yylval.token = DES;
+	return DES;
+}
+token TypeMonsterAction(const char * lexeme, const int lenght){
+	LogDebug("TypeMonsterAction: %s", lexeme);
+	yylval.token = TYPEMONS;
+	return TYPEMONS;
+}
+token AttacksAction(const char * lexeme, const int lenght){
+	LogDebug("AttacksAction: %s", lexeme);
+	yylval.token = ATTACKS;
+	return ATTACKS;
+}
+/*
 token CMonsAction(const char * lexeme){
 	LogDebug("CreateMosnterAction: %s", lexeme);
 	yylval.token = CMONS;
@@ -478,7 +588,7 @@ token ChangeTempSheet(const char * lexeme){
 	yylval.token = CHTPSH;
 	return CHTPSH;
 }
-
+*/
 token FunctionPatternAction(const char * lexeme){
 	LogDebug("FunctionPatternAction: %s", lexeme);
 	yylval.token = FUNCT;
@@ -497,11 +607,6 @@ token StartPatternAction(const char * lexeme){
 	return START;
 }
 
-token PartyTypePatternAction(const char * lexeme){
-	LogDebug("PartyTypePatternAction: %s", lexeme);
-	yylval.token = PARTY;
-	return PARTY;
-}
 
 token CharcterTypePatternAction(const char * lexeme){
 	LogDebug("CharaterTypePatternAction: %s", lexeme);
@@ -521,11 +626,6 @@ token StatsTypePatternAction(const char * lexeme){
 	return STATS;
 }
 
-token StatTypePatternAction(const char * lexeme){
-	LogDebug("StatTypePatternAction: %s", lexeme);
-	yylval.token = STAT;
-	return STAT;
-}
 
 token NPCTypePatternAction(const char * lexeme){
 	LogDebug("NPCTypePatternAction: %s", lexeme);
@@ -556,7 +656,7 @@ token SheetTypePatternAction(const char * lexeme){
 	yylval.token = SHEET;
 	return SHEET;
 }
-
+/*
 token IfConditionalPatternAction(const char * lexeme){
 	LogDebug("IfConditionalPatternAction: %s", lexeme);
 	yylval.token = IFCOND;
@@ -634,7 +734,7 @@ token NotEqualsComparativeAction(const char * lexeme){
 	yylval.token = NOTEQ;
 	return NOTEQ;
 }
-
+*/
 void IgnoredPatternAction(const char * lexeme, const int length) {
 	LogDebug("IgnoredPatternAction: '%s' (length = %d).", lexeme, length);
 	// Como no debe hacer nada con el patrón, solo se loguea en consola.

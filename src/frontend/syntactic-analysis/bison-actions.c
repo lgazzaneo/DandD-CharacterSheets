@@ -35,6 +35,10 @@ int ProgramGrammarAction(const int value) {
 	* cuyo campo "succeed" indica si la compilación fue o no exitosa, la cual
 	* es utilizada en la función "main".
 	*/
+/*
+	program * p = malloc(sizeof(program));
+
+*/
 	state.succeed = true;
 	/*
 	* Por otro lado, "result" contiene el resultado de aplicar el análisis
@@ -84,6 +88,16 @@ int ConstantFactorGrammarAction(const int value) {
 
 int IntegerConstantGrammarAction(const int value) {
 	LogDebug("\tIntegerConstantGrammarAction(%d)", value);
+	return value;
+}
+
+int StartProgramAction(const int value){
+	LogDebug("\tStartProgramAction(%d)", value);
+	return value;
+}
+
+int CrearnuevafunctionAction(const int value){
+	LogDebug("\tCrearnuevafunctionAction(%d)", value);
 	return value;
 }
 

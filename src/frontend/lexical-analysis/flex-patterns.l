@@ -56,69 +56,36 @@ dicedamage      [0-9]+[d][0-9]([\+\-][0-9]+)?
 
 "."                                         {return PointAction(yytext);}
 
+":"                                         {return DosPuntosAction(yytext);}
+
 "&&"                                        {return ANDOperator(yytext); }
 "||"                                        {return OROperator(yytext); }
 
-"createCharacter"                           {return CCharAction(yytext); }
-"createMonster"                             {return CMonsAction(yytext); }
-"createRace"                                {return CRaceAction(yytext); }   
-"createClass"                               {return CClassAction(yytext); }
-"createItem"                                {return CItemAction(yytext); }
-"createNPC"                                 {return CNPCAction(yytext); }
-"createFeature"                             {return CFeatureAction(yytext); }
-"createParty"                               {return CPartyAction(yytext); }
 
-"addStats"                                  {return AddStatsAction(yytext); }
-"addCharacterInfo"                          {return AddCharcInfoAction(yytext); }
-"addCharacterBackground"                    {return AddCharcBackgAction(yytext); }
-"addSpellBook"                              {return AddSpellbookAction(yytext); }
-"addSpelltoSpellbook"                       {return AddSpelltoSpellbookAction(yytext); }
-"addRaceModif"                              {return AddRaceModifAction(yytext); }
-"addClassModif"                             {return AddClassModifAction(yytext); }
-"addNPCInfo"                                {return AddNPCInfoAction(yytext); }
-
-"addMonsterInfo"                            {return AddMonsterInfoAction(yytext); }
-
-"addItemDescr"                              {return AddItemDescAction(yytext); }
-"addItemInfo"                               {return AddItemInfoAction(yytext); }
-
-"addPartyMember"                            {return AddPartyMemAction(yytext); }
-"removePartyMember"                         {return RemPartyMemAction(yytext); }
-
-"changeExp"                                 {return ChangeExpAction(yytext); }
-"changeLevel"                               {return ChangeLevelAction(yytext); }
-"changeClassLevel"                          {return ChangeClassLevAction(yytext); }
-"changeClass"                               {return ChangeClassAction(yytext); }
-"changeRace"                                {return ChangeRaceAction(yytext); }
-"becomeMulticlass"                          {return BecomeMultiClassAction(yytext); }
-
-"changeItemClass"                           {return ChangeItemClassAction(yytext); }
-"changeItemRarity"                          {return ChangeItemRarAction(yytext); }
-"changeItemsRequirements"                   {return ChangeItemReqAction(yytext); }
-
-"changeNPCClass"                            {return ChangeNPCClassAction(yytext); }
-
-"equipItem"                                 {return EqItemAction(yytext); }
-"unequipItem"                               {return UneqItemAction(yytext); }
-
-
-"checkClass"                                {return ChkClassAction(yytext); }
-"checkLevel"                                {return ChkLevelAction(yytext); }
-"checkExp"                                  {return ChkExpAction(yytext); }
-"checkSpells"                               {return ChkSpellsAction(yytext); }
-"checkItems"                                {return ChkItemAction(yytext); }
-"checkRace"                                 {return ChkRaceDescAction(yytext); }
-"checkItemRestrictions"                     {return ChkItemRestrAction(yytext); }
-"checkFeatures"                             {return ChkFeatAction(yytext); }
-"checkMonsterInfo"                          {return ChkMonsInfAction(yytext); }
-"checkParty"                                {return ChkPartyAction(yytext); }
-"checkStat"                                 {return ChkStat(yytext); }
-"checkStats"                                {return ChkStats(yytext); }
-
-"exportSheet"                               {return ExportSheetAction(yytext); }
-"getSheet"                                  {return GetSheetAction(yytext); }
-"AddCharactertoSheet"                       {return AddCharctoSheet(yytext);}
-"ChangeTemplateSheet"                       {return ChangeTempSheet(yytext);}
+"name"                                            {return NameAction(yytext, yyleng);}                                                 
+"level"                                           {return LevelAction(yytext, yyleng);}        
+"class"                                           {return ClassAction(yytext, yyleng);}
+"dualclass"                                       {return DualClassAction(yytext, yyleng);}
+"background"                                      {return BackgroundAction(yytext, yyleng);}
+"playername"                                      {return PlayerNameAction(yytext, yyleng);}
+"race"                                            {return RaceAction(yytext, yyleng);}
+"alignment"                                       {return AlignmentAction(yytext, yyleng);}
+"experience"                                      {return ExperienceAction(yytext, yyleng);}
+"Armorclass"                                      {return ACAction(yytext, yyleng);}
+"initiative"                                      {return InitiativeAction(yytext, yyleng);}
+"speed"                                           {return SpeedAction(yytext, yyleng);}
+"proficiency"                                     {return ProficiencyAction(yytext, yyleng);}
+"features"                                        {return FeaturesAction(yytext, yyleng);}
+"equipment"                                       {return EquipmentAction(yytext, yyleng);}
+"items"                                           {return ItemsAction(yytext, yyleng);}
+"backstory"                                       {return BackstoryAction(yytext, yyleng);}
+"spellcasterbook"                                 {return SpellcasterBookAction(yytext, yyleng);}
+"store"                                           {return StoreAction(yytext, yyleng);}
+"itemname"                                        {return ItemnameAction(yytext, yyleng);}
+"rarity"                                          {return RarityAction(yytext, yyleng);}
+"description"                                     {return DescriptionAction(yytext, yyleng);}
+"typemonster"                                     {return TypeMonsterAction(yytext, yyleng);}
+"attacks"                                         {return AttacksAction(yytext, yyleng);}
 
 "function"                                  {return FunctionPatternAction(yytext); }
 "new"                                       {return NewPatternAction(yytext); }
@@ -129,31 +96,12 @@ dicedamage      [0-9]+[d][0-9]([\+\-][0-9]+)?
 "Item"                                      {return ItemTypePatternAction(yytext); }                                   
 "String"                                    {return StringTypeDataAction(yytext);}
 "Stats"                                     {return StatsTypePatternAction(yytext); }
-"stat"                                      {return StatTypePatternAction(yytext); }
 "NPC"                                       {return NPCTypePatternAction(yytext); }
 "Monster"                                   {return MonsterTypePatternAction(yytext); }
 "Razgo"                                     {return RazgoTypePatternAction(yytext); }
 "Modificator"                               {return ModifTypePatternAction(yytext); }
 "Sheet"                                     {return SheetTypePatternAction(yytext); }
 "Integer"                                   {return IntegerDataTypeAction(yytext);}
-
-"if"                                        {return IfConditionalPatternAction(yytext); }
-"else"                                      {return ElseConditionalPatternAction(yytext); }
-"elsif"                                     {return ElsifConditionalPatternAction(yytext); }
-"do"                                        {return DoConditionalPatternAction(yytext); }
-"while"                                     {return WhileConditionalPatternAction(yytext); }
-"for"                                       {return ForConditionalPatternAction(yytext); }
-
-">="                                        {return GreaterorEqualComparativeAction(yytext); }
-"<="                                        {return LesserorEqualComparativeAction(yytext); }
-"=="                                        {return EqualsComparativeAction(yytext); }
-"!="                                        {return NotEqualsComparativeAction(yytext); }
-"<"                                         {return LesserComparativeAction(yytext); }
-">"                                         {return GreaterComparativeAction(yytext); }
-
-"print"                                     {return PrintAction(yytext); }
-
-"return"                                    {return ReturnAction(yytext);}
 
 {digit}+									{ return IntegerPatternAction(yytext, yyleng); }
 

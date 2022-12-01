@@ -40,7 +40,7 @@ token CloseCorchetesPatternAction(const char * lexeme);
 token PuntoComa(const char * lexeme);
 token CommaAction(const char * lexeme);
 token PointAction(const char * lexeme);
-token ANDOperator(const char * lexeme);
+/*token ANDOperator(const char * lexeme);
 token OROperator(const char * lexeme);
 token CCharAction(const char * lexeme);
 token CMonsAction(const char * lexeme);
@@ -94,7 +94,7 @@ token ChkStats(const char * lexeme);
 token ExportSheetAction(const char * lexeme);
 token GetSheetAction(const char * lexeme);
 token AddCharctoSheet(const char * lexeme);
-token ChangeTempSheet(const char * lexeme);
+token ChangeTempSheet(const char * lexeme);*/
 token FunctionPatternAction(const char * lexeme);
 token NewPatternAction(const char * lexeme);
 token StartPatternAction(const char * lexeme);
@@ -111,7 +111,7 @@ token RazgoTypePatternAction(const char * lexeme);
 token ModifTypePatternAction(const char * lexeme);
 token SheetTypePatternAction(const char * lexeme);
 token IntegerDataTypeAction(const char * lexeme);
-
+/*
 token IfConditionalPatternAction(const char * lexeme);
 token ElseConditionalPatternAction(const char * lexeme);
 token ElsifConditionalPatternAction(const char * lexeme);
@@ -126,12 +126,40 @@ token NotEqualsComparativeAction(const char * lexeme);
 token LesserComparativeAction(const char * lexeme);
 token GreaterComparativeAction(const char * lexeme);
 token PrintAction(const char * lexeme);
-token ReturnAction(const char * lexeme);
+token ReturnAction(const char * lexeme); 
+*/
 token AlphavalPatternAction(const char * lexeme, const int lenght);
 token StringPatternAction(const char * lexeme);
 token EndlineAction(const char * lexeme);
 token Cadena(const char * lexeme);
 token DiceDamage(const char * lexeme);
+
+token DosPuntosAction(const char * lexeme);
+
+token NameAction(const char * lexeme, const int lenght);
+token LevelAction(const char * lexeme, const int lenght);
+token ClassAction(const char * lexeme, const int lenght);
+token DualClassAction(const char * lexeme, const int lenght);
+token BackgroundAction(const char * lexeme, const int lenght);
+token PlayerNameAction(const char * lexeme, const int lenght);
+token RaceAction(const char * lexeme, const int lenght);
+token AlignmentAction(const char * lexeme, const int lenght);
+token ExperienceAction(const char * lexeme, const int lenght);
+token ACAction(const char * lexeme, const int lenght);
+token InitiativeAction(const char * lexeme, const int lenght);
+token SpeedAction(const char * lexeme, const int lenght);
+token ProficiencyAction(const char * lexeme, const int lenght);
+token FeaturesAction(const char * lexeme, const int lenght);
+token EquipmentAction(const char * lexeme, const int lenght);
+token ItemsAction(const char * lexeme, const int lenght);
+token BackstoryAction(const char * lexeme, const int lenght);
+token SpellcasterBookAction(const char * lexeme, const int lenght);
+token StoreAction(const char * lexeme, const int lenght);
+token ItemnameAction(const char * lexeme, const int lenght);
+token RarityAction(const char * lexeme, const int lenght);
+token DescriptionAction(const char * lexeme, const int lenght);
+token TypeMonsterAction(const char * lexeme, const int lenght);
+token AttacksAction(const char * lexeme, const int lenght);
 
 // Patrón desconocido, permite abortar debido a un error de sintaxis.
 token UnknownPatternAction(const char * lexeme, const int length);
