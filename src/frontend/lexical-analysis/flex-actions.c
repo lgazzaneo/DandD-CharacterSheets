@@ -64,8 +64,10 @@ token IntegerPatternAction(const char * lexeme, const int length) {
     char * text = (char *) calloc(length + 1, sizeof(char));
     // Copiar el lexema y \0 para evitar segmentation-faults:
     strncpy(text, lexeme, length);
+	Constant * aux = malloc(sizeof(Constant));
     // Convertir el lexema en un entero de verdad:
-    yylval.value->value = atoi(text);
+    aux->value = atoi(text);
+	yylval.value = aux;
     // Liberar la memoria, ya que solo nos interesa el resultado de atoi(.)
     // (no debería llamar a free(.), si “text” debe ser utilizado en Bison):
     free(text);
@@ -110,17 +112,19 @@ token DiceDamage(const char * lexeme, const int length) {
 	char delimitadores[] = "+-d ";
 	char * tok;
 
+	DiceDmg * aux2 = malloc(sizeof(DiceDmg));
+
 	tok = strtok(text, delimitadores);
 	if (tok != NULL)
-		yylval.damage->cantDice = atoi(tok);
+		aux2->cantDice = atoi(tok);
 	tok = strtok(NULL, delimitadores);
 	if(tok != NULL)
-		yylval.damage->typeofdice = atoi(tok);
+		aux2->typeofdice = atoi(tok);
 	tok = strtok(NULL, delimitadores);
 	if(tok != NULL)
-		yylval.damage->modif = cambio * atoi(tok);
+		aux2->modif = cambio * atoi(tok);
 
-
+	yylval.damage = aux2;
     // Liberar la memoria, ya que solo nos interesa el resultado de atoi(.)
     // (no debería llamar a free(.), si “text” debe ser utilizado en Bison):
     free(text);
@@ -138,8 +142,10 @@ token IntegerDataTypeAction(const char * lexeme) {
 
 token StringPatternAction(const char * lexeme, const int length) {
 	LogDebug("StringPatternAction: '%s'", lexeme);
-	strcpy(yylval.text->text, lexeme);
-	yylval.text->len = length;
+	objecttext * aux3 = malloc(sizeof(objecttext));
+	strcpy(aux3->text, lexeme);
+	aux3->len = length;
+	yylval.text = aux3;
 	yylval.token = STR;
 	return STR;
 }

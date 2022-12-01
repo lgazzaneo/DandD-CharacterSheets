@@ -84,21 +84,21 @@
 %token <token> OPEN_CORCHETES
 %token <token> CLOSE_CORCHETES
 
-%token <token> INTEGER
+%token <value> INTEGER
 
 %token <token> INTDT
 
 %token <token> ENDLINE
 %token <token> PUNTOCOMA
 
-%token <token>  DICEDMG
+%token <damage>  DICEDMG
 
 %token <token>    FUNCT
 %token <token>    NEW
 %token <token>    START
 
 %token <token>    CHARAC
-%token <token>   STR
+%token <text>   STR
 %token <token>   STRDT
 %token <token>   ITEM
 %token <token>    STATS
@@ -194,7 +194,7 @@ mainprogram: sheet					{$$ = ProgramStart($1);}
 
 freeendlines: ENDLINE 						{$$ = EndLines(ONEENDLINE, NULL);}
 			| ENDLINE ENDLINE freeendlines 	{$$ = EndLines(TWOORMOREENDLINES, $3);}
-			| /**/  						{$$ = Endlines(ZEROENDLINES, NULL);}
+			| /**/  						{$$ = EndLines(ZEROENDLINES, NULL);}
 ;
 
 sheet: NEW CHARAC DOSPTS INTEGER freeendlines body				{$$ = SheetFunction($4, CHARACTERSH, $6, NULL, NULL, NULL);}
@@ -203,7 +203,7 @@ sheet: NEW CHARAC DOSPTS INTEGER freeendlines body				{$$ = SheetFunction($4, CH
 	| NEW NPC DOSPTS INTEGER freeendlines npcbody				{$$ = SheetFunction($4, NPCSH, NULL, NULL, NULL, $6);}
 ;
 
-body: name freeendlines level freeendlines class freeendlines background freeendlines playername freeendlines race freeendlines alignment freeendlines exppoints freeendlines restofbody	{$$ = CharacBodyFunction($1,$3,$7,$9,$11,$13,$15,$17);}
+body: name freeendlines level freeendlines class freeendlines background freeendlines playername freeendlines race freeendlines alignment freeendlines exppoints freeendlines restofbody	{$$ = CharacBodyFunction($1,$3,$5,$7,$9,$11,$13,$15,$17);}
 ;
 
 name: NAME DOSPTS STR PUNTOCOMA		{$$ = nameCharacFunction($3);}
@@ -259,7 +259,7 @@ equipment: EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA freeendlines equipment
 		|  EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA							{$$ = equipmentChFunction(NORECURTYPE, $3, $5, $7, NULL);}
 ;
 
-items: ITEMS DOSPTS STR COMMA STR PUNTOCOMA freeendlines equipment					{$$ = itemsChFunction(RECURSIVETYPE, $3, $5, $8);}
+items: ITEMS DOSPTS STR COMMA STR PUNTOCOMA freeendlines items					{$$ = itemsChFunction(RECURSIVETYPE, $3, $5, $8);}
 		|  ITEMS DOSPTS STR COMMA STR PUNTOCOMA										{$$ = itemsChFunction(NORECURTYPE, $3, $5, NULL);}
 ;
 
@@ -288,7 +288,7 @@ merchantbody: STORE DOSPTS store					{$$ = MerchantFunction($3);}
 ;
 
 store: itemtosell INTEGER PUNTOCOMA freeendlines store		{$$ = StoreFunction(RECURSIVETYPE, $1, $2, $5);}
-	| itemtosell INTEGER PUNTOCOMA							{$$ = StoreFunction(NORECURTYPE, $1, $2, NULL)}
+	| itemtosell INTEGER PUNTOCOMA							{$$ = StoreFunction(NORECURTYPE, $1, $2, NULL);}
 ;	
 
 itemtosell: STR COMMA STR COMMA								{$$ = ItemstoSellFunction($1, $3);}
