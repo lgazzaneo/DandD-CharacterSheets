@@ -118,6 +118,9 @@ int b(char * str){
 mainprogram * ProgramStart(Sheet * sheet){
 	mainprogram * mainprogram = malloc(sizeof(mainprogram));
 	mainprogram->sheet = sheet;
+	state.succeed = true;
+	state.result = 0;
+	state.mainprogram = mainprogram;
 	return mainprogram;
 }
 

@@ -192,135 +192,135 @@
 mainprogram: sheet					{$$ = ProgramStart($1);} 
 ;
 
-freeendlines: ENDLINE 						{$$ = b("FreeLines1  ");}
-			| ENDLINE ENDLINE freeendlines 	{$$ = b("FreeLines2  ");}
-			| /**/  						{$$ = b("FreeLines3  ");}
+freeendlines: ENDLINE 						{$$ = EndLines(ONEENDLINE, NULL);}
+			| ENDLINE ENDLINE freeendlines 	{$$ = EndLines(TWOORMOREENDLINES, $3);}
+			| /**/  						{$$ = Endlines(ZEROENDLINES, NULL);}
 ;
 
-sheet: NEW CHARAC DOSPTS INTEGER freeendlines body
-	| NEW MOSNTER DOSPTS INTEGER freeendlines monsterbody
-	| NEW ITEM DOSPTS INTEGER freeendlines itembody
-	| NEW NPC DOSPTS INTEGER freeendlines npcbody
+sheet: NEW CHARAC DOSPTS INTEGER freeendlines body				{$$ = SheetFunction($4, CHARACTERSH, $6, NULL, NULL, NULL);}
+	| NEW MOSNTER DOSPTS INTEGER freeendlines monsterbody		{$$ = SheetFunction($4, MOSNTERSH, NULL, $6, NULL, NULL);}
+	| NEW ITEM DOSPTS INTEGER freeendlines itembody				{$$ = SheetFunction($4, ITEMSH, NULL, NULL, $6, NULL);}
+	| NEW NPC DOSPTS INTEGER freeendlines npcbody				{$$ = SheetFunction($4, NPCSH, NULL, NULL, NULL, $6);}
 ;
 
-body: name freeendlines level freeendlines class freeendlines background freeendlines playername freeendlines race freeendlines alignment freeendlines exppoints freeendlines restofbody
+body: name freeendlines level freeendlines class freeendlines background freeendlines playername freeendlines race freeendlines alignment freeendlines exppoints freeendlines restofbody	{$$ = CharacBodyFunction($1,$3,$7,$9,$11,$13,$15,$17);}
 ;
 
-name: NAME DOSPTS STR PUNTOCOMA
+name: NAME DOSPTS STR PUNTOCOMA		{$$ = nameCharacFunction($3);}
 ;
 
-level: LVL DOSPTS INTEGER PUNTOCOMA
+level: LVL DOSPTS INTEGER PUNTOCOMA		{$$ = levelCharacFunction($3);}
 ;
 
-class: CLASS DOSPTS STR PUNTOCOMA
-	| DUALCLASS DOSPTS STR COMMA STR
+class: CLASS DOSPTS STR PUNTOCOMA		{$$ = classCharacFunction(NODUALCLASS, $3, NULL);}
+	| DUALCLASS DOSPTS STR COMMA STR	{$$ = classCharacFunction(SIDUALCLASS, $3, $5);}
 ;
 
-background: BKGR DOSPTS STR PUNTOCOMA
+background: BKGR DOSPTS STR PUNTOCOMA 	{$$ = backgroundCharacFunction($3);}
 ;
 
-playername: PLYNAME DOSPTS STR PUNTOCOMA
+playername: PLYNAME DOSPTS STR PUNTOCOMA	{$$ = playernameFunction($3);}
 ;
 
-race: RACE DOSPTS STR PUNTOCOMA
+race: RACE DOSPTS STR PUNTOCOMA				{$$ = characraceFunction($3);}
 ;
 
-alignment: ALIGN DOSPTS STR PUNTOCOMA
+alignment: ALIGN DOSPTS STR PUNTOCOMA		{$$ = alignmentCharacFunction($3);}
 ;
 
-exppoints: EXP DOSPTS INTEGER PUNTOCOMA
+exppoints: EXP DOSPTS INTEGER PUNTOCOMA		{$$ = exppointsCharacFunction($3);}
 ;
 
-restofbody: stats freeendlines armorclass freeendlines initiative freeendlines speed freeendlines proficiencies freeendlines features freeendlines equipment freeendlines items freeendlines backstory freeendlines spellbook
+restofbody: stats freeendlines armorclass freeendlines initiative freeendlines speed freeendlines proficiencies freeendlines features freeendlines equipment freeendlines items freeendlines backstory freeendlines spellbook 	{$$ = restofbodyCharacFunction($1,$3,$5,$7,$9,$11,$13,$15,$17,$19);}
 		| /**/
 ;
 
-stats: STATS DOSPTS INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER PUNTOCOMA
+stats: STATS DOSPTS INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER COMMA INTEGER PUNTOCOMA 	{$$ = statsSpreadFunction($3,$5,$7,$9,$11,$13);}
 ;
 
-armorclass: ACLASS DOSPTS INTEGER PUNTOCOMA
+armorclass: ACLASS DOSPTS INTEGER PUNTOCOMA		{$$ = ArmorClassFunction($3);}
 ;
 
-initiative: INIT DOSPTS INTEGER PUNTOCOMA
+initiative: INIT DOSPTS INTEGER PUNTOCOMA		{$$ = InitiativeFunction($3);}
 ;
 
-speed: SPD DOSPTS INTEGER PUNTOCOMA
+speed: SPD DOSPTS INTEGER PUNTOCOMA				{$$ = SpeedFunction($3);}
 ;
 
-proficiencies: PROF DOSPTS STR DOSPTS STR COMMA INTEGER COMMA proficiencies
-			|  PROF DOSPTS STR DOSPTS STR COMMA INTEGER PUNTOCOMA
+proficiencies: PROF DOSPTS STR DOSPTS STR COMMA INTEGER COMMA freeendlines proficiencies		{$$ = proficienciesChFunction(RECURSIVETYPE, $3, $5, $7, $10);}
+			|  PROF DOSPTS STR DOSPTS STR COMMA INTEGER PUNTOCOMA								{$$ = proficienciesChFunction(NORECURTYPE, $3, $5, $7, NULL);}
 ;
 
-features: FEAT DOSPTS STR COMMA STR PUNTOCOMA freeendlines features
-		| FEAT DOSPTS STR COMMA STR PUNTOCOMA
+features: FEAT DOSPTS STR COMMA STR PUNTOCOMA freeendlines features				{$$ = featuresChFunction(RECURSIVETYPE, $3, $5, $8);}
+		| FEAT DOSPTS STR COMMA STR PUNTOCOMA									{$$ = featuresChFunction(NORECURTYPE, $3, $5, NULL);}
 ;
 
-equipment: EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA freeendlines equipment
-		|  EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA
+equipment: EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA freeendlines equipment	{$$ = equipmentChFunction(RECURSIVETYPE, $3, $5, $7, $10);}
+		|  EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA							{$$ = equipmentChFunction(NORECURTYPE, $3, $5, $7, NULL);}
 ;
 
-items: ITEMS DOSPTS STR COMMA STR PUNTOCOMA freeendlines equipment
-		|  ITEMS DOSPTS STR COMMA STR PUNTOCOMA
+items: ITEMS DOSPTS STR COMMA STR PUNTOCOMA freeendlines equipment					{$$ = itemsChFunction(RECURSIVETYPE, $3, $5, $8);}
+		|  ITEMS DOSPTS STR COMMA STR PUNTOCOMA										{$$ = itemsChFunction(NORECURTYPE, $3, $5, NULL);}
 ;
 
-backstory: BACKSTORY DOSPTS STR PUNTOCOMA
+backstory: BACKSTORY DOSPTS STR PUNTOCOMA			{$$ = CharacBackStoryFunction($3);}
 ;
 
-spellbook: spellcasterspells
-		|  /**/
+spellbook: spellcasterspells						{$$ = SpellbookFunction(SPBOOK, $1);}
+		|  /**/										{$$ = SpellbookFunction(NOSPBOOK, NULL);}
 ;
 
-spellcasterspells: SPLLBOOK DOSPTS INTEGER DOSPTS levelsplb freeendlines spellcasterspells;
-				|  SPLLBOOK DOSPTS INTEGER DOSPTS levelsplb
+spellcasterspells: SPLLBOOK DOSPTS INTEGER DOSPTS levelsplb freeendlines spellcasterspells		{$$ = spellcasterspellsFunction(RECURSPELL, $5, $3, $7);}
+				|  SPLLBOOK DOSPTS INTEGER DOSPTS levelsplb										{$$ = spellcasterspellsFunction(ONLYONE, $5, $3, NULL);}
 ;
 
-levelsplb: spell freeendlines levelsplb
-		| spell 
+levelsplb: spell freeendlines levelsplb				{$$ = LevelSplbFunction(RECURSIVELVLSPB, $1, $3);}
+		| spell 									{$$ = LevelSplbFunction(ONLYONELEVELSPELL, $1, NULL);}
 ;
 
-spell: STR COMMA STR COMMA DICEDMG PUNTOCOMA
+spell: STR COMMA STR COMMA DICEDMG PUNTOCOMA		{$$ = SpellFunction($1, $3, $5);}
 ;
 //startofnpc
-npcbody: merchantbody
+npcbody: merchantbody								{$$ = NPCBodyFunction($1);}
 ;
 
-merchantbody: STORE DOSPTS store
+merchantbody: STORE DOSPTS store					{$$ = MerchantFunction($3);}
 ;
 
-store: itemtosell INTEGER PUNTOCOMA freeendlines store
-	| itemtosell INTEGER PUNTOCOMA
+store: itemtosell INTEGER PUNTOCOMA freeendlines store		{$$ = StoreFunction(RECURSIVETYPE, $1, $2, $5);}
+	| itemtosell INTEGER PUNTOCOMA							{$$ = StoreFunction(NORECURTYPE, $1, $2, NULL)}
 ;	
 
-itemtosell: STR COMMA STR COMMA
+itemtosell: STR COMMA STR COMMA								{$$ = ItemstoSellFunction($1, $3);}
 ;
 //end npc
 
 //startitem
-itembody: itemname freeendlines rarity freeendlines description freeendlines
+itembody: itemname freeendlines rarity freeendlines description freeendlines	{$$ = ItemBodyFunction($1, $5, $3);}
 ;
 
-itemname: ITEMNAME DOSPTS STR PUNTOCOMA
+itemname: ITEMNAME DOSPTS STR PUNTOCOMA				{$$ = ItemNameFunction($3);}
 ;
 
-rarity: RAR DOSPTS STR PUNTOCOMA
+rarity: RAR DOSPTS STR PUNTOCOMA					{$$ = ItemRarityFunction($3);}
 ;
 
-description: DES DOSPTS STR PUNTOCOMA
+description: DES DOSPTS STR PUNTOCOMA				{$$ = ItemDescriptionFunction($3);}
 ;
 //enditem 
 
 //startmonster
-monsterbody: name freeendlines typeofmonster freeendlines stats freeendlines backstory freeendlines attacks freeendlines spellbook
+monsterbody: name freeendlines typeofmonster freeendlines stats freeendlines backstory freeendlines attacks freeendlines spellbook		{$$ = MonsterBodyFunction($1, $3, $5, $7, $9, $11);}
 ;
 
-typeofmonster: TYPEMONS DOSPTS STR PUNTOCOMA
+typeofmonster: TYPEMONS DOSPTS STR PUNTOCOMA		{$$ = TypeofMonsterFunction($3);}
 ;
 
-attacks: ATTACKS DOSPTS listofat
+attacks: ATTACKS DOSPTS listofat					{$$ = MonsterAttacksFunction($3);}
 ;
 
-listofat: STR COMMA STR COMMA DICEDMG PUNTOCOMA freeendlines listofat
-		| STR COMMA STR COMMA DICEDMG PUNTOCOMA
+listofat: STR COMMA STR COMMA DICEDMG PUNTOCOMA freeendlines listofat			{$$ = ListofAttacksFunction(RECURSIVETYPE, $5, $1, $3, $8);}
+		| STR COMMA STR COMMA DICEDMG PUNTOCOMA									{$$ = ListofAttacksFunction(NORECURTYPE, $5, $1, $3, NULL);}
 ;
 //endmonster
 
