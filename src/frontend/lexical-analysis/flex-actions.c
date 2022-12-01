@@ -143,7 +143,8 @@ token IntegerDataTypeAction(const char * lexeme) {
 token StringPatternAction(const char * lexeme, const int length) {
 	LogDebug("StringPatternAction: '%s'", lexeme);
 	objecttext * aux3 = malloc(sizeof(objecttext));
-	strcpy(aux3->text, lexeme);
+	aux3->text = calloc(length + 1, 1);
+	strncpy(aux3->text, lexeme, length);
 	aux3->len = length;
 	yylval.text = aux3;
 	//yylval.token = STR;
