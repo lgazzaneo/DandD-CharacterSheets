@@ -231,7 +231,7 @@ alignment: ALIGN DOSPTS STR PUNTOCOMA		{$$ = alignmentCharacFunction($3);}
 exppoints: EXP DOSPTS INTEGER PUNTOCOMA		{$$ = exppointsCharacFunction($3);}
 ;
 
-restofbody: stats freeendlines armorclass freeendlines initiative freeendlines speed freeendlines proficiencies freeendlines features freeendlines equipment freeendlines items freeendlines backstory freeendlines spellbook 	{$$ = restofbodyCharacFunction($1,$3,$5,$7,$9,$11,$13,$15,$17,$19);}
+restofbody: stats freeendlines armorclass freeendlines initiative freeendlines speed freeendlines proficiencies features equipment items backstory freeendlines spellbook 	{$$ = restofbodyCharacFunction($1,$3,$5,$7,$9,$10,$11,$12,$13,$15);}
 		| /**/
 ;
 
@@ -247,20 +247,20 @@ initiative: INIT DOSPTS INTEGER PUNTOCOMA		{$$ = InitiativeFunction($3);}
 speed: SPD DOSPTS INTEGER PUNTOCOMA				{$$ = SpeedFunction($3);}
 ;
 
-proficiencies: PROF DOSPTS STR DOSPTS STR COMMA INTEGER COMMA freeendlines proficiencies		{$$ = proficienciesChFunction(RECURSIVETYPE, $3, $5, $7, $10);}
-			|  PROF DOSPTS STR DOSPTS STR COMMA INTEGER PUNTOCOMA								{$$ = proficienciesChFunction(NORECURTYPE, $3, $5, $7, NULL);}
+proficiencies: PROF DOSPTS STR DOSPTS STR COMMA INTEGER COMMA freeendlines proficiencies				{$$ = proficienciesChFunction(RECURSIVETYPE, $3, $5, $7, $10);}
+			|  PROF DOSPTS STR DOSPTS STR COMMA INTEGER PUNTOCOMA freeendlines							{$$ = proficienciesChFunction(NORECURTYPE, $3, $5, $7, NULL);}
 ;
 
 features: FEAT DOSPTS STR COMMA STR PUNTOCOMA freeendlines features				{$$ = featuresChFunction(RECURSIVETYPE, $3, $5, $8);}
-		| FEAT DOSPTS STR COMMA STR PUNTOCOMA									{$$ = featuresChFunction(NORECURTYPE, $3, $5, NULL);}
+		| FEAT DOSPTS STR COMMA STR PUNTOCOMA freeendlines						{$$ = featuresChFunction(NORECURTYPE, $3, $5, NULL);}
 ;
 
-equipment: EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA freeendlines equipment	{$$ = equipmentChFunction(RECURSIVETYPE, $3, $5, $7, $10);}
-		|  EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA							{$$ = equipmentChFunction(NORECURTYPE, $3, $5, $7, NULL);}
+equipment: EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA freeendlines equipment		{$$ = equipmentChFunction(RECURSIVETYPE, $3, $5, $7, $10);}
+		|  EQUIP DOSPTS STR COMMA STR COMMA STR PUNTOCOMA freeendlines					{$$ = equipmentChFunction(NORECURTYPE, $3, $5, $7, NULL);}
 ;
 
-items: ITEMS DOSPTS STR COMMA STR PUNTOCOMA freeendlines items					{$$ = itemsChFunction(RECURSIVETYPE, $3, $5, $8);}
-		|  ITEMS DOSPTS STR COMMA STR PUNTOCOMA										{$$ = itemsChFunction(NORECURTYPE, $3, $5, NULL);}
+items: ITEMS DOSPTS STR COMMA STR PUNTOCOMA freeendlines items								{$$ = itemsChFunction(RECURSIVETYPE, $3, $5, $8);}
+		|  ITEMS DOSPTS STR COMMA STR PUNTOCOMA freeendlines								{$$ = itemsChFunction(NORECURTYPE, $3, $5, NULL);}
 ;
 
 backstory: BACKSTORY DOSPTS STR PUNTOCOMA			{$$ = CharacBackStoryFunction($3);}
@@ -310,7 +310,7 @@ description: DES DOSPTS STR PUNTOCOMA				{$$ = ItemDescriptionFunction($3);}
 //enditem 
 
 //startmonster
-monsterbody: name freeendlines typeofmonster freeendlines stats freeendlines backstory freeendlines attacks freeendlines spellbook		{$$ = MonsterBodyFunction($1, $3, $5, $7, $9, $11);}
+monsterbody: name freeendlines typeofmonster freeendlines stats freeendlines backstory freeendlines attacks spellbook		{$$ = MonsterBodyFunction($1, $3, $5, $7, $9, $10);}
 ;
 
 typeofmonster: TYPEMONS DOSPTS STR PUNTOCOMA		{$$ = TypeofMonsterFunction($3);}
@@ -320,7 +320,7 @@ attacks: ATTACKS DOSPTS listofat					{$$ = MonsterAttacksFunction($3);}
 ;
 
 listofat: STR COMMA STR COMMA DICEDMG PUNTOCOMA freeendlines listofat			{$$ = ListofAttacksFunction(RECURSIVETYPE, $5, $1, $3, $8);}
-		| STR COMMA STR COMMA DICEDMG PUNTOCOMA									{$$ = ListofAttacksFunction(NORECURTYPE, $5, $1, $3, NULL);}
+		| STR COMMA STR COMMA DICEDMG PUNTOCOMA	freeendlines							{$$ = ListofAttacksFunction(NORECURTYPE, $5, $1, $3, NULL);}
 ;
 //endmonster
 
