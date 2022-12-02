@@ -1,0 +1,5 @@
+new NPC : 44
+store: "Rations", "Cheap Food, Great while traveling the woods and mountains", 10;
+        "Water Bottle", "Bottle filled with pure water", 5;
+        "A Kilogram of Fruit and Vegetables", "A Kilo of random fruits and vegetables in season, very refreshing", 25;
+        "BackPack +1", "Great for a travelling party, enchances carring capacity by +50Kg", 150;

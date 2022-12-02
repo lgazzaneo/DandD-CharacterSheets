@@ -1,6 +1,6 @@
-#line 1 "../src/frontend/lexical-analysis/flex-scanner.c"
+#line 2 "../src/frontend/lexical-analysis/flex-scanner.c"
 
-#line 3 "../src/frontend/lexical-analysis/flex-scanner.c"
+#line 4 "../src/frontend/lexical-analysis/flex-scanner.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -785,14 +785,14 @@ char *yytext;
 
 #include "flex-actions.h"
 
-#line 788 "../src/frontend/lexical-analysis/flex-scanner.c"
+#line 789 "../src/frontend/lexical-analysis/flex-scanner.c"
 /* Obliga a crear una regla explícita para manejar lexemas desconocidos. */
 /* Escanea un único archivo y se detiene. */
 /* Dispone una variable global "yylineno" con el número de línea actual. */
 /* Contextos de Flex. */
 
 /* Patrones reutilizables. */
-#line 795 "../src/frontend/lexical-analysis/flex-scanner.c"
+#line 796 "../src/frontend/lexical-analysis/flex-scanner.c"
 
 #define INITIAL 0
 #define COMMENT 1
@@ -1014,7 +1014,7 @@ YY_DECL
 #line 30 "../src/frontend/lexical-analysis/flex-patterns.l"
 
 
-#line 1017 "../src/frontend/lexical-analysis/flex-scanner.c"
+#line 1018 "../src/frontend/lexical-analysis/flex-scanner.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1419,7 +1419,7 @@ YY_RULE_SETUP
 #line 121 "../src/frontend/lexical-analysis/flex-patterns.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1422 "../src/frontend/lexical-analysis/flex-scanner.c"
+#line 1423 "../src/frontend/lexical-analysis/flex-scanner.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(COMMENT):
 case YY_STATE_EOF(STRING):
