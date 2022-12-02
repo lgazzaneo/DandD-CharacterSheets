@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.3.2.  */
+/* A Bison parser, made by GNU Bison 3.8.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2019 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -31,8 +31,9 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
 
 #ifndef YY_YY_SRC_FRONTEND_SYNTACTIC_ANALYSIS_BISON_PARSER_H_INCLUDED
 # define YY_YY_SRC_FRONTEND_SYNTACTIC_ANALYSIS_BISON_PARSER_H_INCLUDED
@@ -44,79 +45,83 @@
 extern int yydebug;
 #endif
 
-/* Token type.  */
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    ADD = 258,
-    SUB = 259,
-    MUL = 260,
-    DIV = 261,
-    AND = 262,
-    OR = 263,
-    UNKNOWN_ERROR = 264,
-    ALPHAVAL = 265,
-    OPEN_PARENTHESIS = 266,
-    CLOSE_PARENTHESIS = 267,
-    OPEN_LLAVES = 268,
-    CLOSE_LLAVES = 269,
-    OPEN_CORCHETES = 270,
-    CLOSE_CORCHETES = 271,
-    INTEGER = 272,
-    INTDT = 273,
-    ENDLINE = 274,
-    PUNTOCOMA = 275,
-    DICEDMG = 276,
-    FUNCT = 277,
-    NEW = 278,
-    START = 279,
-    CHARAC = 280,
-    STR = 281,
-    STRDT = 282,
-    ITEM = 283,
-    STATS = 284,
-    NPC = 285,
-    MOSNTER = 286,
-    RAZGO = 287,
-    MODIF = 288,
-    SHEET = 289,
-    DOSPTS = 290,
-    CADENA = 291,
-    COMMA = 292,
-    NAME = 293,
-    CLASS = 294,
-    DUALCLASS = 295,
-    LVL = 296,
-    BKGR = 297,
-    PLYNAME = 298,
-    RACE = 299,
-    ALIGN = 300,
-    EXP = 301,
-    ACLASS = 302,
-    INIT = 303,
-    SPD = 304,
-    PROF = 305,
-    FEAT = 306,
-    EQUIP = 307,
-    ITEMS = 308,
-    BACKSTORY = 309,
-    SPLLBOOK = 310,
-    STORE = 311,
-    ITEMNAME = 312,
-    RAR = 313,
-    DES = 314,
-    TYPEMONS = 315,
-    ATTACKS = 316
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    ADD = 258,                     /* ADD  */
+    SUB = 259,                     /* SUB  */
+    MUL = 260,                     /* MUL  */
+    DIV = 261,                     /* DIV  */
+    AND = 262,                     /* AND  */
+    OR = 263,                      /* OR  */
+    UNKNOWN_ERROR = 264,           /* UNKNOWN_ERROR  */
+    ALPHAVAL = 265,                /* ALPHAVAL  */
+    OPEN_PARENTHESIS = 266,        /* OPEN_PARENTHESIS  */
+    CLOSE_PARENTHESIS = 267,       /* CLOSE_PARENTHESIS  */
+    OPEN_LLAVES = 268,             /* OPEN_LLAVES  */
+    CLOSE_LLAVES = 269,            /* CLOSE_LLAVES  */
+    OPEN_CORCHETES = 270,          /* OPEN_CORCHETES  */
+    CLOSE_CORCHETES = 271,         /* CLOSE_CORCHETES  */
+    INTEGER = 272,                 /* INTEGER  */
+    INTDT = 273,                   /* INTDT  */
+    ENDLINE = 274,                 /* ENDLINE  */
+    PUNTOCOMA = 275,               /* PUNTOCOMA  */
+    DICEDMG = 276,                 /* DICEDMG  */
+    FUNCT = 277,                   /* FUNCT  */
+    NEW = 278,                     /* NEW  */
+    START = 279,                   /* START  */
+    CHARAC = 280,                  /* CHARAC  */
+    STR = 281,                     /* STR  */
+    STRDT = 282,                   /* STRDT  */
+    ITEM = 283,                    /* ITEM  */
+    STATS = 284,                   /* STATS  */
+    NPC = 285,                     /* NPC  */
+    MOSNTER = 286,                 /* MOSNTER  */
+    RAZGO = 287,                   /* RAZGO  */
+    MODIF = 288,                   /* MODIF  */
+    SHEET = 289,                   /* SHEET  */
+    DOSPTS = 290,                  /* DOSPTS  */
+    CADENA = 291,                  /* CADENA  */
+    COMMA = 292,                   /* COMMA  */
+    NAME = 293,                    /* NAME  */
+    CLASS = 294,                   /* CLASS  */
+    DUALCLASS = 295,               /* DUALCLASS  */
+    LVL = 296,                     /* LVL  */
+    BKGR = 297,                    /* BKGR  */
+    PLYNAME = 298,                 /* PLYNAME  */
+    RACE = 299,                    /* RACE  */
+    ALIGN = 300,                   /* ALIGN  */
+    EXP = 301,                     /* EXP  */
+    ACLASS = 302,                  /* ACLASS  */
+    INIT = 303,                    /* INIT  */
+    SPD = 304,                     /* SPD  */
+    PROF = 305,                    /* PROF  */
+    FEAT = 306,                    /* FEAT  */
+    EQUIP = 307,                   /* EQUIP  */
+    ITEMS = 308,                   /* ITEMS  */
+    BACKSTORY = 309,               /* BACKSTORY  */
+    SPLLBOOK = 310,                /* SPLLBOOK  */
+    STORE = 311,                   /* STORE  */
+    ITEMNAME = 312,                /* ITEMNAME  */
+    RAR = 313,                     /* RAR  */
+    DES = 314,                     /* DES  */
+    TYPEMONS = 315,                /* TYPEMONS  */
+    ATTACKS = 316                  /* ATTACKS  */
   };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-
 union YYSTYPE
 {
-#line 8 "../src/frontend/syntactic-analysis/bison-grammar.y" /* yacc.c:1921  */
+#line 8 "../src/frontend/syntactic-analysis/bison-grammar.y"
 
 	// No-terminales (backend).
 	/*
@@ -174,9 +179,9 @@ union YYSTYPE
 	objecttext * text;
 	DiceDmg * damage;
 
-#line 178 "../src/frontend/syntactic-analysis/bison-parser.h" /* yacc.c:1921  */
-};
+#line 183 "../src/frontend/syntactic-analysis/bison-parser.h"
 
+};
 typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -185,6 +190,8 @@ typedef union YYSTYPE YYSTYPE;
 
 extern YYSTYPE yylval;
 
+
 int yyparse (void);
+
 
 #endif /* !YY_YY_SRC_FRONTEND_SYNTACTIC_ANALYSIS_BISON_PARSER_H_INCLUDED  */

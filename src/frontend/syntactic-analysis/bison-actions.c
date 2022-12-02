@@ -268,7 +268,7 @@ statsSpread * statsSpreadFunction(Constant * stat1, Constant * stat2, Constant *
 
 Constant * statmodifcalc(Constant * stat1){
 	Constant * x1 = malloc(sizeof(Constant));
-	if(stat1->value <= 2 || stat1->value == 3){
+	if(stat1->value == 2 || stat1->value == 3){
 		x1->value = -4;
 	}else if (stat1->value == 4 || stat1->value == 5){
 		x1->value = -3;
@@ -284,7 +284,7 @@ Constant * statmodifcalc(Constant * stat1){
 		x1->value = 2;
 	}else if (stat1->value == 16 || stat1->value == 17){
 		x1->value = 3;
-	}else if (stat1->value == 18 || stat1->value >= 19){
+	}else if (stat1->value == 18 || stat1->value == 19){
 		x1->value = 4;
 	}
 	return x1;

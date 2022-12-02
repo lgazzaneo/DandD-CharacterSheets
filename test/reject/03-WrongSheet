@@ -1,7 +1,0 @@
-new Item : 158
-name: "Araxis";
-typemonster : "Queen Arachne - Queen of All Arachnids"
-Stats : 150, 100, 75, 200, 175, 10;
-backstory: "An massive evolved Arachne can become a Queen if she slays enough Arachne to gain the power to Evolve. It gains the capability to create 100s if not 1000s of lesser aracnids in a minute, also it can telepaticaly comunicate with her brood. Risk Assement: SSS"
-attacks: "Death Vision", "A ray of death comes from at least 1 of its 8 eyes. It can cause instant death 5%", 2d8+1;
-        "Poison Mist", "A poison mist that spreads in 30m sphere in all directions, it causes poisoning 1d4 every turn", 2d6;

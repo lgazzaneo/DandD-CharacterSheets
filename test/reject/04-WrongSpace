@@ -1,5 +1,0 @@
-new Item : 2
-itemname : "The Blade of Zircalia";
-rarity : "Unique";
-modifier: "+2Dex";
-description : "This Blade will deal true damage to anyone that it strikes including the wielder. Damage is Ethereal 5d6+4";
